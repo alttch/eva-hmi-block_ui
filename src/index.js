@@ -20,6 +20,10 @@
   var is_menu_active = false;
   var popover_cbtns = Array();
 
+  function error(msg) {
+    throw new Error(msg);
+  }
+
   function server_error(err) {
     $eva.toolbox
       .popup('eva_hmi_popup', 'error', 'ERROR', err.message, {ct: 2})
@@ -448,6 +452,9 @@
     } else {
       $eva = window.$eva;
     }
+    if (!window.eva_hmi_config) {
+      error('HMI config not loaded');
+    }
     if (!window.eva_hmi_config_url)
       window.eva_hmi_config_url = document.location;
     $eva.hmi = {};
@@ -458,9 +465,7 @@
     $eva.hmi.format_camera_src = function() {};
     $eva.hmi.after_draw = function() {};
     $eva.hmi.prepare_layout = function() {};
-    $eva.hmi.error = function(msg) {
-      throw new Error(msg);
-    };
+    $eva.hmi.error = error;
     $eva.hmi.init_top_bar = init_top_bar;
     $eva.hmi.top_bar = function() {
       if (!$eva.in_evaHI) $eva.hmi.init_top_bar();
