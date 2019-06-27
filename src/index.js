@@ -3,6 +3,11 @@
 (() => {
   const $ = require('jquery');
 
+  window.$ = $;
+
+  require('bootstrap');
+  require('bootstrap/dist/css/bootstrap.min.css');
+
   var $eva;
   var login_window;
   var content_holder;
@@ -438,9 +443,15 @@
   }
 
   function init() {
+    if (!window.$eva) {
+      error('EVA JS Framework not found');
+    } else {
+      $eva = window.$eva;
+    }
     if (!window.eva_hmi_config_url)
       window.eva_hmi_config_url = document.location;
     $eva.hmi = {};
+    $eva.hmi.start = start;
     $eva.hmi.logo = {};
     $eva.hmi.logo.href = 'https://www.eva-ics.com/';
     $eva.hmi.logo.text = 'www.eva-ics.com';
@@ -454,7 +465,6 @@
     $eva.hmi.top_bar = function() {
       if (!$eva.in_evaHI) $eva.hmi.init_top_bar();
     };
-    $eva.hmi.correct_cbtn_padding = correct_cbtn_padding;
     if (typeof window.evaHI === 'object' && window.evaHI['index']) {
       window.eva_hmi_config_main_page = window.evaHI['index'];
     } else {
@@ -500,13 +510,13 @@
     $('<div />', {id: 'eva_hmi_popup'}).appendTo('body');
     $('<div />', {id: 'eva_hmi_anim'}).appendTo('body');
     $('<div />')
+      .addClass('eva_hmi_dialog_window_holder')
+      .addClass('evacc_setup')
+      .on('click', close_cc_setup)
       .html(
-        '<div class="eva_hmi_dialog_window_holder evacc_setup" \
-            onclick="close_cc_setup(event)"> \
-          <div class="eva_hmi_dialog_window"> \
+        '<div class="eva_hmi_dialog_window"> \
             <div class="eva_hmi_setup_form"> \
-              <div class="eva_hmi_close_btn" \
-                onclick="close_cc_setup()"></div> \
+              <div class="eva_hmi_close_btn"></div> \
               <a href="https://play.google.com/store/apps/details?id=com.altertech.evacc" \
               class="eva_hmi_andr_app"></a> \
               <span>Scan this code with </span> \
@@ -514,8 +524,7 @@
                 class="eva_hmi_app_link">EVA Control Center app</a> \
               <div class="eva_hmi_qr_install"><canvas id="evaccqr"></canvas></div> \
             </div> \
-          </div> \
-        </div>'
+          </div>'
       )
       .appendTo('body');
     if (
@@ -545,10 +554,9 @@
       login_window.hide();
       login_window.html(
         '<div class="eva_hmi_dialog_window"> \
-        <form id="eva_hmi_login_form" \
-            onsubmit="javascript:return submit_login(event)"> \
+        <form id="eva_hmi_login_form"> \
           <div class="form-group eva_hmi_input_form"> \
-            <div class="$eva.hmi.error_message" id="eva_hmi_login_error"></div> \
+            <div class="eva_hmi_error_message" id="eva_hmi_login_error"></div> \
             <input type="text" class="form-control" name="login" \
                 id="eva_hmi_login" value="" placeholder="User"/> \
             <input type="password" class="form-control" \
@@ -566,6 +574,7 @@
       </div>'
       );
       login_window.appendTo('body');
+      $('#eva_hmi_login_form').on('submit', submit_login);
       if (window.eva_hmi_config_motd) {
         var motd = $('<div />')
           .addClass('eva_hmi_motd')
@@ -580,7 +589,7 @@
       main.appendTo(bg);
       container.appendTo(main);
       row.appendTo(container);
-      content_holder = $('<div />').addClass('content_holder');
+      content_holder = $('<div />').addClass('eva_hmi_content_holder');
       content_holder.hide();
       content_holder.appendTo(row);
       $eva.on('login.success', function() {
@@ -631,15 +640,11 @@
       var bg = $('<div />')
         .addClass('eva_hmi_bg')
         .addClass('bg_sensors');
-      content_holder = $('<div />').addClass('content_holder_sensors');
+      content_holder = $('<div />').addClass('eva_hmi_content_holder_sensors');
       content_holder.hide();
       content_holder.appendTo(bg);
       if (window.eva_hmi_config_layout['sys-block']) {
-        bg.append(
-          $('<div />')
-            .addClass('eva_hmi_sysblock')
-            .html(create_sysblock())
-        );
+        bg.append(create_sysblock());
       }
       bg.appendTo('body');
     }
@@ -714,18 +719,14 @@
   }
 
   function init_top_bar() {
-    var topbar = $('<div />', {id: '$eva.hmi.top_bar'});
+    var topbar = $('<div />', {id: 'eva_hmi_top_bar'});
     var hamb = $('<div />', {'data-toggle': 'menuicon', id: 'eva_hmi_hamb'});
     for (var i = 0; i < 3; i++) {
       $('<span />').appendTo(hamb);
     }
     hamb.on('click', toggle_menu);
     topbar.append(hamb);
-    var html = create_sysblock(true);
-    $('<div />')
-      .addClass('$eva.hmi.top_bar_sysblock')
-      .html(html)
-      .appendTo(topbar);
+    topbar.append(create_sysblock(true, 'eva_hmi_top_bar_sysblock'));
     content_holder.addClass('with_topbar');
     content_holder.append(topbar);
     var menu_container = $('<div />', {id: 'eva_hmi_menu_container'});
@@ -881,7 +882,7 @@
     if ($(window).width() < 768) {
       draw_compact_layout();
       is_compact = true;
-      $eva.hmi.correct_cbtn_padding();
+      correct_cbtn_padding();
     } else {
       draw_layout();
       is_compact = false;
@@ -933,10 +934,9 @@
     }
     cam_img.addClass('eva_hmi_cam_img');
     cam_img.appendTo(cam);
-    var reloader = setInterval(
-      'reload_camera("' + cam_id + '")',
-      reload_int * 1000
-    );
+    var reloader = setInterval(function() {
+      reload_camera(cam_id);
+    }, reload_int * 1000);
     camera_reloader.push(reloader);
     append_action(cam, cam_cfg, false);
     return cam;
@@ -1067,10 +1067,7 @@
           }
           if (bar_cfg['sys-block']) {
             if (!dblk) dblk = $('<div />').addClass('eva_hmi_data_block');
-            $('<div />')
-              .addClass('eva_hmi_sysblock')
-              .html(create_sysblock())
-              .appendTo(dblk);
+            dblk.append(create_sysblock());
           }
           if (dblk) bar.append(dblk);
           eva_bar_holder.append(bar);
@@ -1103,10 +1100,7 @@
         });
       }
       if (window.eva_hmi_config_layout.sysblock) {
-        $('<div />')
-          .addClass('eva_hmi_sysblock')
-          .html(create_sysblock())
-          .appendTo(holder);
+        holder.append(create_sysblock());
       }
       content_holder.append(holder);
     }
@@ -1120,22 +1114,31 @@
     });
   }
 
-  function create_sysblock(mini) {
-    var html =
-      'EVA ICS v<span class="eva_version"></span>, \
+  function create_sysblock(mini, cl_id) {
+    var sysblock = $('<div />')
+      .addClass(cl_id ? cl_id : 'eva_hmi_sysblock')
+      .html(
+        'EVA ICS v<span class="eva_version"></span>, \
     build <span class="eva_build"></span>, \
-    user: <span class="eva_user"></span>';
+    user: <span class="eva_user"></span>'
+      );
     if (!mini) {
-      html = html + '<br />';
+      sysblock.append($('<br />'));
       if (!$eva.in_evaHI) {
-        html =
-          html +
-          '<span class="eva_hmi_links" style="margin-right: 10px" \
-          onclick="open_cc_setup(event);">EvaCC setup</span>';
+        $('<span />')
+          .addClass('eva_hmi_links')
+          .css('margin-right', '10px')
+          .on('click', open_cc_setup)
+          .html('EvaCC setup')
+          .appendTo(sysblock);
       }
-      html += '<span class="eva_hmi_links" onclick="logout()">Logout</span>';
+      $('<span />')
+        .addClass('eva_hmi_links')
+        .on('click', logout)
+        .html('Logout')
+        .appendTo(sysblock);
     }
-    return html;
+    return sysblock;
   }
 
   function draw_compact_layout() {
@@ -1159,10 +1162,7 @@
             data_block.append(create_data_block(v['id']));
             row.append(data_block);
           } else if (v['type'] == 'sys-block') {
-            $('<div />')
-              .addClass('eva_hmi_sysblock')
-              .html(create_sysblock())
-              .appendTo(row);
+            row.append(create_sysblock());
           } else if (v['type'] == 'spacer') {
             var h = v['height'];
             if (!h) h = '12px';
@@ -1207,11 +1207,6 @@
   }
 
   function start() {
-    if (!window.$eva) {
-      error('EVA JS Framework not found');
-    } else {
-      $eva = window.$eva;
-    }
     var oldSize = $(window).width();
     window.addEventListener('resize', function() {
       $('[data-toggle="popover"]').popover('hide');
@@ -1221,7 +1216,7 @@
         recreate_objects();
       }
       if (w < 768) {
-        $eva.hmi.correct_cbtn_padding();
+        correct_cbtn_padding();
       }
     });
     var l = window.$cookies.read('eva_hmi_login');
@@ -1330,6 +1325,5 @@
       .catch(err => l);
   }
 
-  $eva.hmi.init = init;
-  $eva.hmi.start = start;
+  window.eva_init_hmi = init;
 })();
