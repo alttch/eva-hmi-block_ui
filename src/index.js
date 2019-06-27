@@ -971,7 +971,7 @@
             }
           ]
         },
-        options: eva_hmi_chart_options
+        options: eva_hmi_config_chart_options
       };
     }
   }
