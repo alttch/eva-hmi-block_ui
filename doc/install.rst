@@ -12,8 +12,8 @@ it doesn't exist yet and clone app repository to it.
     git clone https://github.com/alttch/eva-hmi-block_ui.git
 
 If you don't have `EVA JS Framework
-<https://github.com/alttch/eva-js-framework/>_`, download it and put e.g.
-to *lib* folder:
+<https://github.com/alttch/eva-js-framework/>`_ installed, download it and
+put e.g. to *lib* folder:
 
 .. code-block:: bash
 
@@ -48,7 +48,6 @@ you can name your file *index.html* as well:
             href="apps/eva-hmi-block_ui/themes/default/icons.css">
         <script type="text/javascript">
           document.addEventListener('DOMContentLoaded', function() {
-            eva_init_hmi();
             $eva.hmi.start();
           });
         </script>
@@ -126,3 +125,27 @@ Connect HMI application:
 
     <script type="text/javascript"
         src="apps/eva-hmi-block_ui/index.min.js"></script>
+
+After loading, HMI application is automatically injected into EVA JS
+Framework as *$eva.hmi*.
+
+Finally, connect styles
+
+.. code-block:: html
+
+    <link rel="stylesheet"
+            href="apps/eva-hmi-block_ui/themes/default/style.css">
+    <link rel="stylesheet"
+            href="apps/eva-hmi-block_ui/themes/default/icons.css">
+
+and start interface app:
+
+.. code-block:: html
+
+    <script type="text/javascript">
+      document.addEventListener('DOMContentLoaded', function() {
+        $eva.hmi.start();
+      });
+    </script>
+
+Before start, some app methods can be :doc:`overriden <overriding>`.

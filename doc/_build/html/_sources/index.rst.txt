@@ -31,3 +31,5 @@ Live demo: `<https://smarthome.demo.eva-ics.com/>`_
     dashboard
     simple
     sensors
+    navigation
+    overriding

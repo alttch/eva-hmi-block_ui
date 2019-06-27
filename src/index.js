@@ -711,7 +711,7 @@
     }
   }
 
-  function init_top_bar() {
+  function draw_top_bar() {
     var topbar = $('<div />', {id: 'eva_hmi_top_bar'});
     var hamb = $('<div />', {'data-toggle': 'menuicon', id: 'eva_hmi_hamb'});
     for (var i = 0; i < 3; i++) {
@@ -867,8 +867,8 @@
   }
 
   function redraw_layout() {
-    $eva.hmi.prepare_layout();
     clear_layout();
+    $eva.hmi.prepare_layout();
     $eva.hmi.top_bar();
     stop_cams();
     chart_creators = Array();
@@ -881,7 +881,7 @@
       current_layout_compact = false;
     }
     update_sysblock();
-    $eva.hmi.after_draw();
+    $eva.hmi.after_draw(current_layout_compact);
   }
 
   function create_data_block(block_id) {
@@ -1332,8 +1332,8 @@
   $eva.hmi.after_draw = function() {};
   $eva.hmi.prepare_layout = function() {};
   $eva.hmi.error = error;
-  $eva.hmi.init_top_bar = init_top_bar;
+  $eva.hmi.draw_top_bar = draw_top_bar;
   $eva.hmi.top_bar = function() {
-    if (!$eva.in_evaHI) $eva.hmi.init_top_bar();
+    if (!$eva.in_evaHI) $eva.hmi.draw_top_bar();
   };
 })();

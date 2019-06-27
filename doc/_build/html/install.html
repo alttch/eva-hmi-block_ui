@@ -28,6 +28,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Overriding app methods and variables" href="overriding.html" />
     <link rel="prev" title="EVA HMI Block UI" href="index.html" /> 
 
   
@@ -83,6 +84,7 @@
             
               <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overriding.html">Overriding app methods and variables</a></li>
 </ul>
 
             
@@ -155,6 +157,13 @@ mkdir -p apps
 git clone https://github.com/alttch/eva-hmi-block_ui.git
 </pre></div>
 </div>
+<p>If you don’t have <a class="reference external" href="https://github.com/alttch/eva-js-framework/">EVA JS Framework</a> installed, download it and
+put e.g. to <em>lib</em> folder:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> /opt/eva/ui
+mkdir -p lib
+curl https://raw.githubusercontent.com/alttch/eva-js-framework/master/dist/eva.min.js -o lib/eva.min.js
+</pre></div>
+</div>
 <p>Then create your first page in <em>/opt/eva/ui/</em>, call it <em>index.j2</em>. J2 files
 are regular HTML files however EVA ICS processes them as <a class="reference external" href="http://jinja.pocoo.org/">Jinja2
 templates</a>. If you don’t plan to use Jinja tags,
@@ -172,14 +181,13 @@ you can name your file <em>index.html</em> as well:</p>
     <span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span>
         <span class="na">src</span><span class="o">=</span><span class="s">&quot;lib/eva.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span>
-        <span class="na">src</span><span class="o">=</span><span class="s">&quot;apps/eva-hmi-block_ui/hmi.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+        <span class="na">src</span><span class="o">=</span><span class="s">&quot;apps/eva-hmi-block_ui/index.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span>
         <span class="na">href</span><span class="o">=</span><span class="s">&quot;apps/eva-hmi-block_ui/themes/default/style.css&quot;</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span>
         <span class="na">href</span><span class="o">=</span><span class="s">&quot;apps/eva-hmi-block_ui/themes/default/icons.css&quot;</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span><span class="p">&gt;</span>
       <span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;DOMContentLoaded&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-        <span class="nx">eva_init_hmi</span><span class="p">();</span>
         <span class="nx">$eva</span><span class="p">.</span><span class="nx">hmi</span><span class="p">.</span><span class="nx">start</span><span class="p">();</span>
       <span class="p">});</span>
     <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
@@ -187,6 +195,82 @@ you can name your file <em>index.html</em> as well:</p>
 <span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
 </pre></div>
 </div>
+<p>Let’s explain it line-by-line:</p>
+<p>This line adds top-bar and menu <span class="xref std std-doc">navigation</span>
+configuration, which is <a class="reference external" href="https://github.com/alttch/evaHI">evaHI</a>
+compatible YAML or JSON file. As EVA ICS SFA allows to transform YAML files
+on the flow to JSON or JavaScript variable/function, we’ll use YAML almost
+everywhere.</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span>
+    <span class="na">src</span><span class="o">=</span><span class="s">&quot;.evahi/config.yml?as=js&amp;var=evaHI&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>Next we need to connect main page configuration. It should be placed to
+JavaScript variable called <em>eva_hmi_config</em>.</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span>
+    <span class="na">src</span><span class="o">=</span><span class="s">&quot;config/index.yml?as=js&amp;var=eva_hmi_config&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>By the way, you can split your configuration in several files, e.g. create
+separate configuration files for buttons and cameras and load them to
+proper JavaScript configuration variables for all pages you have.</p>
+<p>Just note: if you’ve already loaded configuration for buttons, but
+<em>buttons</em> section is present in the main configuration, the first one will
+be overwritten.</p>
+<p>Valid configuration variables are:</p>
+<ul class="simple">
+<li><strong>eva_hmi_config</strong></li>
+<li><strong>eva_hmi_config_class</strong></li>
+<li><strong>eva_hmi_config_buttons</strong></li>
+<li><strong>eva_hmi_config_data</strong></li>
+<li><strong>eva_hmi_config_control_blocks</strong></li>
+<li><strong>eva_hmi_config_data_blocks</strong></li>
+<li><strong>eva_hmi_config_cameras</strong></li>
+<li><strong>eva_hmi_config_charts</strong></li>
+<li><strong>eva_hmi_config_layout</strong></li>
+<li><strong>eva_hmi_config_layout_compact</strong></li>
+<li><strong>eva_hmi_config_url</strong></li>
+<li><strong>eva_hmi_config_main_page</strong></li>
+<li><strong>eva_hmi_config_motd</strong></li>
+<li><strong>eva_hmi_config_chart_options</strong></li>
+</ul>
+<p>Their names match proper sections in the configuration files.</p>
+<p>Depending on a page class, create configuration file for <span class="xref std std-doc">dashboard</span>, <span class="xref std std-doc">simple</span> or <span class="xref std std-doc">sensors</span> UI page.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Primary UI page (<em>index.html</em> or <em>index.j2</em>) should have either
+<em>dashboard</em> or <em>simple</em> class, as <em>sensors</em> page class doesn’t have
+login form and if user is not authorized, redirect to the page
+specified in <em>eva_hmi_config_main_page</em> variable or to <em>/ui/</em> if
+variable is not set.</p>
+</div>
+<p>Connect EVA JS Framework:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;lib/eva.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>Connect HMI application:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span>
+    <span class="na">src</span><span class="o">=</span><span class="s">&quot;apps/eva-hmi-block_ui/index.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>After loading, HMI application is automatically injected into EVA JS
+Framework as <em>$eva.hmi</em>.</p>
+<p>Finally, connect styles</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span>
+        <span class="na">href</span><span class="o">=</span><span class="s">&quot;apps/eva-hmi-block_ui/themes/default/style.css&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span>
+        <span class="na">href</span><span class="o">=</span><span class="s">&quot;apps/eva-hmi-block_ui/themes/default/icons.css&quot;</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>and start interface app:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span><span class="p">&gt;</span>
+  <span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;DOMContentLoaded&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">$eva</span><span class="p">.</span><span class="nx">hmi</span><span class="p">.</span><span class="nx">start</span><span class="p">();</span>
+  <span class="p">});</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>Before start, some app methods can be <a class="reference internal" href="overriding.html"><span class="doc">overriden</span></a>.</p>
 </div>
 
 
