@@ -1,0 +1,47 @@
+{
+  "name": "@eva-ics/hmi-block_ui",
+  "version": "0.0.1",
+  "description": "Block UI for EVA ICS",
+  "scripts": {
+    "test": "echo 'Error: no test specified' && exit 1",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alttch/eva-hmi-block_ui.git"
+  },
+  "main": "src/index.js",
+  "keywords": [
+    "iot",
+    "iiot",
+    "browser",
+    "hmi",
+    "interface",
+    "evaics",
+    "eva-ics"
+  ],
+  "author": "Altertech",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/alttch/eva-hmi-block_ui/issues"
+  },
+  "dependencies": {
+    "@babel/cli": "^7.4.4",
+    "babel-preset-minify": "^0.5.0",
+    "bootstrap": "^4.3.1",
+    "jquery": "^3.4.1",
+    "popper.js": "^1.15.0",
+    "swiped-events": "^1.0.9"
+  },
+  "homepage": "https://www.eva-ics.com/",
+  "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
+    "babel-loader": "^8.0.6",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "cssmin-cli": "0.0.5",
+    "webpack": "^4.33.0",
+    "webpack-cli": "^3.3.4"
+  }
+}

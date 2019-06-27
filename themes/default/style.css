@@ -2,7 +2,7 @@ html, body {
   width: 100%;
   height: 100%;
 }
-#eva_ui_top_bar {
+#eva_hmi_top_bar {
   position: fixed;
   display: flex;
   top: 0;
@@ -14,12 +14,12 @@ html, body {
   z-index: 1250;
   overflow: hidden;
 }
-#eva_ui_top_bar > .eva_ui_menu_item {
+#eva_hmi_top_bar > .eva_hmi_menu_item {
   width: 36px;
   padding: 7px;
   overflow: hidden;
 }
-#eva_ui_menu_container {
+#eva_hmi_menu_container {
   position: fixed;
   display: none;
   top: 0px;
@@ -29,7 +29,7 @@ html, body {
   background: rgba(0,0,0,0.3);
   z-index: 1200;
 }
-#eva_ui_menu {
+#eva_hmi_menu {
   display: none;
   position: fixed;
   top: 40px;
@@ -41,29 +41,29 @@ html, body {
   border-right: 2px solid #ccc;
   z-index: 1220;
 }
-.eva_ui_menu_holder {
+.eva_hmi_menu_holder {
   position: relative;
   min-height: 100%;
   padding-bottom: 120px;
 }
-.eva_ui_menu_item {
+.eva_hmi_menu_item {
   padding: 10px 15px;
   /*border-bottom: 1px solid #ccc;*/
   color: #999;
   font-size: 18px;
   cursor: pointer;
 }
-.eva_ui_menu_item:not(:disabled):hover,
-.eva_ui_menu_item.active_menu {
+.eva_hmi_menu_item:not(:disabled):hover,
+.eva_hmi_menu_item.active_menu {
   color: #1a1a1a;
 }
-.eva_ui_menu_item:not(:disabled):hover {
+.eva_hmi_menu_item:not(:disabled):hover {
   background: #eee;
 }
-.eva_ui_menu_title {
+.eva_hmi_menu_title {
   margin-left: 35px;
 }
-.eva_ui_menu_icon {
+.eva_hmi_menu_icon {
   width: 35px;
   height: 35px;
   float: left;
@@ -71,7 +71,7 @@ html, body {
   background-size: 22px 22px;
   background-repeat: no-repeat;
 }
-.eva_ui_top_bar_sysblock {
+.eva_hmi_top_bar_sysblock {
   position: absolute;
   right: 0px;
   top: 0px;
@@ -79,14 +79,14 @@ html, body {
   color: #808080;
   font-size: 12px;
 }
-.eva_ui_logo_container {
+.eva_hmi_logo_container {
   position: absolute;
   bottom: 0;
   width: 100%;
   height: 150px;
   overflow: hidden;
 }
-.eva_ui_logo {
+.eva_hmi_logo {
   background-image: url('images/eva_logo.png');
   background-repeat: no-repeat;
   margin-left: auto;
@@ -103,7 +103,7 @@ html, body {
   bottom: 10px;
   left: 70px;
 }
-#eva_ui_hamb {
+#eva_hmi_hamb {
   margin: 0 20px 0 0;
   padding: 0;
   width: 46px;
@@ -119,7 +119,7 @@ html, body {
   cursor: pointer;
 }
 
-#eva_ui_hamb span {
+#eva_hmi_hamb span {
   display: block;
   position: absolute;
   height: 4px;
@@ -138,19 +138,19 @@ html, body {
   transition: .25s ease-in-out;
 }
 
-#eva_ui_hamb span:nth-child(1) {
+#eva_hmi_hamb span:nth-child(1) {
   top: 9px;
 }
 
-#eva_ui_hamb span:nth-child(2) {
+#eva_hmi_hamb span:nth-child(2) {
   top: 17px;
 }
 
-#eva_ui_hamb span:nth-child(3) {
+#eva_hmi_hamb span:nth-child(3) {
   top: 25px;
 }
 
-#eva_ui_hamb.open span:nth-child(1) {
+#eva_hmi_hamb.open span:nth-child(1) {
   top: 17px;
   -webkit-transform: rotate(135deg);
   -moz-transform: rotate(135deg);
@@ -158,32 +158,32 @@ html, body {
   transform: rotate(135deg);
 }
 
-#eva_ui_hamb.open span:nth-child(2) {
+#eva_hmi_hamb.open span:nth-child(2) {
   opacity: 0;
   left: -60px;
 }
 
-#eva_ui_hamb.open span:nth-child(3) {
+#eva_hmi_hamb.open span:nth-child(3) {
   top: 17px;
   -webkit-transform: rotate(-135deg);
   -moz-transform: rotate(-135deg);
   -o-transform: rotate(-135deg);
   transform: rotate(-135deg);
 }
-#eva_ui_anim {
+#eva_hmi_anim {
   height: 100%;
   align-items: center;
   display: none;
 }
-.eva_ui_motd {
+.eva_hmi_motd {
   font-size: 14px;
   font-style: italic
 }
-.eva_ui_slider_container {
+.eva_hmi_slider_container {
   width: 270px;
   padding: 10px;
 }
-.eva_ui_slider {
+.eva_hmi_slider {
   width: 250px;
   -webkit-appearance: none;
   width: 100%;
@@ -194,13 +194,13 @@ html, body {
   -webkit-transition: .2s;
   transition: opacity .2s;
 }
-.eva_ui_slider.slider_off {
+.eva_hmi_slider.slider_off {
   background-color: #d3d3d3;
 }
-.eva_ui_slider.slider_on {
+.eva_hmi_slider.slider_on {
   background-color: #ffd982;
 }
-.eva_ui_slider::-webkit-slider-thumb {
+.eva_hmi_slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
   width: 25px;
@@ -210,20 +210,20 @@ html, body {
   cursor: pointer;
 }
 
-.eva_ui_slider::-moz-range-thumb {
+.eva_hmi_slider::-moz-range-thumb {
   width: 25px;
   height: 25px;
   border-radius: 50%;
   background: #4CAF50;
   cursor: pointer;
 }
-.eva_ui_slider_label {
+.eva_hmi_slider_label {
   margin-top: 10px;
 	font: 12px Arial;
   font-weight: 800;
 	color: #b3b3b3;
 }
-.eva_ui_dialog_window_holder {
+.eva_hmi_dialog_window_holder {
 	position: fixed;
 	top: 0;
 	bottom: 0;
@@ -231,12 +231,12 @@ html, body {
 	right: 0;
 	z-index: 1001;
 }
-.eva_ui_dialog_window {
+.eva_hmi_dialog_window {
 	display: flex;
 	width: 100%;
 	height: 100%;
 }
-.eva_ui_dialog_window #eva_ui_login_form {
+.eva_hmi_dialog_window #eva_hmi_login_form {
 	display: block;
 	width: 100%;
 	max-width: 370px;
@@ -247,53 +247,53 @@ html, body {
 	background: rgba(230, 230, 230, 0.5);
 	background: linear-gradient(0.222turn, rgb(230, 230, 230) 0%, rgba(230, 230, 230, 0.5) 50%, rgba(230, 230, 230, 0.5) 100%)
 }
-#eva_ui_login_form > div {
+#eva_hmi_login_form > div {
 	max-width: 224px;
 	margin-left: auto;
 	margin-right: auto;
 }
-.eva_ui_error_message {
+.eva_hmi_error_message {
 	display: none;
 	position: absolute;
 	margin: -17px 2px 0;
 	font: 14px Arial;
 	color: #c1272d;
 }
-.eva_ui_input_form {
+.eva_hmi_input_form {
 	margin: 20px 0 0;
 }
-.eva_ui_input_form input {
+.eva_hmi_input_form input {
 	height: 37px;
 	margin-bottom: 10px;
 	font: 14px Arial;
 	color: #4d4d4d;
 	border-radius: 2px;
 }
-.eva_ui_input_form input:focus {
+.eva_hmi_input_form input:focus {
 	box-shadow: none;
 }
-.eva_ui_input_form input.error_key {
+.eva_hmi_input_form input.error_key {
 	border-color: #c1272d;
 	border-width: 2px;
 }
-#eva_ui_login_form label {
+#eva_hmi_login_form label {
 	font: 14px Arial;
 	color: #4d4d4d;
 }
-.eva_ui_custom_checkbox {
+.eva_hmi_custom_checkbox {
 	margin-bottom: 8px;
 }
-.eva_ui_custom_checkbox input[type=checkbox] {
+.eva_hmi_custom_checkbox input[type=checkbox] {
 	opacity: 0;
 	width: 16px;
 	height: 16px;
 }
-.eva_ui_custom_checkbox input[type=checkbox] + label {
+.eva_hmi_custom_checkbox input[type=checkbox] + label {
 	position: absolute;
 	margin: 2px 0 0 -16px;
 	padding-left: 30px;
 }
-.eva_ui_custom_checkbox input[type=checkbox] + label::before {
+.eva_hmi_custom_checkbox input[type=checkbox] + label::before {
 	content: "";
 	position: absolute;
 	left: 0;
@@ -304,7 +304,7 @@ html, body {
 	border-radius: 2px;
 	background: #fff;
 }
-.eva_ui_custom_checkbox input[type=checkbox]:checked + label::after {
+.eva_hmi_custom_checkbox input[type=checkbox]:checked + label::after {
 	content: "";
 	position: absolute;
 	left: 3px;
@@ -338,35 +338,35 @@ html, body {
 	box-shadow: none;
 }
 
-.eva_ui_bg {
+.eva_hmi_bg {
   width: 100%;
   min-height: 100%;
   padding-bottom: 20px;
   background: url('images/patt.gif') 0 0;
 }
-.eva_ui_bg.bg_sensors {
+.eva_hmi_bg.bg_sensors {
   position: relative;
   width: 100%;
   padding: 5px 25px 25px 25px;
   background: url('images/patt.gif') 0 0;
 }
-.eva_ui_content_holder {
+.eva_hmi_content_holder {
   display: flex;
   flex-wrap: wrap;
   width: 320px;
   /*margin: auto;*/
 }
-.eva_ui_bar_holder {
+.eva_hmi_bar_holder {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
 }
-.eva_ui_bar_holder.single_bar_holder {
+.eva_hmi_bar_holder.single_bar_holder {
 	width: 760px;
 	justify-content: start;
 	padding-right: 15px;
 }
-.eva_ui_content_holder_sensors {
+.eva_hmi_content_holder_sensors {
   display: flex;
   flex-wrap: wrap;
   padding: 20px 0;
@@ -374,7 +374,7 @@ html, body {
   border-radius: 5px;
   border: 2px solid #ccc;
 }
-.eva_ui_cam_img {
+.eva_hmi_cam_img {
   background-image: -webkit-repeating-linear-gradient(135deg, rgba(0,0,0,.3),
     rgba(0,0,0,.3) 1px, transparent 2px, transparent 2px, rgba(0,0,0,.3) 3px);
   background-image: -moz-repeating-linear-gradient(135deg, rgba(0,0,0,.3),
@@ -389,7 +389,7 @@ html, body {
   padding: 0px;
   margin: 0px;
 }
-.eva_ui_cam_holder_bg {
+.eva_hmi_cam_holder_bg {
    position: absolute;
    top: 0;
    left: 0;
@@ -398,42 +398,42 @@ html, body {
    z-index: -1;
    overflow: hidden;
 }
-.eva_ui_cam_preview {
+.eva_hmi_cam_preview {
   width: 315px;
   height: 200px;
 }
-.eva_ui_cam_preview_big {
+.eva_hmi_cam_preview_big {
   width: 750px;
   height: 468px;
 }
-.eva_ui_bar {
+.eva_hmi_bar {
   margin-top: 50px;
   width: 320px;
 	display: flex;
 	flex-wrap: wrap;
 	flex-direction: column;
 }
-.eva_ui_bar:first-child {
+.eva_hmi_bar:first-child {
   margin-top: 20px;
 }
-.eva_ui_camera_block {
+.eva_hmi_camera_block {
   width: 100%;
   text-align: center;
   margin-top: 10px;
 }
-.eva_ui_control_block {
+.eva_hmi_control_block {
   display: flex;
   width: 100%;
   margin-top: 7px;
   padding-top: 7px;
   border-top: 2px solid #ccc;
 }
-.eva_ui_control_block.first {
+.eva_hmi_control_block.first {
 	padding-top: 0;
 	border-top: none;
 	margin-top: 34px;
 }
-.eva_ui_cbtn {
+.eva_hmi_cbtn {
   position: relative;
   width: 75px;
   height: 75px;
@@ -446,10 +446,10 @@ html, body {
 	background-repeat: no-repeat;
   transition: background-image 0.2s linear;
 }
-.eva_ui_cbtn:last-of-type {
+.eva_hmi_cbtn:last-of-type {
   margin-right: 0;
 }
-.eva_ui_cbtn.menu::before {
+.eva_hmi_cbtn.menu::before {
   content: "";
   position: absolute;
   bottom: 0;
@@ -458,7 +458,7 @@ html, body {
   width: 24px;
   background: url('btn/x_menu.svg') 0 0 no-repeat;
 }
-.eva_ui_cbtn.gear::after {
+.eva_hmi_cbtn.gear::after {
   content: "";
   position: absolute;
   top: 0;
@@ -467,7 +467,7 @@ html, body {
   width: 19px;
   background: url('btn/x_macros.svg') 0 0 no-repeat;
 }
-.eva_ui_cbtn.busy::after {
+.eva_hmi_cbtn.busy::after {
   content: "";
   position: absolute;
   top: 0;
@@ -477,14 +477,14 @@ html, body {
   background: url('btn/x_busy.svg') 50% 50%  no-repeat rgba(255, 255, 255, 0.3);
   background-size: 50px;
 }
-.eva_ui_cbtn:not(:disabled):hover {
+.eva_hmi_cbtn:not(:disabled):hover {
   outline: none;
 }
-.eva_ui_cbtn:not(:disabled):focus,
-.eva_ui_cbtn:not(:disabled):active {
+.eva_hmi_cbtn:not(:disabled):focus,
+.eva_hmi_cbtn:not(:disabled):active {
   outline: none;
 }
-.eva_ui_cbtn .title {
+.eva_hmi_cbtn .title {
 	position: absolute;
 	max-width: 70%;
 	top: 0;
@@ -496,7 +496,7 @@ html, body {
 	white-space: nowrap;
 	text-overflow: ellipsis;
 }
-.eva_ui_cbtn .value {
+.eva_hmi_cbtn .value {
 	position: absolute;
 	max-width: 70%;
 	bottom: 0;
@@ -508,30 +508,30 @@ html, body {
 	white-space: nowrap;
 	text-overflow: ellipsis;
 }
-.single_bar_holder .eva_ui_cbtn {
+.single_bar_holder .eva_hmi_cbtn {
   padding: 0;
   margin-top: 6px;
 }
-.single_bar_holder .eva_ui_cbtn:last-of-type {
+.single_bar_holder .eva_hmi_cbtn:last-of-type {
   margin-right: 6px;
 }
-.eva_ui_chart {
+.eva_hmi_chart {
   width: 320px;
   height: 100px;
 }
-.eva_ui_chart_title {
+.eva_hmi_chart_title {
   padding-left: 30px;
   font-size: 14px;
   color: #808080;
 }
-.eva_ui_chart_value {
+.eva_hmi_chart_value {
   height: 50px;
   padding-left: 70px;
   font-size: 24px;
   line-height: 55px;
   color: #808080;
   }
-.eva_ui_chart_value_units {
+.eva_hmi_chart_value_units {
   position: absolute;
   right: 10px;
   margin-top: -10px;
@@ -571,8 +571,8 @@ html, body {
 .popover-body {
 	padding: .5rem;
 }
-.popover .eva_ui_cbtn:not(:disabled):hover,
-.popover .eva_ui_cbtn:not(:disabled):active {
+.popover .eva_hmi_cbtn:not(:disabled):hover,
+.popover .eva_hmi_cbtn:not(:disabled):active {
   border-color: #ececec;
 }
 .bs-popover-top {
@@ -641,13 +641,13 @@ html, body {
   from { left: 50px; }
   to { left: 0px; }
 }
-.eva_ui_data_block {
+.eva_hmi_data_block {
   border-top: 2px solid #ccc;
   margin-top: 7px;
   padding-top: 10px;
   order: 10;
 }
-.eva_ui_data_holder {
+.eva_hmi_data_holder {
   display: flex;
   flex-wrap: wrap;
   position: relative;
@@ -656,7 +656,7 @@ html, body {
   border: 2px solid #e6e6e6;
   border-radius: 5px;
 }
-.eva_ui_data_holder > div {
+.eva_hmi_data_holder > div {
   height: 32px;
   min-width: 75px;
   padding: 10px 0 0 32px;
@@ -666,7 +666,7 @@ html, body {
   background-position: 0 0;
   background-repeat: no-repeat;
 }
-.eva_ui_sysblock {
+.eva_hmi_sysblock {
   width: 100%;
   height: auto;
   margin: 10px 0 0;
@@ -675,15 +675,15 @@ html, body {
   color: #808080;
   text-align: center;
 }
-.eva_ui_links {
+.eva_hmi_links {
   color: #29ABE2;
   cursor: pointer;
 }
-.eva_ui_dialog_window_holder.evacc_setup {
+.eva_hmi_dialog_window_holder.evacc_setup {
   display: none;
   background: rgba(0,0,0,0.3);
 }
-.eva_ui_setup_form {
+.eva_hmi_setup_form {
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -700,7 +700,7 @@ html, body {
   color: #000;
   text-align: center;
 }
-.eva_ui_close_btn {
+.eva_hmi_close_btn {
 	position: absolute;
 	right: 10px;
 	top: 10px;
@@ -709,39 +709,39 @@ html, body {
   cursor: pointer;
   background: url('images/cross.svg') 0 0 no-repeat;
 }
-.eva_ui_close_btn.secondary_page {
+.eva_hmi_close_btn.secondary_page {
   right: 35px;
   top: 15px;
 }
-.eva_ui_andr_app {
+.eva_hmi_andr_app {
   width: 100%;
   height: 70px;
   background: url('images/android_icon.svg') 50% 0 no-repeat;
 }
-.eva_ui_setup_form > span {
+.eva_hmi_setup_form > span {
   margin: auto;
 }
-.eva_ui_app_link {
+.eva_hmi_app_link {
   display: block;
   width: 100%;
   font-weight: bold;
   color: #000;
 }
-.eva_ui_app_link:hover {
+.eva_hmi_app_link:hover {
   color: #000;
 }
-.eva_ui_qr_install {
+.eva_hmi_qr_install {
   width: 200px;
   height: 200px;
   margin: 34px auto;
 }
-.eva_ui_chart_item {
+.eva_hmi_chart_item {
   margin-top: 20px;
   position: relative;
 }
 
 @media (max-width: 567px) {
-  .eva_ui_bar_holder.single_bar_holder {
+  .eva_hmi_bar_holder.single_bar_holder {
     max-width: 440px;
     margin: auto;
     padding-left: 15px;
@@ -750,15 +750,15 @@ html, body {
 }
 
 @media (max-width: 767px) {
-  .popover-body > span > .eva_ui_cbtn {
+  .popover-body > span > .eva_hmi_cbtn {
     margin-top: 3px;
     margin-top: 3px;
   }
-  .eva_ui_cam_preview_big {
+  .eva_hmi_cam_preview_big {
     width: 380px;
     height: 237px;
   }
-  .eva_ui_camera_block {
+  .eva_hmi_camera_block {
       margin-top: 15px;
   }
   .container {
@@ -770,41 +770,41 @@ html, body {
     padding-right: 15px;
     margin-top: 0px;
   }
-  .eva_ui_bar {
+  .eva_hmi_bar {
     width: 100%;
   }
-  .eva_ui_bg.bg_sensors {
+  .eva_hmi_bg.bg_sensors {
     padding: 5px 15px 20px 15px
   }
-  .eva_ui_close_btn.secondary_page {
+  .eva_hmi_close_btn.secondary_page {
     top: 15px;
     right: 25px;
   }
-  .eva_ui_content_holder {
+  .eva_hmi_content_holder {
     margin-top: -5px;
     width: 100%;
   }
-  .eva_ui_content_holder.with_topbar {
+  .eva_hmi_content_holder.with_topbar {
     margin-top: 15px;
   }
-  .eva_ui_content_holder.with_topbar.compact {
+  .eva_hmi_content_holder.with_topbar.compact {
     margin-top: 40px;
   }
-  .eva_ui_content_holder_sensors.with_topbar {
+  .eva_hmi_content_holder_sensors.with_topbar {
     margin-top: 45px;
   }
-  .eva_ui_bar_holder {
+  .eva_hmi_bar_holder {
     padding: 0 35px;
   }
   .mob_layout {
     width: 100%;
     padding: 0 35px;
   }
-  .eva_ui_cam_preview {
+  .eva_hmi_cam_preview {
     width: 100%;
     height: auto;
   }
-  #eva_ui_top_bar > .eva_ui_menu_item {
+  #eva_hmi_top_bar > .eva_hmi_menu_item {
     display: none;
   }
 }
@@ -817,44 +817,44 @@ html, body {
   .single_bar_holder {
     margin-top: 60px;
   }
-  .eva_ui_cbtn:not(:disabled):hover {
+  .eva_hmi_cbtn:not(:disabled):hover {
     outline: none;
     background-color: #ececec;
     border-color: #ccc;
   }
-  .eva_ui_content_holder {
+  .eva_hmi_content_holder {
     margin-top: -45px;
     width: 664px;
     /*justify-content: space-between;*/
   }
-  .eva_ui_content_holder.with_topbar {
+  .eva_hmi_content_holder.with_topbar {
     margin-top: -15px;
   }
-  .eva_ui_content_holder_sensors.with_topbar {
+  .eva_hmi_content_holder_sensors.with_topbar {
     margin-top: 45px;
   }
-  .eva_ui_bar:first-child {
+  .eva_hmi_bar:first-child {
     margin-top: 50px;
   }
-  .eva_ui_bar:nth-child(2n + 1) {
+  .eva_hmi_bar:nth-child(2n + 1) {
     width: 333px;
     margin-right: 11px;
     padding-right: 11px;
     border-right: 2px dashed #ccc;
   }
-  /*.eva_ui_bar:nth-child(4) {
+  /*.eva_hmi_bar:nth-child(4) {
     margin-left: auto;
   }*/
-  .eva_ui_bar:last-child {
+  .eva_hmi_bar:last-child {
     width: 320px !important;
     margin-right: auto !important;
     padding-right: 0 !important;
     border-right: none !important;
   }
-  .eva_ui_chart_item:first-child {
+  .eva_hmi_chart_item:first-child {
     margin-top: 20px;
   }
-  .eva_ui_menu_page {
+  .eva_hmi_menu_page {
     /*display: none;*/
   }
 }
@@ -863,17 +863,17 @@ html, body {
   .container {
     max-width: 990px;
   }
-  .eva_ui_content_holder {
+  .eva_hmi_content_holder {
     width: 990px;
   }
-  .eva_ui_bar:nth-child(2n + 1) {
+  .eva_hmi_bar:nth-child(2n + 1) {
     width: 320px;
     margin-right: 0;
     padding-right: 0;
     border-right: none;
   }
-  .eva_ui_bar:nth-child(3n + 1),
-  .eva_ui_bar:nth-child(3n + 2)  {
+  .eva_hmi_bar:nth-child(3n + 1),
+  .eva_hmi_bar:nth-child(3n + 2)  {
     width: 328px;
     margin-right: 6px;
     padding-right: 6px;
@@ -884,11 +884,11 @@ html, body {
   .container {
     max-width: 1008px;
   }
-  .eva_ui_content_holder {
+  .eva_hmi_content_holder {
     width: 1008px;
   }
-  .eva_ui_bar:nth-child(3n + 1),
-  .eva_ui_bar:nth-child(3n + 2) {
+  .eva_hmi_bar:nth-child(3n + 1),
+  .eva_hmi_bar:nth-child(3n + 2) {
     width: 333px;
     margin-right: 11px;
     padding-right: 11px;

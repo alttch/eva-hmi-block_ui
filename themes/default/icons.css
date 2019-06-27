@@ -1,255 +1,255 @@
 /* menu icons */
-.eva_ui_menu_icon.i_home {
+.eva_hmi_menu_icon.i_home {
   background-image: url('menu_icons/home.svg');
 }
-.eva_ui_active_menu_icon .eva_ui_menu_icon.i_home,
-.eva_ui_menu_item:not(:disabled):hover .eva_ui_menu_icon.i_home,
-  .eva_ui_menu_icon.i_home_tb {
+.eva_hmi_active_menu_icon .eva_hmi_menu_icon.i_home,
+.eva_hmi_menu_item:not(:disabled):hover .eva_hmi_menu_icon.i_home,
+  .eva_hmi_menu_icon.i_home_tb {
   background-image: url('menu_icons/home_active.svg');
 }
-.eva_ui_menu_icon.i_evahi {
+.eva_hmi_menu_icon.i_evahi {
   background-image: url('menu_icons/phone.svg');
 }
-.eva_ui_menu_item:not(:disabled):hover .eva_ui_menu_icon.i_evahi {
+.eva_hmi_menu_item:not(:disabled):hover .eva_hmi_menu_icon.i_evahi {
   background-image: url('menu_icons/phone_active.svg');
 }
-.eva_ui_menu_icon.i_logout {
+.eva_hmi_menu_icon.i_logout {
   background-image: url('menu_icons/exit.svg');
 }
-.eva_ui_menu_item:not(:disabled):hover .eva_ui_menu_icon.i_logout {
+.eva_hmi_menu_item:not(:disabled):hover .eva_hmi_menu_icon.i_logout {
   background-image: url('menu_icons/exit_active.svg');
 }
-.eva_ui_menu_icon.i_evahi_icon {
+.eva_hmi_menu_icon.i_evahi_icon {
   -webkit-filter: grayscale(100%);
   filter: grayscale(100%);
 }
-.eva_ui_menu_item:not(:disabled):hover .eva_ui_menu_icon.i_evahi_icon {
+.eva_hmi_menu_item:not(:disabled):hover .eva_hmi_menu_icon.i_evahi_icon {
   -webkit-filter: grayscale(0%);
   filter: grayscale(0%);
 }
 
 /* data icons */
-.eva_ui_data_item.i_indoor_temp {
+.eva_hmi_data_item.i_indoor_temp {
   background-image: url('data_icons/temp_in.svg');
 }
-.eva_ui_data_item.i_indoor_hum {
+.eva_hmi_data_item.i_indoor_hum {
   background-image: url('data_icons/hum_in.svg');
 }
-.eva_ui_data_item.i_pressure {
+.eva_hmi_data_item.i_pressure {
   background-image: url('data_icons/pressure.svg');
 }
-.eva_ui_data_item.i_outdoor_temp {
+.eva_hmi_data_item.i_outdoor_temp {
   background-image: url('data_icons/temp_out.svg');
 }
-.eva_ui_data_item.i_outdoor_hum {
+.eva_hmi_data_item.i_outdoor_hum {
   background-image: url('data_icons/hum_out.svg');
 }
 /* chart icons */
-.eva_ui_data_item.c_indoor_temp {
+.eva_hmi_data_item.c_indoor_temp {
   background: url('data_icons/temp_in.svg') 20px 0 no-repeat;
 }
-.eva_ui_data_item.c_indoor_hum {
+.eva_hmi_data_item.c_indoor_hum {
   background: url('data_icons/hum_in.svg') 20px 0 no-repeat;
 }
-.eva_ui_data_item.c_pressure {
+.eva_hmi_data_item.c_pressure {
   background: url('data_icons/pressure.svg') 20px 0 no-repeat;
 }
-.eva_ui_data_item.c_outdoor_temp {
+.eva_hmi_data_item.c_outdoor_temp {
   background: url('data_icons/temp_out.svg') 20px 0 no-repeat;
 }
-.eva_ui_data_item.c_outdoor_hum {
+.eva_hmi_data_item.c_outdoor_hum {
   background: url('data_icons/hum_out.svg') 20px 0 no-repeat;
 }
 
 /* light */
-.eva_ui_cbtn.i_lamp.s_0 {
+.eva_hmi_cbtn.i_lamp.s_0 {
   background-image: url('icons/lamp.off.svg');
 }
-.eva_ui_cbtn.i_lamp.s_1 {
+.eva_hmi_cbtn.i_lamp.s_1 {
   background-image: url('icons/lamp.on.svg');
 }
-.eva_ui_cbtn.i_lamps.s_0 {
+.eva_hmi_cbtn.i_lamps.s_0 {
   background-image: url('icons/lamps.off.svg');
 }
-.eva_ui_cbtn.i_lamps.s_1 {
+.eva_hmi_cbtn.i_lamps.s_1 {
   background-image: url('icons/lamps.on.svg');
 }
 /* windows */
-.eva_ui_cbtn.i_window_left.s_0 {
+.eva_hmi_cbtn.i_window_left.s_0 {
   background-image: url('icons/window_left.closed.svg');
 }
-.eva_ui_cbtn.i_window_left.s_1 {
+.eva_hmi_cbtn.i_window_left.s_1 {
   background-image: url('icons/window_left.open.svg');
 }
-.eva_ui_cbtn.i_window_left.s_2 {
+.eva_hmi_cbtn.i_window_left.s_2 {
   background-image: url('icons/window_left.raised.svg');
 }
-.eva_ui_cbtn.i_window_corner.s_0 {
+.eva_hmi_cbtn.i_window_corner.s_0 {
   background-image: url('icons/window_corner.closed.svg');
 }
-.eva_ui_cbtn.i_window_corner.s_1 {
+.eva_hmi_cbtn.i_window_corner.s_1 {
   background-image: url('icons/window_corner.open.svg');
 }
-.eva_ui_cbtn.i_window_corner.s_2 {
+.eva_hmi_cbtn.i_window_corner.s_2 {
   background-image: url('icons/window_corner.raised.svg');
 }
-.eva_ui_cbtn.i_window_right.s_0 {
+.eva_hmi_cbtn.i_window_right.s_0 {
   background-image: url('icons/window_right.closed.svg');
 }
-.eva_ui_cbtn.i_window_right.s_1 {
+.eva_hmi_cbtn.i_window_right.s_1 {
   background-image: url('icons/window_right.open.svg');
 }
-.eva_ui_cbtn.i_window_right.s_2 {
+.eva_hmi_cbtn.i_window_right.s_2 {
   background-image: url('icons/window_right.raised.svg');
 }
-.eva_ui_cbtn.i_window_long.s_0 {
+.eva_hmi_cbtn.i_window_long.s_0 {
   background-image: url('icons/window_long.closed.svg');
 }
-.eva_ui_cbtn.i_window_long.s_1 {
+.eva_hmi_cbtn.i_window_long.s_1 {
   background-image: url('icons/window_long.open.svg');
 }
-.eva_ui_cbtn.i_window_long.s_2 {
+.eva_hmi_cbtn.i_window_long.s_2 {
   background-image: url('icons/window_long.raised.svg');
 }
-.eva_ui_cbtn.i_windows.s_0 {
+.eva_hmi_cbtn.i_windows.s_0 {
   background-image: url('icons/windows.closed.svg');
 }
-.eva_ui_cbtn.i_windows.s_1 {
+.eva_hmi_cbtn.i_windows.s_1 {
   background-image: url('icons/windows.open.svg');
 }
-.eva_ui_cbtn.i_windows.s_2 {
+.eva_hmi_cbtn.i_windows.s_2 {
   background-image: url('icons/windows.raised.svg');
 }
 /* equipment */
-.eva_ui_cbtn.i_thermostat.s_0 {
+.eva_hmi_cbtn.i_thermostat.s_0 {
   background-image: url('icons/thermostat.off.svg');
 }
-.eva_ui_cbtn.i_thermostat.s_1 {
+.eva_hmi_cbtn.i_thermostat.s_1 {
   background-image: url('icons/thermostat.on.svg');
 }
-.eva_ui_cbtn.i_cam.s_0 {
+.eva_hmi_cbtn.i_cam.s_0 {
   background-image: url('icons/cam.off.svg');
 }
-.eva_ui_cbtn.i_cam.s_1 {
+.eva_hmi_cbtn.i_cam.s_1 {
   background-image: url('icons/cam.on.svg');
 }
-.eva_ui_cbtn.i_pc.s_0 {
+.eva_hmi_cbtn.i_pc.s_0 {
   background-image: url('icons/pc.off.svg');
 }
-.eva_ui_cbtn.i_pc.s_1 {
+.eva_hmi_cbtn.i_pc.s_1 {
   background-image: url('icons/pc.on.svg');
 }
-.eva_ui_cbtn.i_piano.s_0 {
+.eva_hmi_cbtn.i_piano.s_0 {
   background-image: url('icons/piano.off.svg');
 }
-.eva_ui_cbtn.i_piano.s_1 {
+.eva_hmi_cbtn.i_piano.s_1 {
   background-image: url('icons/piano.on.svg');
 }
-.eva_ui_cbtn.i_tv.s_0 {
+.eva_hmi_cbtn.i_tv.s_0 {
   background-image: url('icons/tv.off.svg');
 }
-.eva_ui_cbtn.i_tv.s_1 {
+.eva_hmi_cbtn.i_tv.s_1 {
   background-image: url('icons/tv.on.svg');
 }
-.eva_ui_cbtn.i_vent.s_0 {
+.eva_hmi_cbtn.i_vent.s_0 {
   background-image: url('icons/vent.off.svg');
 }
-.eva_ui_cbtn.i_vent.s_1 {
+.eva_hmi_cbtn.i_vent.s_1 {
   background-image: url('icons/vent.on.svg');
 }
 /* weather/day mode */
-.eva_ui_cbtn.i_sun.s_0 {
+.eva_hmi_cbtn.i_sun.s_0 {
   background-image: url('icons/sun.off.svg');
 }
-.eva_ui_cbtn.i_sun.s_1 {
+.eva_hmi_cbtn.i_sun.s_1 {
   background-image: url('icons/sun.on.svg');
 }
-.eva_ui_cbtn.i_snow.s_0 {
+.eva_hmi_cbtn.i_snow.s_0 {
   background-image: url('icons/snow.off.svg');
 }
-.eva_ui_cbtn.i_snow.s_1 {
+.eva_hmi_cbtn.i_snow.s_1 {
   background-image: url('icons/snow.on.svg');
 }
-.eva_ui_cbtn.i_moon.s_0 {
+.eva_hmi_cbtn.i_moon.s_0 {
   background-image: url('icons/moon.off.svg');
 }
-.eva_ui_cbtn.i_moon.s_1 {
+.eva_hmi_cbtn.i_moon.s_1 {
   background-image: url('icons/moon.on.svg');
 }
 /* service */
-.eva_ui_cbtn.i_attn.s_0 {
+.eva_hmi_cbtn.i_attn.s_0 {
   background-image: url('icons/attn.off.svg');
 }
-.eva_ui_cbtn.i_attn.s_1 {
+.eva_hmi_cbtn.i_attn.s_1 {
   background-image: url('icons/attn.on.svg');
 }
-.eva_ui_cbtn.i_head.s_0 {
+.eva_hmi_cbtn.i_head.s_0 {
   background-image: url('icons/head.off.svg');
 }
-.eva_ui_cbtn.i_head.s_1 {
+.eva_hmi_cbtn.i_head.s_1 {
   background-image: url('icons/head.on.svg');
 }
-.eva_ui_cbtn.i_enter.s_0 {
+.eva_hmi_cbtn.i_enter.s_0 {
   background-image: url('icons/enter.off.svg');
 }
-.eva_ui_cbtn.i_enter.s_1 {
+.eva_hmi_cbtn.i_enter.s_1 {
   background-image: url('icons/enter.on.svg');
 }
-.eva_ui_cbtn.i_stop.s_0 {
+.eva_hmi_cbtn.i_stop.s_0 {
   background-image: url('icons/stop.off.svg');
 }
-.eva_ui_cbtn.i_stop.s_1 {
+.eva_hmi_cbtn.i_stop.s_1 {
   background-image: url('icons/stop.on.svg');
 }
-.eva_ui_cbtn.i_reload.s_0 {
+.eva_hmi_cbtn.i_reload.s_0 {
   background-image: url('icons/reload.off.svg');
 }
-.eva_ui_cbtn.i_reload.s_1 {
+.eva_hmi_cbtn.i_reload.s_1 {
   background-image: url('icons/reload.on.svg');
 }
 /* party */
-.eva_ui_cbtn.i_star.s_0, .eva_ui_cbtn.i_star.s_off {
+.eva_hmi_cbtn.i_star.s_0, .eva_hmi_cbtn.i_star.s_off {
   background-image: url('icons/star.off.svg');
 }
-.eva_ui_cbtn.i_star.s_1, .eva_ui_cbtn.i_star.s_on {
+.eva_hmi_cbtn.i_star.s_1, .eva_hmi_cbtn.i_star.s_on {
   background-image: url('icons/star.lightblue.svg');
 }
-.eva_ui_cbtn.i_star.s_red {
+.eva_hmi_cbtn.i_star.s_red {
   background-image: url('icons/star.red.svg');
 }
-.eva_ui_cbtn.i_star.s_white {
+.eva_hmi_cbtn.i_star.s_white {
   background-image: url('icons/star.white.svg');
 }
-.eva_ui_cbtn.i_star.s_grey {
+.eva_hmi_cbtn.i_star.s_grey {
   background-image: url('icons/star.grey.svg');
 }
-.eva_ui_cbtn.i_star.s_yellow {
+.eva_hmi_cbtn.i_star.s_yellow {
   background-image: url('icons/star.yellow.svg');
 }
-.eva_ui_cbtn.i_star.s_blue {
+.eva_hmi_cbtn.i_star.s_blue {
   background-image: url('icons/star.blue.svg');
 }
-.eva_ui_cbtn.i_star.s_random {
+.eva_hmi_cbtn.i_star.s_random {
   background-image: url('icons/star.random.svg');
 }
-.eva_ui_cbtn.i_star.s_music_red {
+.eva_hmi_cbtn.i_star.s_music_red {
   background-image: url('icons/music.red.svg');
 }
-.eva_ui_cbtn.i_star.s_music_green {
+.eva_hmi_cbtn.i_star.s_music_green {
   background-image: url('icons/music.green.svg');
 }
-.eva_ui_cbtn.i_star.s_music_blue {
+.eva_hmi_cbtn.i_star.s_music_blue {
   background-image: url('icons/music.blue.svg');
 }
-.eva_ui_cbtn.i_music.s_0, .eva_ui_cbtn.i_music.s_off {
+.eva_hmi_cbtn.i_music.s_0, .eva_hmi_cbtn.i_music.s_off {
   background-image: url('icons/music.off.svg');
 }
-.eva_ui_cbtn.i_music.s_1, .eva_ui_cbtn.i_music.s_blue {
+.eva_hmi_cbtn.i_music.s_1, .eva_hmi_cbtn.i_music.s_blue {
   background-image: url('icons/music.blue.svg');
 }
-.eva_ui_cbtn.i_music.s_red {
+.eva_hmi_cbtn.i_music.s_red {
   background-image: url('icons/music.red.svg');
 }
-.eva_ui_cbtn.i_music.s_green {
+.eva_hmi_cbtn.i_music.s_green {
   background-image: url('icons/music.green.svg');
 }
