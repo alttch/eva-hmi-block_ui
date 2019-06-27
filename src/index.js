@@ -475,13 +475,14 @@
     if ('default-login' in window.eva_hmi_config) {
       $eva.login = window.eva_hmi_config['default-login'];
     }
-    if ('layout' in window.eva_hmi_config) {
-      window.eva_hmi_config_layout = window.eva_hmi_config['layout'];
-    }
-    if ('layout-compact' in window.eva_hmi_config) {
-      window.eva_hmi_config_layout_compact =
-        window.eva_hmi_config['layout-compact'];
-    }
+    window.eva_hmi_config_layout = $.extend(
+      window.eva_hmi_config_layout,
+      window.eva_hmi_config['layout']
+    );
+    window.eva_hmi_config_layout_compact = $.extend(
+      window.eva_hmi_config_layout_compact,
+      window.eva_hmi_config['layout_compact']
+    );
     $('body').empty();
     $('body').on('click', function(e) {
       if (
@@ -524,23 +525,26 @@
       window.eva_hmi_config_class == 'dashboard' ||
       window.eva_hmi_config_class == 'simple'
     ) {
-      if ('buttons' in window.eva_hmi_config) {
-        window.eva_hmi_config_buttons = window.eva_hmi_config['buttons'];
-      }
-      if ('data' in window.eva_hmi_config) {
-        window.eva_hmi_config_data = window.eva_hmi_config['data'];
-      }
-      if ('data-blocks' in window.eva_hmi_config) {
-        window.eva_hmi_config_data_blocks =
-          window.eva_hmi_config['data-blocks'];
-      }
-      if ('control-blocks' in window.eva_hmi_config) {
-        window.eva_hmi_config_control_blocks =
-          window.eva_hmi_config['control-blocks'];
-      }
-      if ('cameras' in window.eva_hmi_config) {
-        window.eva_hmi_config_cameras = window.eva_hmi_config['cameras'];
-      }
+      window.eva_hmi_config_buttons = $.extend(
+        window.eva_hmi_config_buttons,
+        window.eva_hmi_config['buttons']
+      );
+      window.eva_hmi_config_data = $.extend(
+        window.eva_hmi_config_data,
+        window.eva_hmi_config['data']
+      );
+      window.eva_hmi_config_data_blocks = $.extend(
+        window.eva_hmi_config_data_blocks,
+        window.eva_hmi_config['data-blocks']
+      );
+      window.eva_hmi_config_control_blocks = $.extend(
+        window.eva_hmi_config_control_blocks,
+        window.eva_hmi_config['control-blocks']
+      );
+      window.eva_hmi_config_cameras = $.extend(
+        window.eva_hmi_config_cameras,
+        window.eva_hmi_config['cameras']
+      );
       login_window = $('<div >/', {
         id: 'login_window'
       }).addClass('eva_hmi_dialog_window_holder');
@@ -620,9 +624,10 @@
       if ('main-page' in window.eva_hmi_config) {
         window.eva_hmi_config_main_page = window.eva_hmi_config['main-page'];
       }
-      if ('charts' in window.eva_hmi_config) {
-        window.eva_hmi_config_charts = window.eva_hmi_config['charts'];
-      }
+      window.eva_hmi_config_charts = $.extend(
+        window.eva_hmi_config_charts,
+        window.eva_hmi_config['charts']
+      );
       $eva.on('login.success', function() {
         update_sysblock();
         run();
