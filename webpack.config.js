@@ -12,12 +12,8 @@ module.exports = {
     filename: 'index.min.tmp.js'
   },
   externals: {
-    '@eva-ics/framework': {
-      root: '$eva'
-    },
-    '@eva-ics/toolbox': {
-      root: '$eva.toolbox'
-    }
+    '@eva-ics/framework': {},
+    '@eva-ics/toolbox': {},
   },
   //optimization: {
   //minimize: false

@@ -7,9 +7,11 @@
 
   require('bootstrap');
   require('bootstrap/dist/css/bootstrap.min.css');
-  const eva_framework = require('@eva-ics/framework');
-  const $eva = eva_framework.$eva;
-  $eva.toolbox = require('@eva-ics/toolbox');
+
+  require('@eva-ics/framework');
+  require('@eva-ics/toolbox');
+
+  const $eva = window.$eva;
 
   var login_window;
   var content_holder;
