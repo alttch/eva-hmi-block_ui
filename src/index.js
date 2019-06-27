@@ -17,9 +17,10 @@
   var btn_coord;
   var camera_reloader = Array();
   var chart_creators = Array();
-  var is_compact = false;
+  var current_layout_compact = false;
+  var initialized = false;
   var slider_update_funcs = Array();
-  var is_menu_active = false;
+  var menu_active = false;
   var popover_cbtns = Array();
 
   function error(msg) {
@@ -449,6 +450,7 @@
   }
 
   function init() {
+    initialized = true;
     if (!window.eva_hmi_config) {
       error('HMI config not loaded');
     }
@@ -808,19 +810,19 @@
   }
 
   document.addEventListener('swiped-right', function(e) {
-    if (!is_menu_active) {
+    if (!menu_active) {
       open_menu();
     }
   });
 
   document.addEventListener('swiped-left', function(e) {
-    if (is_menu_active) {
+    if (menu_active) {
       close_menu();
     }
   });
 
   function toggle_menu() {
-    if (is_menu_active) {
+    if (menu_active) {
       close_menu();
     } else {
       open_menu();
@@ -829,16 +831,16 @@
 
   function open_menu() {
     $('body').css('overflow', 'hidden');
-    is_menu_active = true;
+    menu_active = true;
     $('#eva_hmi_hamb').addClass('open');
     $('#eva_hmi_menu').animate({width: 'toggle'}, 250);
     $('#eva_hmi_menu_container').fadeIn(250);
   }
 
   function close_menu() {
-    if (is_menu_active) {
+    if (menu_active) {
       $('body').css('overflow', 'auto');
-      is_menu_active = false;
+      menu_active = false;
       $('#eva_hmi_hamb').removeClass('open');
       $('#eva_hmi_menu').animate({width: 'toggle'}, 250);
       $('#eva_hmi_menu_container').fadeOut(250);
@@ -870,11 +872,11 @@
     chart_creators = Array();
     if ($(window).width() < 768) {
       draw_compact_layout();
-      is_compact = true;
+      current_layout_compact = true;
       correct_cbtn_padding();
     } else {
       draw_layout();
-      is_compact = false;
+      current_layout_compact = false;
     }
     update_sysblock();
     $eva.hmi.after_draw();
@@ -1196,11 +1198,15 @@
   }
 
   function start() {
+    if (!initialized) init();
     var oldSize = $(window).width();
     window.addEventListener('resize', function() {
       $('[data-toggle="popover"]').popover('hide');
       var w = $(window).width();
-      if ((w > 767 && is_compact) || (w < 768 && !is_compact)) {
+      if (
+        (w > 767 && current_layout_compact) ||
+        (w < 768 && !current_layout_compact)
+      ) {
         redraw_layout();
         recreate_objects();
       }
@@ -1314,8 +1320,8 @@
       .catch(err => l);
   }
 
-
   $eva.hmi = {};
+  $eva.hmi.init = init;
   $eva.hmi.start = start;
   $eva.hmi.logo = {};
   $eva.hmi.logo.href = 'https://www.eva-ics.com/';
@@ -1328,5 +1334,4 @@
   $eva.hmi.top_bar = function() {
     if (!$eva.in_evaHI) $eva.hmi.init_top_bar();
   };
-
 })();
