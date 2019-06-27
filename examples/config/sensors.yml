@@ -1,0 +1,119 @@
+#url: https://my.external.domain:port/
+class: sensors
+
+charts:
+  room1_temp:
+    icon: indoor_temp
+    item: sensor:env/temp1_int
+    title: Room 1 temperature
+    cfg: default
+    units: "°C"
+    color: orange
+    fill: "false"
+    #background-color: orange
+    decimals: 0
+    params:
+      timeframe: 1D
+      fill: 30T:1
+      prop: value
+
+  room1_hum:
+    icon: indoor_hum
+    item: sensor:env/hum1_int
+    title: Room 1 humidity
+    cfg: default
+    units: "%"
+    color: '#336699'
+    fill: "false"
+    decimals: 0
+    #background-color: orange
+    params:
+      timeframe: 1D
+      fill: 30T:1
+      prop: value
+
+  room2_temp:
+    icon: indoor_temp
+    item: sensor:env/temp2_int
+    title: Room 2 temperature
+    cfg: default
+    units: "°C"
+    color: orange
+    fill: "false"
+    #background-color: orange
+    decimals: 0
+    params:
+      timeframe: 1D
+      fill: 30T:1
+      prop: value
+
+  room2_hum:
+    icon: indoor_hum
+    item: sensor:env/hum1_int
+    title: Room 2 humidity
+    cfg: default
+    units: "%"
+    color: '#336699'
+    fill: "false"
+    decimals: 0
+    #background-color: orange
+    params:
+      timeframe: 1D
+      fill: 30T:1
+      prop: value
+
+  outdoor_temp:
+    icon: outdoor_temp
+    item: sensor:env/temp_ext
+    title: Outdoor temperature
+    cfg: default
+    units: "°C"
+    color: orange
+    fill: "false"
+    #background-color: orange
+    decimals: 0
+    params:
+      timeframe: 1D
+      fill: 30T:1
+      prop: value
+
+  outdoor_hum:
+    icon: outdoor_hum
+    item: sensor:env/hum_ext
+    title: Outdoor humidity
+    cfg: default
+    units: "%"
+    color: '#336699'
+    fill: "false"
+    decimals: 0
+    #background-color: orange
+    params:
+      timeframe: 1D
+      fill: 30T:1
+      prop: value
+
+  air_pressure:
+    icon: pressure
+    title: Air pressure
+    item: sensor:env/air_pressure
+    cfg: default
+    units: " hPa"
+    color: red
+    fill: "false"
+    #background-color: orange
+    decimals: 0
+    params:
+      timeframe: 1D
+      fill: 30T:1
+      prop: value
+
+layout:
+  charts:
+    - { id: room1_temp, reload: 180 }
+    - { id: room1_hum, reload: 180 }
+    - { id: room2_temp, reload: 180 }
+    - { id: room2_hum, reload: 180 }
+    - { id: outdoor_temp, reload: 180 }
+    - { id: outdoor_hum, reload: 180 }
+    - { id: air_pressure, reload: 180 }
+  #sys-block: true

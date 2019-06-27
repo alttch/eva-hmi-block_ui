@@ -9,7 +9,7 @@ module.exports = {
   target: 'web',
   output: {
     path: path.resolve(__dirname, './'),
-    filename: 'hmi.min.tmp.js'
+    filename: 'index.min.tmp.js'
   },
   externals: [],
   //optimization: {

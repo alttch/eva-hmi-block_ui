@@ -1,0 +1,8 @@
+serial: 15
+index: /ui/
+index_landscape: /ui/
+menu:
+    - {icon: 'room.png', name: 'Room 1', url: /ui/room1.j2}
+    - {icon: 'room.png', name: 'Room 2', url: /ui/room2.j2}
+    - {icon: 'room.png', name: 'Hall', url: /ui/hall.j2}
+    - {icon: 'sensors.png', name: 'Sensors', url: /ui/sensors.j2}

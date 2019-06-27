@@ -1,0 +1,64 @@
+#url: https://my.external.domain:port/
+class: simple
+
+buttons:
+  light_room1:
+    icon: lamp
+    item: unit:light/room1
+    title: Room 1
+  window_room1:
+    icon: window_left
+    item: unit:windows/room1
+    menu: 3
+  thermo_room1_off:
+    icon: thermostat.s_0
+    title: Turn off
+    action: unit:thermo/room1
+    action_params:
+      s: 0
+  thermo_room1_15:
+    icon: thermostat.s_1
+    action: unit:thermo/room1
+    title: "Set 15°C"
+    action_params:
+      s: 1
+      v: 15
+  thermo_room1_20:
+    icon: thermostat.s_1
+    action: unit:thermo/room1
+    title: "Set 20°C"
+    action_params:
+      s: 1
+      v: 20
+  thermo_room1_25:
+    icon: thermostat.s_1
+    action: unit:thermo/room1
+    title: "Set 25°C"
+    action_params:
+      s: 1
+      v: 25
+  thermo_room1:
+    icon: thermostat
+    item: unit:thermo/room1
+    value: "°C"
+    title: profiles
+    menu:
+      - thermo_room1_off
+      - thermo_room1_15
+      - thermo_room1_20
+      - thermo_room1_25
+
+cameras:
+  room1:
+    image: /rpvt?f=127.0.0.1:8118/cam/1?nocache=$NOCACHE
+
+layout:
+  camera:
+    id: room1
+    reload: 1
+    action: url:/ui/
+  buttons:
+    - light_room1
+    - window_room1
+    - thermo_room1
+  #sys-block: true

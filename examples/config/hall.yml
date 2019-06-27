@@ -1,0 +1,30 @@
+#url: https://my.external.domain:port/
+class: simple
+
+buttons:
+  light_hall:
+    icon: lamp
+    item: unit:light/hall
+    title: Hall
+  alarm:
+    icon: attn
+    item: lvar:security/alarm
+    title: Alarm
+  cctv:
+    title: Rec.
+    icon: cam
+    item: unit:equipment/cctv
+
+cameras:
+  hall:
+    image: /rpvt?f=127.0.0.1:8118/cam/3?nocache=$NOCACHE
+
+layout:
+  camera:
+    id: hall
+    reload: 1
+    action: url:/ui/
+  buttons:
+    - light_hall
+    - alarm
+    - cctv
