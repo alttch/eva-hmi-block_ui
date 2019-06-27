@@ -7,8 +7,10 @@
 
   require('bootstrap');
   require('bootstrap/dist/css/bootstrap.min.css');
+  const eva_framework = require('@eva-ics/framework');
+  const $eva = eva_framework.$eva;
+  $eva.toolbox = require('@eva-ics/toolbox');
 
-  var $eva;
   var login_window;
   var content_holder;
   var first_time_login = true;
@@ -447,29 +449,11 @@
   }
 
   function init() {
-    if (!window.$eva) {
-      error('EVA JS Framework not found');
-    } else {
-      $eva = window.$eva;
-    }
     if (!window.eva_hmi_config) {
       error('HMI config not loaded');
     }
     if (!window.eva_hmi_config_url)
       window.eva_hmi_config_url = document.location;
-    $eva.hmi = {};
-    $eva.hmi.start = start;
-    $eva.hmi.logo = {};
-    $eva.hmi.logo.href = 'https://www.eva-ics.com/';
-    $eva.hmi.logo.text = 'www.eva-ics.com';
-    $eva.hmi.format_camera_src = function() {};
-    $eva.hmi.after_draw = function() {};
-    $eva.hmi.prepare_layout = function() {};
-    $eva.hmi.error = error;
-    $eva.hmi.init_top_bar = init_top_bar;
-    $eva.hmi.top_bar = function() {
-      if (!$eva.in_evaHI) $eva.hmi.init_top_bar();
-    };
     if (typeof window.evaHI === 'object' && window.evaHI['index']) {
       window.eva_hmi_config_main_page = window.evaHI['index'];
     } else {
@@ -1330,5 +1314,19 @@
       .catch(err => l);
   }
 
-  window.eva_init_hmi = init;
+
+  $eva.hmi = {};
+  $eva.hmi.start = start;
+  $eva.hmi.logo = {};
+  $eva.hmi.logo.href = 'https://www.eva-ics.com/';
+  $eva.hmi.logo.text = 'www.eva-ics.com';
+  $eva.hmi.format_camera_src = function() {};
+  $eva.hmi.after_draw = function() {};
+  $eva.hmi.prepare_layout = function() {};
+  $eva.hmi.error = error;
+  $eva.hmi.init_top_bar = init_top_bar;
+  $eva.hmi.top_bar = function() {
+    if (!$eva.in_evaHI) $eva.hmi.init_top_bar();
+  };
+
 })();

@@ -11,7 +11,14 @@ module.exports = {
     path: path.resolve(__dirname, './'),
     filename: 'index.min.tmp.js'
   },
-  externals: [],
+  externals: {
+    '@eva-ics/framework': {
+      root: '$eva'
+    },
+    '@eva-ics/toolbox': {
+      root: '$eva.toolbox'
+    }
+  },
   //optimization: {
   //minimize: false
   //},
@@ -19,7 +26,7 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        use: [{ loader: 'style-loader' }, { loader: 'css-loader' }],
+        use: [{loader: 'style-loader'}, {loader: 'css-loader'}]
       },
       {
         test: /\.(js|jsx)$/,
