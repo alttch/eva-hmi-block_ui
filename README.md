@@ -3,6 +3,10 @@
 Simple but flexible human-machine interface web UI application for [EVA
 ICS](https://www.eva-ics.com/).
 
+### Documentation
+
+https://eva-hmi-block-ui.readthedocs.io/
+
 ### Screen shots
 
 <img src="https://github.com/alttch/eva-hmi-block_ui/raw/master/doc/images/dashboard.jpg" width="200" />
