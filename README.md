@@ -5,11 +5,11 @@ ICS](https://www.eva-ics.com/).
 
 ### Screen shots
 
-![Dashboard](https://github.com/alttch/eva-hmi-block_ui/raw/master/doc/images/dashboard.jpg "Dashboard"]
+![Dashboard](https://github.com/alttch/eva-hmi-block_ui/raw/master/doc/images/dashboard.jpg | width=200)
 
-![Simple page](https://github.com/alttch/eva-hmi-block_ui/raw/master/doc/images/simple.jpg "Simple page"]
+![Simple page](https://github.com/alttch/eva-hmi-block_ui/raw/master/doc/images/simple.jpg | width=200)
 
-![Sensor charts](https://github.com/alttch/eva-hmi-block_ui/raw/master/doc/images/sensors.jpg "Sensor charts")
+![Sensor charts](https://github.com/alttch/eva-hmi-block_ui/raw/master/doc/images/sensors.jpg | width=200)
 
 ### Live demo
 
