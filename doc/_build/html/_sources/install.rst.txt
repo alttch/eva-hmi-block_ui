@@ -1,0 +1,46 @@
+Installation
+************
+
+Go to EVA ICS UI folder (usually */opt/eva/ui*) create *apps* folder if
+it doesn't exist yet and clone app repository to it.
+
+.. code-block:: bash
+
+    cd /opt/eva/ui
+    mkdir -p apps
+    cd apps
+    git clone https://github.com/alttch/eva-hmi-block_ui.git
+
+Then create your first page in */opt/eva/ui/*, call it *index.j2*. J2 files
+are regular HTML files however EVA ICS processes them as `Jinja2
+templates <http://jinja.pocoo.org/>`_. If you don't plan to use Jinja tags,
+you can name your file *index.html* as well:
+
+.. code-block:: html
+
+    <html>
+      <head>
+        <title>Dashboard</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1,
+            user-scalable=no" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <script type="text/javascript"
+            src=".evahi/config.yml?as=js&var=evaHI"></script>
+        <script type="text/javascript"
+            src="config/index.yml?as=js&var=eva_hmi_config"></script>
+        <script type="text/javascript"
+            src="lib/eva.min.js"></script>
+        <script type="text/javascript"
+            src="apps/eva-hmi-block_ui/hmi.min.js"></script>
+        <link rel="stylesheet"
+            href="apps/eva-hmi-block_ui/themes/default/style.css">
+        <link rel="stylesheet"
+            href="apps/eva-hmi-block_ui/themes/default/icons.css">
+        <script type="text/javascript">
+          document.addEventListener('DOMContentLoaded', function() {
+            eva_init_hmi();
+            $eva.hmi.start();
+          });
+        </script>
+      </head>
+    </html>

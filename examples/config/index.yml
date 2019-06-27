@@ -230,7 +230,6 @@ layout:
     camera:
       id: room1
       reload: 1
-      action: url:room1.j2
     control-blocks:
       - room1-controls
       - macros
@@ -239,7 +238,6 @@ layout:
     camera:
       id: room2
       reload: 1
-      action: url:room2.j2
     control-blocks:
       - room2-controls
       - profiles
@@ -248,7 +246,7 @@ layout:
     camera:
       id: hall
       reload: 1
-      action: url:hall.j2
+      action: url:simple.j2
     control-blocks:
       - hall-and-svc
       - enter-exit
