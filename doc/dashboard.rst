@@ -108,9 +108,6 @@ Button can display additional pop-over menu:
         item: unit:windows/room2
         menu: 3
 
-.. figure:: images/popover-menu.png
-    :scale: 100%
-
 *menu: 3* means display menu with 3 item states: 0, 1 and 2. If you want to
 display menu with only 2 states, you may just set *menu: true*.
 
@@ -127,6 +124,9 @@ The button can have a complex menu as well which contains other buttons:
         - thermo_room1_off
         - thermo_room1_15
         - thermo_room1_25
+
+.. figure:: images/popover-menu.png
+    :scale: 100%
 
 In the example above, the button *thermo_room1* will display a pop-over with 3
 additional buttons. Configurations of buttons inside pop-over must be defined
