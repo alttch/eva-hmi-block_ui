@@ -7,7 +7,7 @@ ICS](https://www.eva-ics.com/).
 
 https://eva-hmi-block-ui.readthedocs.io/
 
-### Screen shots
+### Screenshots
 
 <img src="https://github.com/alttch/eva-hmi-block_ui/raw/master/doc/images/dashboard.jpg" width="200" />
 <img src="https://github.com/alttch/eva-hmi-block_ui/raw/master/doc/images/simple.jpg" width="200" />
