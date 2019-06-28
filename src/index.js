@@ -1146,7 +1146,11 @@
   }
 
   function draw_compact_layout() {
-    if (!window.eva_hmi_config_layout_compact) return draw_layout(true);
+    if (
+      !window.eva_hmi_config_layout_compact ||
+      !'elements' in window.eva_hmi_config_layout_compact
+    )
+      return draw_layout(true);
     var cams = Array();
     if (window.eva_hmi_config_class == 'dashboard') {
       var row = $('<div />', {class: 'mob_layout'});
