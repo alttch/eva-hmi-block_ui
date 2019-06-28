@@ -481,7 +481,7 @@
     );
     window.eva_hmi_config_layout_compact = $.extend(
       window.eva_hmi_config_layout_compact,
-      window.eva_hmi_config['layout_compact']
+      window.eva_hmi_config['layout-compact']
     );
     $('body').empty();
     $('body').on('click', function(e) {
@@ -1175,9 +1175,9 @@
             cams.push(v['id']);
           }
         }
-        content_holder.append(row);
-        content_holder.addClass('compact');
       });
+      content_holder.append(row);
+      content_holder.addClass('compact');
     } else if (
       window.eva_hmi_config_class == 'sensors' ||
       window.eva_hmi_config_class == 'simple'
