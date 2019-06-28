@@ -285,7 +285,7 @@ at the bottom of the bar.
 .. figure:: images/sysblock.png
     :scale: 100%
 
-    A system block
+    System block
 
 .. _layout-compact:
 
