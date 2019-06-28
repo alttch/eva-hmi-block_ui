@@ -1,7 +1,7 @@
 Dashboard page
 **************
 
-Dashboard is usually a primary page of interface.
+Dashboard is usually a primary page of the interface.
 
 .. figure:: images/dashboard.jpg
     :scale: 50%
@@ -328,7 +328,7 @@ actions as well. Let's explain what types of actions may be specified:
 
 * **url:URL** go to URL
 
-* **javascript:** launch JavaScript code via *eval()*
+* **javascript:** execute JavaScript code via *eval()*
 
 action_params
 -------------
