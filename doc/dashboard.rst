@@ -272,8 +272,8 @@ at the bottom of the bar.
 
 .. _layout-compact:
 
-layout
-======
+layout-compact
+==============
 
 If specified, used to display a dedicated layout for screens with width < 768
 virtual or physical pixels (usually smartphones).
