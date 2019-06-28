@@ -79,9 +79,9 @@ By the way, you can split your configuration in several files, e.g. create
 separate configuration files for buttons and cameras and load them to
 proper JavaScript configuration variables for all pages you have.
 
-Just note: if you've already loaded configuration for e.g. buttons, but
-*buttons* with the same IDs are present in the main configuration, they will be
-overriden.
+Just note: if you've already loaded configuration for e.g. buttons, but buttons
+with the same IDs are present in the main configuration, first configuration
+will be overriden.
 
 Valid configuration variables are:
 
