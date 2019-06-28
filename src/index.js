@@ -7,6 +7,7 @@
 
   require('bootstrap');
   require('bootstrap/dist/css/bootstrap.min.css');
+  require('swiped-events');
 
   require('@eva-ics/framework');
   require('@eva-ics/toolbox');
