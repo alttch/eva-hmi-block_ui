@@ -19,7 +19,7 @@ The navigation configuration looks like:
         - {icon: 'sensors.png', name: 'Sensors', url: /ui/sensors.j2}
 
 where **serial** and **index_landscape**  parameters are used by smartphone app
-only and are ignored by HMI application.
+only and ignored by HMI application.
 
-Parameter **index** is used for the main UI page. Menu is built from **menu**
-section entries, menu icons are located in *.evahi/icons* folder.
+Parameter **index** is used to specify the main UI page. Menu is built from
+**menu** section entries, menu icons are located in *.evahi/icons* folder.
