@@ -50,7 +50,8 @@ configuration looks like:
 * **item** EVA ICS item to display a chart for, usually a sensor, but can be
   unit or logical variable as well
 * **title** chart title
-* **cfg** optional, reserved
+* **cfg** if specified and is not *default*,
+  :ref:`$eva.hmi.format_chart_config<format_chart_config>` is called.
 * **units** value units. As YAML doesn't like special characters, should be
   quoted
 * **color** chart line color

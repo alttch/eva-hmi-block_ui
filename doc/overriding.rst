@@ -46,6 +46,28 @@ kiosk tablet when nobody is in the building.
 If function doesn't return a value or return null, default camera image is
 used.
 
+.. _format_chart_config:
+
+$eva.hmi.format_chart_config
+============================
+
+The method is called to prepare :doc:`chart config<sensors>`.
+
+E.g. we have a charts with *cfg: realtime* which display real-time data from
+sensors. But our default chart options are set up for hourly charts.
+
+Let's tune it:
+
+.. code-block:: javascript
+
+   $eva.hmi.format_chart_config = function(cfg_id, cfg) {
+      if (cfg_id == 'realtime') {
+        cfg.options.scales.xAxes[0].time.unit = 'second';
+        cfg.options.scales.xAxes[0].time.round = 'second';
+        cfg.options.scales.xAxes[0].ticks.maxTicksLimit = 4;
+      }
+    }
+
 $eva.hmi.prepare_layout
 =======================
 
