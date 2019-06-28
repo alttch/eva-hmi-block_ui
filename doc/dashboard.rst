@@ -133,7 +133,7 @@ Button with a slider
 --------------------
 
 The button can open a slider which will set unit or logical variable value when
-scrolled.
+moved.
 
 .. code-block:: yaml
 
@@ -151,7 +151,7 @@ Default slider *min* value is *0*, default *max* value is *100*, so they
 usually must be overriden. Default step is *1*.
 
 If *can_off: true* slider option is specified, unit *OFF* action (set status to
-*0*) will be executed if slider is scrolled to the extreme left.
+*0*) is executed if slider is moved to the extreme left.
 
 To be displayed, a button must be included in a :ref:`control
 block<control-blocks>`.
