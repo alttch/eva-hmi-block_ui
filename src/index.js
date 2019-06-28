@@ -1219,10 +1219,10 @@
   }
 
   function start() {
+    if (!initialized) init();
     if (window.eva_hmi_config_title) {
       document.title = window.eva_hmi_config_title;
     }
-    if (!initialized) init();
     var oldSize = $(window).width();
     window.addEventListener('resize', function() {
       $('[data-toggle="popover"]').popover('hide');
