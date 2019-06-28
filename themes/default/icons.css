@@ -29,20 +29,23 @@
 }
 
 /* data icons */
+.eva_hmi_data_item.i_pressure {
+  background-image: url('data_icons/pressure.svg');
+}
 .eva_hmi_data_item.i_indoor_temp {
   background-image: url('data_icons/temp_in.svg');
 }
 .eva_hmi_data_item.i_indoor_hum {
   background-image: url('data_icons/hum_in.svg');
 }
-.eva_hmi_data_item.i_pressure {
-  background-image: url('data_icons/pressure.svg');
-}
 .eva_hmi_data_item.i_outdoor_temp {
   background-image: url('data_icons/temp_out.svg');
 }
 .eva_hmi_data_item.i_outdoor_hum {
   background-image: url('data_icons/hum_out.svg');
+}
+.eva_hmi_data_item.i_outdoor_pressure {
+  background-image: url('data_icons/pressure_out.svg');
 }
 /* chart icons */
 .eva_hmi_data_item.c_indoor_temp {

@@ -21,6 +21,10 @@ Data icons
   :width: 42px
   :align: middle
 
+.. |di_outdoor_pressure| image:: ../themes/default/data_icons/pressure_out.svg
+  :width: 42px
+  :align: middle
+
 .. |di_outdoor_temp| image:: ../themes/default/data_icons/temp_out.svg
   :width: 42px
   :align: middle
@@ -29,19 +33,21 @@ Data icons
   :width: 42px
   :align: middle
 
-+--------------+-------------------+
-| name         | icon              |
-+==============+===================+
-| indoor_hum   | |di_indoor_hum|   |
-+--------------+-------------------+
-| indoor_temp  | |di_indoor_temp|  |
-+--------------+-------------------+
-| outdoor_hum  | |di_outdoor_hum|  |
-+--------------+-------------------+
-| outdoor_temp | |di_outdoor_temp| |
-+--------------+-------------------+
-| pressure     | |di_pressure|     |
-+--------------+-------------------+
++------------------+-----------------------+
+| name             | icon                  |
++==================+=======================+
+| indoor_hum       | |di_indoor_hum|       |
++------------------+-----------------------+
+| indoor_temp      | |di_indoor_temp|      |
++------------------+-----------------------+
+| outdoor_hum      | |di_outdoor_hum|      |
++------------------+-----------------------+
+| outdoor_pressure | |di_outdoor_pressure| |
++------------------+-----------------------+
+| outdoor_temp     | |di_outdoor_temp|     |
++------------------+-----------------------+
+| pressure         | |di_pressure|         |
++------------------+-----------------------+
 
 .. _state_icons:
 
