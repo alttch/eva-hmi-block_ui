@@ -28,3 +28,4 @@ layout:
     - light_hall
     - alarm
     - cctv
+  #sys-block: true

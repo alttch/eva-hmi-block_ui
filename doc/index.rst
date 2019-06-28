@@ -24,9 +24,6 @@ Live demo: `<https://smarthome.demo.eva-ics.com/>`_
 
 .. toctree::
 
-    :caption: Installation and configuration
-    :maxdepth: 1
-
     install
     dashboard
     simple

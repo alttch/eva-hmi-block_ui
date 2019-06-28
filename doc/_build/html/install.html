@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Installation &mdash; EVA HMI Block UI 1.0.0 documentation</title>
+  <title>Installation &mdash; EVA HMI Block UI  documentation</title>
   
 
   
@@ -28,7 +28,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Overriding app methods and variables" href="overriding.html" />
+    <link rel="next" title="Dashboard page" href="dashboard.html" />
     <link rel="prev" title="EVA HMI Block UI" href="index.html" /> 
 
   
@@ -55,13 +55,6 @@
           </a>
 
           
-            
-            
-              <div class="version">
-                1.0.0
-              </div>
-            
-          
 
           
 <div role="search">
@@ -84,6 +77,10 @@
             
               <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dashboard.html">Dashboard page</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simple.html">Simple page</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sensors.html">Sensors page</a></li>
+<li class="toctree-l1"><a class="reference internal" href="navigation.html">Navigation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="overriding.html">Overriding app methods and variables</a></li>
 </ul>
 
@@ -196,7 +193,7 @@ you can name your file <em>index.html</em> as well:</p>
 </pre></div>
 </div>
 <p>Let’s explain it line-by-line:</p>
-<p>This line adds top-bar and menu <span class="xref std std-doc">navigation</span>
+<p>This line adds top-bar and menu <a class="reference internal" href="navigation.html"><span class="doc">navigation</span></a>
 configuration, which is <a class="reference external" href="https://github.com/alttch/evaHI">evaHI</a>
 compatible YAML or JSON file. As EVA ICS SFA allows to transform YAML files
 on the flow to JSON or JavaScript variable/function, we’ll use YAML almost
@@ -214,9 +211,9 @@ JavaScript variable called <em>eva_hmi_config</em>.</p>
 <p>By the way, you can split your configuration in several files, e.g. create
 separate configuration files for buttons and cameras and load them to
 proper JavaScript configuration variables for all pages you have.</p>
-<p>Just note: if you’ve already loaded configuration for buttons, but
-<em>buttons</em> section is present in the main configuration, the first one will
-be overwritten.</p>
+<p>Just note: if you’ve already loaded configuration for e.g. buttons, but
+<em>buttons</em> with the same IDs are present in the main configuration, they will be
+overriden.</p>
 <p>Valid configuration variables are:</p>
 <ul class="simple">
 <li><strong>eva_hmi_config</strong></li>
@@ -235,7 +232,7 @@ be overwritten.</p>
 <li><strong>eva_hmi_config_chart_options</strong></li>
 </ul>
 <p>Their names match proper sections in the configuration files.</p>
-<p>Depending on a page class, create configuration file for <span class="xref std std-doc">dashboard</span>, <span class="xref std std-doc">simple</span> or <span class="xref std std-doc">sensors</span> UI page.</p>
+<p>Depending on a page class, create configuration file for <a class="reference internal" href="dashboard.html"><span class="doc">dashboard</span></a>, <a class="reference internal" href="simple.html"><span class="doc">simple</span></a> or <a class="reference internal" href="sensors.html"><span class="doc">sensors</span></a> UI page.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Primary UI page (<em>index.html</em> or <em>index.j2</em>) should have either
@@ -306,7 +303,7 @@ Framework as <em>$eva.hmi</em>.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'1.0.0',
+            VERSION:'',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

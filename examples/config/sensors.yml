@@ -1,4 +1,5 @@
 #url: https://my.external.domain:port/
+#main-page: /ui/
 class: sensors
 
 charts:
