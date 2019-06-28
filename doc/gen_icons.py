@@ -5,6 +5,8 @@ i = 0
 data_icons = {}
 di_maxlength = 0
 state_icons = {}
+si_maxlength = 0
+sc_maxlength = 0
 while i < len(css):
     s = css[i]
     if s.startswith('.eva_hmi_data_item'):
@@ -22,9 +24,18 @@ while i < len(css):
             x = s.split('.')
             c = x[2]
             sc = x[3].split()[0]
-            state_icons.setdefault(c[2:], {})[sc] = img
+            try:
+                int(sc[2:])
+                state_icons.setdefault(c[2:], {})[sc] = img
+                if len(sc) > sc_maxlength:
+                    sc_maxlength = l
+                l = len(c + sc) - 1
+                if l > si_maxlength:
+                    si_maxlength = l
+            except:
+                pass
     i += 1
-print ("""Icons (default theme)
+print("""Icons (default theme)
 *********************
 
 .. toctree::
@@ -48,3 +59,50 @@ for i in sorted(data_icons):
     print('| ' + i.ljust(di_maxlength) + ' | |di_' + i + '|' +
           ' ' * (di_maxlength - len(i)) + ' |')
     print('+' + '-' * (di_maxlength + 2) + '+' + '-' * (di_maxlength + 7) + '+')
+
+print("""
+.. _state_icons:
+
+State icons
+-----------
+
+""")
+
+for i in sorted(state_icons):
+    for z in sorted(state_icons[i]):
+        print('.. |si_{}.{}| image:: ../themes/default/{}'.format(
+            i, z, state_icons[i][z]))
+        print('  :width: 42px')
+        print('  :align: middle')
+        print()
+
+si_maxlength += 6
+
+max_t = ''
+for i, v in state_icons.items():
+    t = ''
+    for a in v:
+        t += '| {} '.format(a.ljust(si_maxlength))
+    if len(t) > len(max_t):
+        max_t = t
+
+line = '+' + '-' * (si_maxlength + 2)
+for x in max_t.split('|'):
+    line += '-' * len(x) + '+'
+print(line)
+print('| ' + 'name'.ljust(si_maxlength) + ' ' + max_t + '|')
+print(line.replace('-', '='))
+for i in sorted(state_icons):
+    print('| ' + i.ljust(si_maxlength) + ' | ', end='')
+    z = 0
+    for x in sorted(state_icons[i]):
+        z += 1
+        print(
+            '|si_' + i + '.' + x + '|' + ' ' * (si_maxlength - len(i + x) - 6)
+            + ' | ',
+            end='')
+    while z < len(max_t.split('|')) - 1:
+        z += 1
+        print(' ' * (si_maxlength) + ' | ', end='')
+    print()
+    print(line)
