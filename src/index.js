@@ -470,6 +470,9 @@
     if ('class' in window.eva_hmi_config) {
       window.eva_hmi_config_class = window.eva_hmi_config['class'];
     }
+    if ('title' in window.eva_hmi_config) {
+      window.eva_hmi_config_title = window.eva_hmi_config['title'];
+    }
     if ('motd' in window.eva_hmi_config) {
       window.eva_hmi_config_motd = window.eva_hmi_config['motd'];
     }
@@ -1216,6 +1219,9 @@
   }
 
   function start() {
+    if (window.eva_hmi_config_title) {
+      document.title = window.eva_hmi_config_title;
+    }
     if (!initialized) init();
     var oldSize = $(window).width();
     window.addEventListener('resize', function() {
