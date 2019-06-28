@@ -22,4 +22,5 @@ where **serial** and **index_landscape**  parameters are used by smartphone app
 only and ignored by HMI application.
 
 Parameter **index** is used to specify the main UI page. Menu is built from
-**menu** section entries, menu icons are located in *.evahi/icons* folder.
+**menu** section entries, menu icons are located in */opt/eva/ui/.evahi/icons*
+folder.
