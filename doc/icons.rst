@@ -1,7 +1,7 @@
 Icons (default theme)
 *********************
 
-.. toctree::
+.. contents::
 
 .. _data_icons:
 
