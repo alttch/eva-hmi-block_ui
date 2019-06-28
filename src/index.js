@@ -418,7 +418,7 @@
     });
     data_item.append(data_item_value);
     $('<span />')
-      .html(data_item_config['u'])
+      .html(data_item_config['units'])
       .appendTo(data_item);
     data_item.attr('eva-display-decimals', data_item_config['decimals']);
     data_item.addClass('eva_hmi_data_item');
@@ -989,7 +989,7 @@
     }).appendTo(chart_info);
     chart_item_state.attr('eva-display-decimals', chart_config['decimals']);
     $('<span />')
-      .html(chart_config['u'])
+      .html(chart_config['units'])
       .appendTo(chart_info);
     chart.append(chart_info);
     if (
@@ -1013,7 +1013,7 @@
     }
     $('<div />')
       .addClass('eva_hmi_chart_value_units')
-      .html(chart_config['u'])
+      .html(chart_config['units'])
       .appendTo(chart);
     $('<div />', {id: 'eva_hmi_chart_content_' + chart_id})
       .addClass('eva_hmi_chart')
