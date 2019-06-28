@@ -71,6 +71,14 @@ State icons
   :width: 42px
   :align: middle
 
+.. |si_circle.s_0| image:: ../themes/default/icons/circle.red.svg
+  :width: 42px
+  :align: middle
+
+.. |si_circle.s_1| image:: ../themes/default/icons/circle.green.svg
+  :width: 42px
+  :align: middle
+
 .. |si_enter.s_0| image:: ../themes/default/icons/enter.off.svg
   :width: 42px
   :align: middle
@@ -266,6 +274,8 @@ State icons
 +-------------------------+-------------------------+-------------------------+-------------------------+
 | cam                     | |si_cam.s_0|            | |si_cam.s_1|            |                         | 
 +-------------------------+-------------------------+-------------------------+-------------------------+
+| circle                  | |si_circle.s_0|         | |si_circle.s_1|         |                         | 
++-------------------------+-------------------------+-------------------------+-------------------------+
 | enter                   | |si_enter.s_0|          | |si_enter.s_1|          |                         | 
 +-------------------------+-------------------------+-------------------------+-------------------------+
 | head                    | |si_head.s_0|           | |si_head.s_1|           |                         | 
@@ -313,6 +323,49 @@ State icons
 
 Special state icons
 ===================
+
+circle
+------
+
+.. |spi_circle.s_blue| image:: ../themes/default/icons/circle.blue.svg
+  :width: 42px
+  :align: middle
+
+.. |spi_circle.s_green| image:: ../themes/default/icons/circle.green.svg
+  :width: 42px
+  :align: middle
+
+.. |spi_circle.s_off| image:: ../themes/default/icons/circle.red.svg
+  :width: 42px
+  :align: middle
+
+.. |spi_circle.s_on| image:: ../themes/default/icons/circle.green.svg
+  :width: 42px
+  :align: middle
+
+.. |spi_circle.s_red| image:: ../themes/default/icons/circle.red.svg
+  :width: 42px
+  :align: middle
+
+.. |spi_circle.s_yellow| image:: ../themes/default/icons/circle.yellow.svg
+  :width: 42px
+  :align: middle
+
++------------------+-----------------------+
+| state            | icon                  |
++==================+=======================+
+| s_blue           | |spi_circle.s_blue|   |
++------------------+-----------------------+
+| s_green          | |spi_circle.s_green|  |
++------------------+-----------------------+
+| s_off            | |spi_circle.s_off|    |
++------------------+-----------------------+
+| s_on             | |spi_circle.s_on|     |
++------------------+-----------------------+
+| s_red            | |spi_circle.s_red|    |
++------------------+-----------------------+
+| s_yellow         | |spi_circle.s_yellow| |
++------------------+-----------------------+
 
 music
 -----

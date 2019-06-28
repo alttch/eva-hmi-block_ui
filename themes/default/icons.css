@@ -210,6 +210,25 @@
 .eva_hmi_cbtn.i_reload.s_1 {
   background-image: url('icons/reload.on.svg');
 }
+/* circles */
+.eva_hmi_cbtn.i_circle.s_0, .eva_hmi_cbtn.i_circle.s_off {
+  background-image: url('icons/circle.red.svg');
+}
+.eva_hmi_cbtn.i_circle.s_1, .eva_hmi_cbtn.i_circle.s_on {
+  background-image: url('icons/circle.green.svg');
+}
+.eva_hmi_cbtn.i_circle.s_red {
+  background-image: url('icons/circle.red.svg');
+}
+.eva_hmi_cbtn.i_circle.s_green {
+  background-image: url('icons/circle.green.svg');
+}
+.eva_hmi_cbtn.i_circle.s_yellow {
+  background-image: url('icons/circle.yellow.svg');
+}
+.eva_hmi_cbtn.i_circle.s_blue {
+  background-image: url('icons/circle.blue.svg');
+}
 /* party */
 .eva_hmi_cbtn.i_star.s_0, .eva_hmi_cbtn.i_star.s_off {
   background-image: url('icons/star.off.svg');
