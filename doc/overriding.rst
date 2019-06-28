@@ -85,5 +85,4 @@ Overriding logo
 Variables *$eva.hmi.logo.href* and *$eva.hmi.logo.text* can be overriden to
 set custom logo text and URI when main menu is opened.
 
-To override logo image, override background image of CSS class
-*.eva_hmi_logo*.
+To override logo image, change background image of CSS class *.eva_hmi_logo*.
