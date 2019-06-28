@@ -17,9 +17,10 @@ build-js:
 done:
 	@which figlet > /dev/null && figlet -f slant "DONE" || echo -e "-----------------\nDONE"
 
+ver:
+	npm version patch
 
 pub:
-	npm version patch
 	npm publish --access public
 
 clean:
