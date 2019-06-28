@@ -83,3 +83,20 @@ reload interval in seconds (default: 60 seconds).
 
 If *sys-block* parameter is specified and is *true*, system block (system info,
 evaHI setup, logout link) will be displayed at the bottom of the page.
+
+Chart options
+=============
+
+For this page class, **eva_hmi_config_chart_options** must be defined which
+contains an options for `Chart.js <https://www.chartjs.org/>`_.
+
+Usually, chart options are just a piece of JavaScript code, included in app as:
+
+.. code-block:: html
+
+    <script type="text/javascript" src="config/chart_options.js"></script>
+
+and look like:
+
+.. literalinclude:: ../examples/config/chart_options.js
+    :language: javascript
