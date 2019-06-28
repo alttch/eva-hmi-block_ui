@@ -30,3 +30,4 @@ Live demo: `<https://smarthome.demo.eva-ics.com/>`_
     sensors
     navigation
     overriding
+    icons

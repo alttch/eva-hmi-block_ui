@@ -181,7 +181,8 @@ Data item looks like:
     decimals: 0
     #action: 
 
-* **icon** chart icon sets CSS class *.eva_hmi_data_item.i_<icon_name>*
+* **icon** item :ref:`icon<data_icons>` (CSS class
+  *.eva_hmi_data_item.i_<icon_name>*)
 * **item** EVA ICS item to display a chart for, usually a sensor, but can be
   unit or logical variable as well
 * **units** value units. As YAML doesn't like special characters, should be

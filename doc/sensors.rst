@@ -46,7 +46,9 @@ configuration looks like:
       fill: 30T:1
       prop: value
 
-* **icon** chart icon sets CSS class *.eva_hmi_data_item.i_<icon_name>*
+* **icon** chart item :ref:`icon<data_icons>` (CSS class
+  *.eva_hmi_data_item.i_<icon_name>*)
+
 * **item** EVA ICS item to display a chart for, usually a sensor, but can be
   unit or logical variable as well
 * **title** chart title
