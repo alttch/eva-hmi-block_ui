@@ -108,6 +108,9 @@ Button can display additional pop-over menu:
         item: unit:windows/room2
         menu: 3
 
+.. figure:: images/popover-menu.png
+    :scale: 100%
+
 *menu: 3* means display menu with 3 item states: 0, 1 and 2. If you want to
 display menu with only 2 states, you may just set *menu: true*.
 
@@ -146,6 +149,9 @@ moved.
       max: 25
       step: 1
       #can_off: true
+
+.. figure:: images/slider.png
+    :scale: 100%
 
 Default slider *min* value is *0*, default *max* value is *100*, so they
 usually must be overriden. Default step is *1*.
@@ -215,6 +221,9 @@ control-blocks
 All :ref:`control buttons<buttons>` must be grouped in a control blocks. One
 control block can have up to 4 buttons.
 
+.. figure:: images/control-block.png
+    :scale: 100%
+
 A control block looks like:
 
 .. code-block:: yaml
@@ -239,6 +248,9 @@ A data block groups :ref:`data<data>` items and looks like:
       - temp1_int
       - hum1_int
     #action: url:sensors.j2
+
+.. figure:: images/data-block.png
+    :scale: 100%
 
 If on-click action is specified for the data block, it overrides actions,
 specified for the single data items.
@@ -269,6 +281,11 @@ Bar can have ID from 1 to 20 (*bar1-bar20*).
 All parameters are optional. If *sys-block* parameter is specified and is
 *true*, system block (system info, evaHI setup, logout link) will be displayed
 at the bottom of the bar.
+
+.. figure:: images/sysblock.png
+    :scale: 100%
+
+    A system block
 
 .. _layout-compact:
 
