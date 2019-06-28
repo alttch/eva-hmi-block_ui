@@ -297,6 +297,9 @@ Looks like a simple list of elements need to be displayed:
 Actions
 =======
 
+Action types
+------------
+
 All buttons have the actions, data items, data blocks and cameras can have
 actions as well. Let's explain what types of actions may be specified:
 
@@ -310,8 +313,29 @@ actions as well. Let's explain what types of actions may be specified:
 
 * **javascript:** launch JavaScript code via *eval()*
 
-* **action_params** for items, action launches *toggle* action by default,
-  however if action parameters are specified and status or value are present,
-  it will launch *action* API call for units and *set* API call for logical
-  variables. For macros, additional launch parameters can be specified
+action_params
+-------------
+
+For items, action launches *toggle* action by default, however if action
+parameters are specified and status or value are present, it will launch
+*action* API call for units and *set* API call for logical variables. For
+macros, additional launch parameters can be specified.
+
+Example:
+
+.. code-block:: yaml
+
+    buttons:
+
+      #............
+      #............
+      #............
+
+      thermo_room1_25:
+        icon: thermostat.s_1
+        action: unit:thermo/room1
+        title: "Set 25°C"
+        action_params:
+          s: 1
+          v: 25
 
