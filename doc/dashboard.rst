@@ -28,6 +28,11 @@ As dashboard is a primary page, let's explain it as detailed as possible.
 Global variables
 ================
 
+title
+-----
+
+If specified, set web page title.
+
 url
 ---
 

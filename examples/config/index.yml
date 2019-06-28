@@ -1,5 +1,6 @@
 #url: https://my.external.domain:port/
 class: dashboard
+title: Dashboard - Sample interface
 
 default-login: operator
 
