@@ -940,6 +940,10 @@
     return cam;
   }
 
+  function format_chart_config(cfg_id, chart_cfg) {
+    return chart_cfg;
+  }
+
   function create_chart_config(config) {
     var c_type = config['type'] ? config['type'] : 'line';
     var c_label = config['label'] ? config['label'] : '';
@@ -948,25 +952,27 @@
     var c_background = config['background-color']
       ? config['background-color']
       : '#eeeeee';
-    if (!config['cfg'] || config['cfg'] == 'default') {
-      return {
-        type: c_type,
-        data: {
-          labels: [],
-          datasets: [
-            {
-              label: c_label,
-              data: [],
-              fill: c_fill,
-              pointRadius: 0,
-              borderColor: c_color,
-              backgroundColor: c_background
-            }
-          ]
-        },
-        options: eva_hmi_config_chart_options
-      };
+    var chart_cfg = {
+      type: c_type,
+      data: {
+        labels: [],
+        datasets: [
+          {
+            label: c_label,
+            data: [],
+            fill: c_fill,
+            pointRadius: 0,
+            borderColor: c_color,
+            backgroundColor: c_background
+          }
+        ]
+      },
+      options: $.extend({}, eva_hmi_config_chart_options)
+    };
+    if (config['cfg'] && config['cfg'] != 'default') {
+      $eva.hmi.format_chart_config(config['cfg'], chart_cfg);
     }
+    return chart_cfg;
   }
 
   function create_chart(chart_id, reload) {
@@ -1334,6 +1340,7 @@
   $eva.hmi.logo.href = 'https://www.eva-ics.com/';
   $eva.hmi.logo.text = 'www.eva-ics.com';
   $eva.hmi.format_camera_src = function() {};
+  $eva.hmi.format_cmart_config = format_chart_config();
   $eva.hmi.after_draw = function() {};
   $eva.hmi.prepare_layout = function() {};
   $eva.hmi.error = error;
