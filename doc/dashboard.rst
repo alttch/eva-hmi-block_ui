@@ -68,14 +68,14 @@ configuration looks like:
         #action_params:
         #value:
 
-* **icon** button icon of class *.eva_hmi_cbtn.i_<icon_name>*. The class should
-  have subclasses for the different item states, e.g.
-  *.eva_hmi_cbtn.i_<icon_name>.s_0* is used when status is *0* (*OFF*),
-  *.eva_hmi_cbtn.i_<icon_name>.s_1* is used when status is *1* (*ON*). All
-  available icons are listed in *themes/<theme>/icons.css*. For unit items,
-  state property *status* is used to choose current icon, for logical variables
-  - state property *value*. For macros, icon must be specified as
-  *<icon_name>.s_<status>*, e.g. *windows.s_1*
+* **icon** button :ref:`icon<state_icons>` of class
+  *.eva_hmi_cbtn.i_<icon_name>*. The class should have subclasses for the
+  different item states, e.g.  *.eva_hmi_cbtn.i_<icon_name>.s_0* is used when
+  status is *0* (*OFF*), *.eva_hmi_cbtn.i_<icon_name>.s_1* is used when status
+  is *1* (*ON*). All available icons are listed in *themes/<theme>/icons.css*.
+  For unit items, state property *status* is used to choose current icon, for
+  logical variables - state property *value*. For macros, icon must be
+  specified as *<icon_name>.s_<status>*, e.g. *windows.s_1*
 
 * **item** an item the button is for. If item type is unit, the button toggles
   its status, if logical variable - the button toggles its value. If item is
