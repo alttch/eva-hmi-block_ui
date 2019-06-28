@@ -39,7 +39,7 @@ kiosk tablet when nobody is in the building.
     $eva.hmi.format_camera_src = function(cam_id) {
       if ($eva.authorized_user == 'kiosk' &&
         !$eva.state('flags/people_present').value) {
-          return '/ui/images/black.jpg';
+          return '/ui/images/black.png';
         }
     }
 
