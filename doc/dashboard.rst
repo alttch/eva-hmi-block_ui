@@ -128,7 +128,7 @@ The button can have a complex menu as well which contains other buttons:
         - thermo_room1_15
         - thermo_room1_25
 
-In the example above, the button *thermo_room1* will display a pop-over with 4
+In the example above, the button *thermo_room1* will display a pop-over with 3
 additional buttons. Configurations of buttons inside pop-over must be defined
 before the button with such menu, otherwise exception will occur.
 
