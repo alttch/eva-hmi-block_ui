@@ -16,7 +16,7 @@ The page has dedicated :ref:`compact layout<layout-compact>` for screens with
 width < 768 virtual or physical pixels (usually smartphones). Dedicated layout
 is used e.g. to slowdown camera refresh or to re-order control blocks.
 
-On a dashboard page, everything is grouped to bars, one bar can have one
+On a dashboard page, everything is grouped into bars, one bar can have one
 camera, one data block, and any number of control blocks with buttons grouped
 by 4.
 
@@ -32,7 +32,7 @@ url
 ---
 
 External UI URL used in QR code for smartphone application setup. Set to
-*document.location* if not specified. If your set up uses front-end or clients
+*document.location* if not specified. If your setup uses front-end or clients
 access UI via port-forwarding on external IP/domain, variable must be present
 in config.
 
