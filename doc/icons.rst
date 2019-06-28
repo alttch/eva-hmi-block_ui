@@ -6,7 +6,7 @@ Icons (default theme)
 .. _data_icons:
 
 Data icons
-----------
+==========
 
 
 .. |di_indoor_hum| image:: ../themes/default/data_icons/hum_in.svg
@@ -46,7 +46,7 @@ Data icons
 .. _state_icons:
 
 State icons
------------
+===========
 
 
 .. |si_attn.s_0| image:: ../themes/default/icons/attn.off.svg
@@ -302,3 +302,113 @@ State icons
 +-------------------------+-------------------------+-------------------------+-------------------------+
 | windows                 | |si_windows.s_0|        | |si_windows.s_1|        | |si_windows.s_2|        | 
 +-------------------------+-------------------------+-------------------------+-------------------------+
+
+.. _special_state_icons:
+
+Special state icons
+===================
+
+music
+-----
+
+.. |spi_music.s_blue| image:: ../themes/default/icons/music.blue.svg
+  :width: 42px
+  :align: middle
+
+.. |spi_music.s_green| image:: ../themes/default/icons/music.green.svg
+  :width: 42px
+  :align: middle
+
+.. |spi_music.s_off| image:: ../themes/default/icons/music.off.svg
+  :width: 42px
+  :align: middle
+
+.. |spi_music.s_red| image:: ../themes/default/icons/music.red.svg
+  :width: 42px
+  :align: middle
+
++----------------+---------------------+
+| state          | icon                |
++================+=====================+
+| s_blue         | |spi_music.s_blue|  |
++----------------+---------------------+
+| s_green        | |spi_music.s_green| |
++----------------+---------------------+
+| s_off          | |spi_music.s_off|   |
++----------------+---------------------+
+| s_red          | |spi_music.s_red|   |
++----------------+---------------------+
+
+star
+----
+
+.. |spi_star.s_blue| image:: ../themes/default/icons/star.blue.svg
+  :width: 42px
+  :align: middle
+
+.. |spi_star.s_grey| image:: ../themes/default/icons/star.grey.svg
+  :width: 42px
+  :align: middle
+
+.. |spi_star.s_music_blue| image:: ../themes/default/icons/music.blue.svg
+  :width: 42px
+  :align: middle
+
+.. |spi_star.s_music_green| image:: ../themes/default/icons/music.green.svg
+  :width: 42px
+  :align: middle
+
+.. |spi_star.s_music_red| image:: ../themes/default/icons/music.red.svg
+  :width: 42px
+  :align: middle
+
+.. |spi_star.s_off| image:: ../themes/default/icons/star.off.svg
+  :width: 42px
+  :align: middle
+
+.. |spi_star.s_on| image:: ../themes/default/icons/star.lightblue.svg
+  :width: 42px
+  :align: middle
+
+.. |spi_star.s_random| image:: ../themes/default/icons/star.random.svg
+  :width: 42px
+  :align: middle
+
+.. |spi_star.s_red| image:: ../themes/default/icons/star.red.svg
+  :width: 42px
+  :align: middle
+
+.. |spi_star.s_white| image:: ../themes/default/icons/star.white.svg
+  :width: 42px
+  :align: middle
+
+.. |spi_star.s_yellow| image:: ../themes/default/icons/star.yellow.svg
+  :width: 42px
+  :align: middle
+
++---------------------+--------------------------+
+| state               | icon                     |
++=====================+==========================+
+| s_blue              | |spi_star.s_blue|        |
++---------------------+--------------------------+
+| s_grey              | |spi_star.s_grey|        |
++---------------------+--------------------------+
+| s_music_blue        | |spi_star.s_music_blue|  |
++---------------------+--------------------------+
+| s_music_green       | |spi_star.s_music_green| |
++---------------------+--------------------------+
+| s_music_red         | |spi_star.s_music_red|   |
++---------------------+--------------------------+
+| s_off               | |spi_star.s_off|         |
++---------------------+--------------------------+
+| s_on                | |spi_star.s_on|          |
++---------------------+--------------------------+
+| s_random            | |spi_star.s_random|      |
++---------------------+--------------------------+
+| s_red               | |spi_star.s_red|         |
++---------------------+--------------------------+
+| s_white             | |spi_star.s_white|       |
++---------------------+--------------------------+
+| s_yellow            | |spi_star.s_yellow|      |
++---------------------+--------------------------+
+

@@ -7,6 +7,7 @@ di_maxlength = 0
 state_icons = {}
 si_maxlength = 0
 sc_maxlength = 0
+special_state_icons = {}
 while i < len(css):
     s = css[i]
     if s.startswith('.eva_hmi_data_item'):
@@ -33,7 +34,7 @@ while i < len(css):
                 if l > si_maxlength:
                     si_maxlength = l
             except:
-                pass
+                special_state_icons.setdefault(c[2:], {})[sc] = img
     i += 1
 print("""Icons (default theme)
 *********************
@@ -43,7 +44,7 @@ print("""Icons (default theme)
 .. _data_icons:
 
 Data icons
-----------
+==========
 
 """)
 for i in sorted(data_icons):
@@ -64,7 +65,7 @@ print("""
 .. _state_icons:
 
 State icons
------------
+===========
 
 """)
 
@@ -98,11 +99,45 @@ for i in sorted(state_icons):
     for x in sorted(state_icons[i]):
         z += 1
         print(
-            '|si_' + i + '.' + x + '|' + ' ' * (si_maxlength - len(i + x) - 6)
-            + ' | ',
+            '|si_' + i + '.' + x + '|' + ' ' * (si_maxlength - len(i + x) - 6) +
+            ' | ',
             end='')
     while z < len(max_t.split('|')) - 1:
         z += 1
         print(' ' * (si_maxlength) + ' | ', end='')
     print()
     print(line)
+
+print("""
+.. _special_state_icons:
+
+Special state icons
+===================
+""")
+for spicon in sorted(special_state_icons):
+    print(spicon)
+    print('-' * len(spicon))
+    print()
+    spi = special_state_icons[spicon]
+    spi_maxlength = 0
+    for i in spi:
+        if len(i + spicon) > spi_maxlength: spi_maxlength = len(i + spicon)
+    spi_maxlength += 2
+    for s in sorted(spi):
+        print('.. |spi_{}.{}| image:: ../themes/default/{}'.format(
+            spicon, s, spi[s]))
+        print('  :width: 42px')
+        print('  :align: middle')
+        print()
+    print('+' + '-' * (spi_maxlength + 2) + '+' + '-' * (spi_maxlength + 7) +
+          '+')
+    print('| ' + 'state'.ljust(spi_maxlength) + ' | ' +
+          'icon'.ljust(spi_maxlength + 6) + '|')
+    print('+' + '=' * (spi_maxlength + 2) + '+' + '=' * (spi_maxlength + 7) +
+          '+')
+    for i in sorted(spi):
+        print('| ' + i.ljust(spi_maxlength) + ' | |spi_' + spicon + '.' + i +
+              '|' + ' ' * (spi_maxlength - len(i + spicon) - 2) + ' |')
+        print('+' + '-' * (spi_maxlength + 2) + '+' +
+              '-' * (spi_maxlength + 7) + '+')
+    print()
