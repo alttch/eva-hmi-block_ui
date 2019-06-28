@@ -26,6 +26,8 @@ var eva_hmi_config_chart_options = {
         round: 'minute',
         tooltipFormat: 'H:mm:ss',
         displayFormats: {
+          second: 'H:mm:ss',
+          minute: 'H:mm:ss',
           hour: 'H:mm',
         },
       },
