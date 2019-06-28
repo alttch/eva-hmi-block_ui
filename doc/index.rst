@@ -11,7 +11,7 @@ download, create configuration files and enjoy!
 The app is fully compatible with `EVA ICS Control Center Android app
 <https://play.google.com/store/apps/details?id=com.altertech.evacc>`_.
 
-Screen shots:
+Screenshots:
 
 .. image:: images/dashboard.jpg
     :width: 30%
