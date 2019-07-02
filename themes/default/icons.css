@@ -81,6 +81,9 @@
 .eva_hmi_data_item.c_pressure {
   background: url('data_icons/pressure.svg') 20px 0 no-repeat;
 }
+.eva_hmi_data_item.c_outdoor_pressure {
+  background: url('data_icons/pressure_out.svg') 20px 0 no-repeat;
+}
 .eva_hmi_data_item.c_outdoor_temp {
   background: url('data_icons/temp_out.svg') 20px 0 no-repeat;
 }
