@@ -1347,6 +1347,26 @@
       .catch(err => l);
   }
 
+  function timeConvert(seconds, max) {
+    var result = '';
+
+    if(seconds >= 3600) {
+      var hour = Math.floor(seconds / 3600);
+      var min = ('0' + Math.floor(seconds % 3600 / 60)).slice(-2);
+      result = hour + ':' + min;
+    } else if(seconds >= 60 && seconds < 3600 || max === 'minute') {
+      var min = Math.floor(seconds / 60);
+      var sec = ('0' + Math.floor(seconds % 60)).slice(-2);
+      result = min + ':' + sec;
+    } else if(seconds < 60 || max === 'second') {
+      var sec = Math.floor(seconds);
+      var mill = Math.round((seconds - sec) * 10);
+      result = sec + '.' + mill;
+    }
+
+    return result;
+  }
+
   $eva.hmi = {};
   $eva.hmi.init = init;
   $eva.hmi.start = start;
