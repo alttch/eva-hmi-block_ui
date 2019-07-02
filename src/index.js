@@ -204,9 +204,6 @@
             params['a'] = val;
           }
           if (is_btn) el.addClass('busy');
-          if (!('w' in params)) {
-            params['w'] = 60;
-          }
           $eva
             .call('run', action, params)
             .then(function() {
@@ -299,9 +296,6 @@
       a = function() {
         if (is_btn) el.addClass('busy');
         var params = $.extend({}, config.action_params);
-        if (!('w' in params)) {
-          params['w'] = 60;
-        }
         $eva
           .call('run', action, params)
           .then(function() {
