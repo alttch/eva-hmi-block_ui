@@ -424,6 +424,7 @@
     data_item.attr('eva-display-decimals', data_item_config['decimals']);
     data_item.addClass('eva_hmi_data_item');
     data_item.addClass('i_' + data_item_config.icon);
+    data_item.css('background-repeat', 'no-repeat');
     append_action(data_item, data_item_config, false);
     var item = data_item_config['item'];
     $eva.watch(item, function(state) {
@@ -991,9 +992,11 @@
       .html(chart_title)
       .appendTo(chart);
     var chart_info = $('<div />')
+      .addClass('i_' + chart_config['icon'])
       .addClass('eva_hmi_chart_value')
-      .addClass('eva_hmi_data_item')
-      .addClass('c_' + chart_config['icon']);
+      .addClass('eva_hmi_data_item');
+    chart_info.css('background-position', '20px 0');
+    chart_info.css('background-repeat', 'no-repeat');
     var chart_item_state = $('<span />', {
       id: 'eva_hmi_chart_' + chart_id + '_state'
     }).appendTo(chart_info);
