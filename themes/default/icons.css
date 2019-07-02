@@ -148,11 +148,26 @@
 .eva_hmi_cbtn.i_door_left.s_1 {
   background-image: url('icons/door_left.open.svg');
 }
+.eva_hmi_cbtn.i_door_left.s_2 {
+  background-image: url('icons/door_left.open-full.svg');
+}
+.eva_hmi_cbtn.i_door_right.s_0 {
+  background-image: url('icons/door_right.closed.svg');
+}
+.eva_hmi_cbtn.i_door_right.s_1 {
+  background-image: url('icons/door_right.open.svg');
+}
+.eva_hmi_cbtn.i_door_right.s_2 {
+  background-image: url('icons/door_right.open-full.svg');
+}
 .eva_hmi_cbtn.i_door.s_0 {
   background-image: url('icons/door.closed.svg');
 }
 .eva_hmi_cbtn.i_door.s_1 {
   background-image: url('icons/door.open.svg');
+}
+.eva_hmi_cbtn.i_door.s_2 {
+  background-image: url('icons/door.open-full.svg');
 }
 /* equipment */
 .eva_hmi_cbtn.i_thermostat.s_0 {

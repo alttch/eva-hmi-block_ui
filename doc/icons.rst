@@ -123,11 +123,31 @@ State icons
   :width: 42px
   :align: middle
 
+.. |si_door.s_2| image:: ../themes/default/icons/door.open-full.svg
+  :width: 42px
+  :align: middle
+
 .. |si_door_left.s_0| image:: ../themes/default/icons/door_left.closed.svg
   :width: 42px
   :align: middle
 
 .. |si_door_left.s_1| image:: ../themes/default/icons/door_left.open.svg
+  :width: 42px
+  :align: middle
+
+.. |si_door_left.s_2| image:: ../themes/default/icons/door_left.open-full.svg
+  :width: 42px
+  :align: middle
+
+.. |si_door_right.s_0| image:: ../themes/default/icons/door_right.closed.svg
+  :width: 42px
+  :align: middle
+
+.. |si_door_right.s_1| image:: ../themes/default/icons/door_right.open.svg
+  :width: 42px
+  :align: middle
+
+.. |si_door_right.s_2| image:: ../themes/default/icons/door_right.open-full.svg
   :width: 42px
   :align: middle
 
@@ -328,9 +348,11 @@ State icons
 +-------------------------+-------------------------+-------------------------+-------------------------+
 | circle                  | |si_circle.s_0|         | |si_circle.s_1|         |                         | 
 +-------------------------+-------------------------+-------------------------+-------------------------+
-| door                    | |si_door.s_0|           | |si_door.s_1|           |                         | 
+| door                    | |si_door.s_0|           | |si_door.s_1|           | |si_door.s_2|           | 
 +-------------------------+-------------------------+-------------------------+-------------------------+
-| door_left               | |si_door_left.s_0|      | |si_door_left.s_1|      |                         | 
+| door_left               | |si_door_left.s_0|      | |si_door_left.s_1|      | |si_door_left.s_2|      | 
++-------------------------+-------------------------+-------------------------+-------------------------+
+| door_right              | |si_door_right.s_0|     | |si_door_right.s_1|     | |si_door_right.s_2|     | 
 +-------------------------+-------------------------+-------------------------+-------------------------+
 | enter                   | |si_enter.s_0|          | |si_enter.s_1|          |                         | 
 +-------------------------+-------------------------+-------------------------+-------------------------+
