@@ -951,29 +951,62 @@
 
   function create_chart_config(config) {
     var c_type = config['type'] ? config['type'] : 'line';
-    var c_label = config['label'] ? config['label'] : '';
-    var c_fill = config['fill'] ? config['fill'] : 'start';
-    var c_color = config['color'] ? config['color'] : '#aaaaaa';
-    var c_background = config['background-color']
-      ? config['background-color']
-      : '#eeeeee';
+
+    var item;
+    if (!('item' in config)) {
+      $eva.hmi.error('No item in chart config');
+    }
+    if (Array.isArray(config['item'])) {
+      item = config['item'];
+    } else {
+      item = config['item'].split(',');
+    }
     var chart_cfg = {
       type: c_type,
       data: {
         labels: [],
-        datasets: [
-          {
-            label: c_label,
-            data: [],
-            fill: c_fill,
-            pointRadius: 0,
-            borderColor: c_color,
-            backgroundColor: c_background
-          }
-        ]
+        datasets: []
       },
       options: $.extend({}, eva_hmi_config_chart_options)
     };
+    $.each(item, function(i, v) {
+      if (Array.isArray(config['label'])) {
+        var c_label = config['label'][i];
+      } else {
+        var c_label = config['label'] ? config['label'] : 'start';
+      }
+      if (Array.isArray(config['fill'])) {
+        var c_fill = config['fill'][i];
+      } else {
+        var c_fill = config['fill'] ? config['fill'] : 'start';
+      }
+      if (Array.isArray(config['color'])) {
+        var c_color = config['color'][i];
+      } else {
+        var c_color = config['color'] ? config['color'] : '#aaaaaa';
+      }
+      if (Array.isArray(config['pointr'])) {
+        var c_pointr = config['point-radius'][i];
+      } else {
+        var c_pointr = config['point-radius'] ? config['point-radius'] : 0;
+      }
+      if (Array.isArray(config['background-color'])) {
+        var c_background = config['background-color'][i];
+      } else {
+        var c_background = config['background-color']
+          ? config['background-color']
+          : '#eeeeee';
+      }
+      var dataset = {
+        label: c_label,
+        data: [],
+        fill: c_fill,
+        pointRadius: c_pointr,
+        borderColor: c_color,
+        backgroundColor: c_background
+      };
+      chart_cfg.data.datasets.push(dataset);
+    });
     if (config['cfg'] && config['cfg'] != 'default') {
       $eva.hmi.format_chart_config(config['cfg'], chart_cfg);
     }
@@ -983,6 +1016,9 @@
   function create_chart(chart_id, reload) {
     var reload_int = reload;
     var chart_config = window.eva_hmi_config_charts[chart_id];
+    if (!chart_config) {
+      $eva.hmi.error('No config for chart ' + chart_id);
+    }
     if (!reload_int) reload_int = 60;
     var chart = $('<div />').addClass('eva_hmi_chart_item');
     var chart_title = chart_config['title'];
