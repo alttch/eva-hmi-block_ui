@@ -29,6 +29,12 @@
 }
 
 /* data icons */
+.eva_hmi_data_item.i_temp {
+  background: url('data_icons/temp.svg');
+}
+.eva_hmi_data_item.i_hum {
+  background: url('data_icons/hum.svg');
+}
 .eva_hmi_data_item.i_pressure {
   background-image: url('data_icons/pressure.svg');
 }
@@ -46,6 +52,18 @@
 }
 .eva_hmi_data_item.i_outdoor_pressure {
   background-image: url('data_icons/pressure_out.svg');
+}
+.eva_hmi_data_item.i_soil_temp {
+  background-image: url('data_icons/temp_soil.svg');
+}
+.eva_hmi_data_item.i_soil_hum {
+  background-image: url('data_icons/hum_soil.svg');
+}
+.eva_hmi_data_item.i_sun {
+  background-image: url('data_icons/sun.svg');
+}
+.eva_hmi_data_item.i_sun_house {
+  background-image: url('data_icons/sun_house.svg');
 }
 /* chart icons */
 .eva_hmi_data_item.c_temp {
@@ -69,19 +87,18 @@
 .eva_hmi_data_item.c_outdoor_hum {
   background: url('data_icons/hum_out.svg') 20px 0 no-repeat;
 }
-.eva_hmi_data_item.i_soil_temp {
-  background-image: url('data_icons/temp_soil.svg');
+.eva_hmi_data_item.c_soil_temp {
+  background-image: url('data_icons/temp_soil.svg') 20px 0 no-repeat;
 }
-.eva_hmi_data_item.i_soil_hum {
-  background-image: url('data_icons/hum_soil.svg');
+.eva_hmi_data_item.c_soil_hum {
+  background-image: url('data_icons/hum_soil.svg') 20px 0 no-repeat;
 }
-.eva_hmi_data_item.i_sun {
-  background-image: url('data_icons/sun.svg');
+.eva_hmi_data_item.c_sun {
+  background-image: url('data_icons/sun.svg') 20px 0 no-repeat;
 }
-.eva_hmi_data_item.i_sun_house {
-  background-image: url('data_icons/sun_house.svg');
+.eva_hmi_data_item.c_sun_house {
+  background-image: url('data_icons/sun_house.svg') 20px 0 no-repeat;
 }
-
 /* light */
 .eva_hmi_cbtn.i_lamp.s_0 {
   background-image: url('icons/lamp.off.svg');
