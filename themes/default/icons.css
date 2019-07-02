@@ -48,6 +48,12 @@
   background-image: url('data_icons/pressure_out.svg');
 }
 /* chart icons */
+.eva_hmi_data_item.c_temp {
+  background: url('data_icons/temp.svg') 20px 0 no-repeat;
+}
+.eva_hmi_data_item.c_hum {
+  background: url('data_icons/hum.svg') 20px 0 no-repeat;
+}
 .eva_hmi_data_item.c_indoor_temp {
   background: url('data_icons/temp_in.svg') 20px 0 no-repeat;
 }
@@ -62,6 +68,18 @@
 }
 .eva_hmi_data_item.c_outdoor_hum {
   background: url('data_icons/hum_out.svg') 20px 0 no-repeat;
+}
+.eva_hmi_data_item.i_soil_temp {
+  background-image: url('data_icons/temp_soil.svg');
+}
+.eva_hmi_data_item.i_soil_hum {
+  background-image: url('data_icons/hum_soil.svg');
+}
+.eva_hmi_data_item.i_sun {
+  background-image: url('data_icons/sun.svg');
+}
+.eva_hmi_data_item.i_sun_house {
+  background-image: url('data_icons/sun_house.svg');
 }
 
 /* light */
@@ -122,6 +140,19 @@
 }
 .eva_hmi_cbtn.i_windows.s_2 {
   background-image: url('icons/windows.raised.svg');
+}
+/* doors */
+.eva_hmi_cbtn.i_door_left.s_0 {
+  background-image: url('icons/door_left.closed.svg');
+}
+.eva_hmi_cbtn.i_door_left.s_1 {
+  background-image: url('icons/door_left.open.svg');
+}
+.eva_hmi_cbtn.i_door.s_0 {
+  background-image: url('icons/door.closed.svg');
+}
+.eva_hmi_cbtn.i_door.s_1 {
+  background-image: url('icons/door.open.svg');
 }
 /* equipment */
 .eva_hmi_cbtn.i_thermostat.s_0 {
@@ -212,10 +243,13 @@
 }
 /* circles */
 .eva_hmi_cbtn.i_circle.s_0, .eva_hmi_cbtn.i_circle.s_off {
-  background-image: url('icons/circle.red.svg');
+  background-image: url('icons/circle.grey.svg');
 }
 .eva_hmi_cbtn.i_circle.s_1, .eva_hmi_cbtn.i_circle.s_on {
   background-image: url('icons/circle.green.svg');
+}
+.eva_hmi_cbtn.i_circle.s_grey {
+  background-image: url('icons/circle.grey.svg');
 }
 .eva_hmi_cbtn.i_circle.s_red {
   background-image: url('icons/circle.red.svg');
@@ -226,8 +260,17 @@
 .eva_hmi_cbtn.i_circle.s_yellow {
   background-image: url('icons/circle.yellow.svg');
 }
+.eva_hmi_cbtn.i_circle.s_white {
+  background-image: url('icons/circle.white.svg');
+}
 .eva_hmi_cbtn.i_circle.s_blue {
   background-image: url('icons/circle.blue.svg');
+}
+.eva_hmi_cbtn.i_circle.s_random {
+  background-image: url('icons/circle.random.svg');
+}
+.eva_hmi_cbtn.i_circle.s_random2 {
+  background-image: url('icons/random.svg');
 }
 /* party */
 .eva_hmi_cbtn.i_star.s_0, .eva_hmi_cbtn.i_star.s_off {
@@ -245,6 +288,9 @@
 .eva_hmi_cbtn.i_star.s_grey {
   background-image: url('icons/star.grey.svg');
 }
+.eva_hmi_cbtn.i_star.s_green {
+  background-image: url('icons/star.green.svg');
+}
 .eva_hmi_cbtn.i_star.s_yellow {
   background-image: url('icons/star.yellow.svg');
 }
@@ -253,6 +299,9 @@
 }
 .eva_hmi_cbtn.i_star.s_random {
   background-image: url('icons/star.random.svg');
+}
+.eva_hmi_cbtn.i_star.s_random2 {
+  background-image: url('icons/random.svg');
 }
 .eva_hmi_cbtn.i_star.s_music_red {
   background-image: url('icons/music.red.svg');

@@ -9,6 +9,10 @@ Data icons
 ==========
 
 
+.. |di_hum| image:: ../themes/default/data_icons/hum.svg
+  :width: 42px
+  :align: middle
+
 .. |di_indoor_hum| image:: ../themes/default/data_icons/hum_in.svg
   :width: 42px
   :align: middle
@@ -33,9 +37,31 @@ Data icons
   :width: 42px
   :align: middle
 
+.. |di_soil_hum| image:: ../themes/default/data_icons/hum_soil.svg
+  :width: 42px
+  :align: middle
+
+.. |di_soil_temp| image:: ../themes/default/data_icons/temp_soil.svg
+  :width: 42px
+  :align: middle
+
+.. |di_sun| image:: ../themes/default/data_icons/sun.svg
+  :width: 42px
+  :align: middle
+
+.. |di_sun_house| image:: ../themes/default/data_icons/sun_house.svg
+  :width: 42px
+  :align: middle
+
+.. |di_temp| image:: ../themes/default/data_icons/temp.svg
+  :width: 42px
+  :align: middle
+
 +------------------+-----------------------+
 | name             | icon                  |
 +==================+=======================+
+| hum              | |di_hum|              |
++------------------+-----------------------+
 | indoor_hum       | |di_indoor_hum|       |
 +------------------+-----------------------+
 | indoor_temp      | |di_indoor_temp|      |
@@ -47,6 +73,16 @@ Data icons
 | outdoor_temp     | |di_outdoor_temp|     |
 +------------------+-----------------------+
 | pressure         | |di_pressure|         |
++------------------+-----------------------+
+| soil_hum         | |di_soil_hum|         |
++------------------+-----------------------+
+| soil_temp        | |di_soil_temp|        |
++------------------+-----------------------+
+| sun              | |di_sun|              |
++------------------+-----------------------+
+| sun_house        | |di_sun_house|        |
++------------------+-----------------------+
+| temp             | |di_temp|             |
 +------------------+-----------------------+
 
 .. _state_icons:
@@ -71,11 +107,27 @@ State icons
   :width: 42px
   :align: middle
 
-.. |si_circle.s_0| image:: ../themes/default/icons/circle.red.svg
+.. |si_circle.s_0| image:: ../themes/default/icons/circle.grey.svg
   :width: 42px
   :align: middle
 
 .. |si_circle.s_1| image:: ../themes/default/icons/circle.green.svg
+  :width: 42px
+  :align: middle
+
+.. |si_door.s_0| image:: ../themes/default/icons/door.closed.svg
+  :width: 42px
+  :align: middle
+
+.. |si_door.s_1| image:: ../themes/default/icons/door.open.svg
+  :width: 42px
+  :align: middle
+
+.. |si_door_left.s_0| image:: ../themes/default/icons/door_left.closed.svg
+  :width: 42px
+  :align: middle
+
+.. |si_door_left.s_1| image:: ../themes/default/icons/door_left.open.svg
   :width: 42px
   :align: middle
 
@@ -276,6 +328,10 @@ State icons
 +-------------------------+-------------------------+-------------------------+-------------------------+
 | circle                  | |si_circle.s_0|         | |si_circle.s_1|         |                         | 
 +-------------------------+-------------------------+-------------------------+-------------------------+
+| door                    | |si_door.s_0|           | |si_door.s_1|           |                         | 
++-------------------------+-------------------------+-------------------------+-------------------------+
+| door_left               | |si_door_left.s_0|      | |si_door_left.s_1|      |                         | 
++-------------------------+-------------------------+-------------------------+-------------------------+
 | enter                   | |si_enter.s_0|          | |si_enter.s_1|          |                         | 
 +-------------------------+-------------------------+-------------------------+-------------------------+
 | head                    | |si_head.s_0|           | |si_head.s_1|           |                         | 
@@ -335,7 +391,11 @@ circle
   :width: 42px
   :align: middle
 
-.. |spi_circle.s_off| image:: ../themes/default/icons/circle.red.svg
+.. |spi_circle.s_grey| image:: ../themes/default/icons/circle.grey.svg
+  :width: 42px
+  :align: middle
+
+.. |spi_circle.s_off| image:: ../themes/default/icons/circle.grey.svg
   :width: 42px
   :align: middle
 
@@ -343,7 +403,19 @@ circle
   :width: 42px
   :align: middle
 
+.. |spi_circle.s_random| image:: ../themes/default/icons/circle.random.svg
+  :width: 42px
+  :align: middle
+
+.. |spi_circle.s_random2| image:: ../themes/default/icons/random.svg
+  :width: 42px
+  :align: middle
+
 .. |spi_circle.s_red| image:: ../themes/default/icons/circle.red.svg
+  :width: 42px
+  :align: middle
+
+.. |spi_circle.s_white| image:: ../themes/default/icons/circle.white.svg
   :width: 42px
   :align: middle
 
@@ -351,21 +423,29 @@ circle
   :width: 42px
   :align: middle
 
-+------------------+-----------------------+
-| state            | icon                  |
-+==================+=======================+
-| s_blue           | |spi_circle.s_blue|   |
-+------------------+-----------------------+
-| s_green          | |spi_circle.s_green|  |
-+------------------+-----------------------+
-| s_off            | |spi_circle.s_off|    |
-+------------------+-----------------------+
-| s_on             | |spi_circle.s_on|     |
-+------------------+-----------------------+
-| s_red            | |spi_circle.s_red|    |
-+------------------+-----------------------+
-| s_yellow         | |spi_circle.s_yellow| |
-+------------------+-----------------------+
++-------------------+------------------------+
+| state             | icon                   |
++===================+========================+
+| s_blue            | |spi_circle.s_blue|    |
++-------------------+------------------------+
+| s_green           | |spi_circle.s_green|   |
++-------------------+------------------------+
+| s_grey            | |spi_circle.s_grey|    |
++-------------------+------------------------+
+| s_off             | |spi_circle.s_off|     |
++-------------------+------------------------+
+| s_on              | |spi_circle.s_on|      |
++-------------------+------------------------+
+| s_random          | |spi_circle.s_random|  |
++-------------------+------------------------+
+| s_random2         | |spi_circle.s_random2| |
++-------------------+------------------------+
+| s_red             | |spi_circle.s_red|     |
++-------------------+------------------------+
+| s_white           | |spi_circle.s_white|   |
++-------------------+------------------------+
+| s_yellow          | |spi_circle.s_yellow|  |
++-------------------+------------------------+
 
 music
 -----
@@ -405,6 +485,10 @@ star
   :width: 42px
   :align: middle
 
+.. |spi_star.s_green| image:: ../themes/default/icons/star.green.svg
+  :width: 42px
+  :align: middle
+
 .. |spi_star.s_grey| image:: ../themes/default/icons/star.grey.svg
   :width: 42px
   :align: middle
@@ -433,6 +517,10 @@ star
   :width: 42px
   :align: middle
 
+.. |spi_star.s_random2| image:: ../themes/default/icons/random.svg
+  :width: 42px
+  :align: middle
+
 .. |spi_star.s_red| image:: ../themes/default/icons/star.red.svg
   :width: 42px
   :align: middle
@@ -450,6 +538,8 @@ star
 +=====================+==========================+
 | s_blue              | |spi_star.s_blue|        |
 +---------------------+--------------------------+
+| s_green             | |spi_star.s_green|       |
++---------------------+--------------------------+
 | s_grey              | |spi_star.s_grey|        |
 +---------------------+--------------------------+
 | s_music_blue        | |spi_star.s_music_blue|  |
@@ -463,6 +553,8 @@ star
 | s_on                | |spi_star.s_on|          |
 +---------------------+--------------------------+
 | s_random            | |spi_star.s_random|      |
++---------------------+--------------------------+
+| s_random2           | |spi_star.s_random2|     |
 +---------------------+--------------------------+
 | s_red               | |spi_star.s_red|         |
 +---------------------+--------------------------+
