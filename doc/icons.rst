@@ -215,6 +215,14 @@ State icons
   :width: 42px
   :align: middle
 
+.. |si_pump.s_0| image:: ../themes/default/icons/pump.off.svg
+  :width: 42px
+  :align: middle
+
+.. |si_pump.s_1| image:: ../themes/default/icons/pump.on.svg
+  :width: 42px
+  :align: middle
+
 .. |si_reload.s_0| image:: ../themes/default/icons/reload.off.svg
   :width: 42px
   :align: middle
@@ -228,6 +236,14 @@ State icons
   :align: middle
 
 .. |si_snow.s_1| image:: ../themes/default/icons/snow.on.svg
+  :width: 42px
+  :align: middle
+
+.. |si_sprinkler.s_0| image:: ../themes/default/icons/sprinkler.off.svg
+  :width: 42px
+  :align: middle
+
+.. |si_sprinkler.s_1| image:: ../themes/default/icons/sprinkler.on.svg
   :width: 42px
   :align: middle
 
@@ -370,9 +386,13 @@ State icons
 +-------------------------+-------------------------+-------------------------+-------------------------+
 | piano                   | |si_piano.s_0|          | |si_piano.s_1|          |                         | 
 +-------------------------+-------------------------+-------------------------+-------------------------+
+| pump                    | |si_pump.s_0|           | |si_pump.s_1|           |                         | 
++-------------------------+-------------------------+-------------------------+-------------------------+
 | reload                  | |si_reload.s_0|         | |si_reload.s_1|         |                         | 
 +-------------------------+-------------------------+-------------------------+-------------------------+
 | snow                    | |si_snow.s_0|           | |si_snow.s_1|           |                         | 
++-------------------------+-------------------------+-------------------------+-------------------------+
+| sprinkler               | |si_sprinkler.s_0|      | |si_sprinkler.s_1|      |                         | 
 +-------------------------+-------------------------+-------------------------+-------------------------+
 | star                    | |si_star.s_0|           | |si_star.s_1|           |                         | 
 +-------------------------+-------------------------+-------------------------+-------------------------+
