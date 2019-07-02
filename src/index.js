@@ -100,9 +100,12 @@
             params['s'] = this.getAttribute('eva-ui-status-to');
             $eva
               .call('action', action, params)
-              .then(function(result) {})
+              .then(function(result) {
+                el.find('.error_msg').remove();
+              })
               .catch(function(err) {
                 if (is_btn) el.removeClass('busy');
+                el.append($('<span />', {class: 'error_msg'}));
                 server_error(err);
               });
           });
