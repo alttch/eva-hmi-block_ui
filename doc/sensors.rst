@@ -63,7 +63,7 @@ configuration looks like:
 * **decimals** value decimals after comma
 * **params** chart params for `$eva.toolbox.chart
   <https://www.npmjs.com/package/@eva-ics/toolbox>`_ function.
-* **color** chart line color
+* **color** chart line color (HTML color name or hex)
 * **fill** if true, chart will be filled
 * **background-color** chart background color (to fill)
 * **point-radius** chart point radius
@@ -78,6 +78,10 @@ If **color** and other options are not arrays, a single value is used for all
 chart items.
 
 Example:
+
+.. figure:: images/sensor-multiple.png
+    :scale: 100%
+    :alt: Multiple items on a single chart
 
 .. code-block:: yaml
 
