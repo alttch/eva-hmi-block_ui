@@ -1,7 +1,7 @@
 EVA HMI Block UI
 ****************
 
-`Block UI<https://github.com/alttch/eva-hmi-block_ui>`_ is a HMI application
+`Block UI <https://github.com/alttch/eva-hmi-block_ui>`_ is a HMI application
 for `EVA ICS <https://www.eva-ics.com/>`_ which provides a simple but flexible
 user web interface for any EVA ICS setup.
 
