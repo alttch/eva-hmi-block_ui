@@ -17,3 +17,7 @@ https://eva-hmi-block-ui.readthedocs.io/
 
 https://smarthome.demo.eva-ics.com/
 
+### Build from sources
+
+make prepare build
+
