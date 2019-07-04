@@ -81,8 +81,14 @@
   function append_action(el, config, is_btn, item) {
     var action = config.action;
     var a = null;
-    if (!action) action = config.item;
-    if (!action) return;
+    if (!action) {
+      if (is_btn) {
+        action = config.item;
+        if (!action) return;
+      } else {
+        return;
+      }
+    }
     if (config.menu) {
       if (is_btn) el.addClass('menu');
       if (config.menu === true || typeof config.menu == 'number') {
