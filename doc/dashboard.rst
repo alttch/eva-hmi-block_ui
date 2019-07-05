@@ -183,14 +183,14 @@ If *can_off: true* slider option is specified, unit *OFF* action (set status to
 To be displayed, a button must be included in a :ref:`control
 block<control-blocks>`.
 
-Slider action for unit sets its status to *1* (*0* if slider is *OFF*) and
-value to the corresponding slider value.
+* Slider action for unit sets its status to *1* (*0* if slider is *OFF*) and
+  value to the corresponding slider value.
 
-Slider action for logical variable sets its value to the corresponding slider
-value or null if slider is *OFF*.
+* Slider action for logical variable sets its value to the corresponding slider
+  value or null if slider is *OFF*.
 
-Slider action for macro executes it with first argument = slider value (if
-slider is *OFF*, argument is set to *OFF* too).
+* Slider action for macro executes it with first argument = slider value (if
+  slider is *OFF*, argument is set to *OFF* too).
 
 .. _data:
 
