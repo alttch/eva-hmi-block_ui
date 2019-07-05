@@ -25,5 +25,5 @@ clean:
 	rm -rf package-lock.json node_modules
 
 ver-pub:
-	git commit -a -m "version `jq < package.json -r .version`"
+	git commit -a -m "version `jq < package.json -r .version`"; 
 	git push
