@@ -95,10 +95,42 @@
     var before_start = function() {
       el.addClass('busy');
     };
+    var process_result = function() {};
     var after_start = function() {};
     if (!action_item.startsWith('unit:')) {
       after_start = function() {
         el.removeClass('busy');
+      };
+    }
+    if (action_item.startsWith('lmacro:') || action_item.startsWith('unit:')) {
+      process_result = function(result) {
+        if (!result || !result.uuid) {
+          server_error('Action failed');
+        } else {
+          $eva.watch_action(result.uuid, function(a) {
+            if (a.finished) {
+              if (
+                a.exitcode ||
+                (a.status != 'completed' && a.status != 'ignored')
+              ) {
+                server_error(
+                  '<div align="left" width="100%">' +
+                    a.uuid +
+                    '<br />action: ' +
+                    a.item_oid +
+                    '<br />code: ' +
+                    a.exitcode +
+                    '; status: ' +
+                    a.status +
+                    '<br />' +
+                    a.err +
+                    '</div>',
+                  null
+                );
+              }
+            }
+          });
+        }
       };
     }
     if (
@@ -116,36 +148,13 @@
       if (!config.busy || config.busy == 'uuid') {
         after_start = function(result) {
           if (!result || !result.uuid) {
-            server_error('Action failed');
-            on_error();
+            el.removeClass('busy');
           } else {
-            let checker = function() {
-              $eva
-                .call('result', {u: result.uuid})
-                .then(function(result) {
-                  if (result.finished) {
-                    el.removeClass('busy');
-                    if (result.exitcode) {
-                      server_error(
-                        'Action ' +
-                          result.uuid +
-                          ' exit code: ' +
-                          result.exitcode +
-                          '<br />' +
-                          result.err,
-                        null
-                      );
-                    }
-                  } else {
-                    setTimeout(checker, 500);
-                  }
-                })
-                .catch(function(err) {
-                  on_error(err);
-                  server_error(err);
-                });
-            };
-            checker();
+            $eva.watch_action(result.uuid, function(a) {
+              if (a.finished) {
+                el.removeClass('busy');
+              }
+            });
           }
         };
       } else if (config.busy.startsWith('lvar:')) {
@@ -171,6 +180,7 @@
         .call(api_method, action_item, params)
         .then(function(result) {
           after_start(result);
+          process_result(result);
         })
         .catch(function(err) {
           on_error(err);
