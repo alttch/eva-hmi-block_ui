@@ -25,6 +25,7 @@
   var slider_update_funcs = Array();
   var menu_active = false;
   var popover_cbtns = Array();
+  var timers = Array();
 
   function error(msg) {
     throw new Error(msg);
@@ -40,7 +41,7 @@
   }
 
   function server_is_gone(err) {
-    stop_cams();
+    stop_intervals();
     var ct = 10;
     var auto_reconnect = setTimeout(function() {
       $eva.start();
@@ -92,9 +93,13 @@
     var on_error = function() {
       el.removeClass('busy');
     };
-    var before_start = function() {
-      el.addClass('busy');
-    };
+    if (action_item.startsWith('unit:')) {
+      var before_start = function() {};
+    } else {
+      var before_start = function() {
+        el.addClass('busy');
+      };
+    }
     var process_result = function() {};
     var after_start = function() {};
     if (!action_item.startsWith('unit:')) {
@@ -453,18 +458,30 @@
         .appendTo(button);
     }
     var button_value = null;
-    if (btn_config.value !== false) {
+    if (btn_config.value !== false || btn_config.timer) {
       button_value = $('<span />');
       var bv = $('<span />').addClass('value');
       bv.append(button_value);
       var button_value_units = $('<span />');
       bv.append(button_value_units);
       button.append(bv);
-      var value_always = btn_config.value_always;
+      var value_always = btn_config['value-always'];
       var value_units = btn_config.value;
     }
     var item = btn_config.item;
     var istatus = btn_config.status;
+    var timer = btn_config.timer;
+    if (timer) {
+      let timer_func = function() {
+        let exp = $eva.expires_in(timer);
+        if (exp > 0) {
+          button_value.html(seconds_to_pretty_string(exp));
+        } else {
+          button_value.html('');
+        }
+      }
+      timers.push(setInterval(timer_func, 100));
+    }
     if (!istatus) istatus = item;
     button.custom_busy = false;
     append_action(button, btn_config, true, istatus);
@@ -490,15 +507,18 @@
             button.find('.eva_hmi_cbtn_error').remove();
           }
           if (button_value) {
-            if (state.status > 0 || value_always) {
-              button_value.html(state.value);
-              button_value_units.html(value_units);
-            } else {
-              button_value.html('');
-              button_value_units.html('');
+            if (!timer) {
+              if (state.status > 0 || value_always) {
+                button_value.html(state.value);
+                button_value_units.html(value_units);
+              } else {
+                button_value.html('');
+                button_value_units.html('');
+              }
             }
           }
           if (!button.custom_busy) {
+            console.log(1);
             if (state.status != state.nstatus || state.value != state.nvalue) {
               button.addClass('busy');
             } else {
@@ -729,7 +749,7 @@
           .catch(server_is_gone);
       });
       $eva.on('login.failed', function(err) {
-        stop_cams();
+        stop_intervals();
         if (err.code == 2) {
           stop_animation();
           erase_login_cookies();
@@ -799,7 +819,7 @@
     });
     $eva.on('server.restart', function() {
       var ct = 15;
-      stop_cams();
+      stop_intervals();
       $eva.stop(true).catch(err => {});
       $eva.toolbox
         .popup(
@@ -837,9 +857,13 @@
     }
   }
 
-  function stop_cams() {
+  function stop_intervals() {
     while (camera_reloader.length > 0) {
-      var reloader = camera_reloader.pop();
+      let reloader = camera_reloader.pop();
+      clearInterval(reloader);
+    }
+    while (timers.length > 0) {
+      let reloader = timers.pop();
       clearInterval(reloader);
     }
   }
@@ -1003,7 +1027,7 @@
     clear_layout();
     $eva.hmi.prepare_layout();
     $eva.hmi.top_bar();
-    stop_cams();
+    stop_intervals();
     chart_creators = Array();
     if ($(window).width() < 768) {
       draw_compact_layout();
@@ -1497,6 +1521,27 @@
   function erase_login_cookies() {
     window.$cookies.erase('eva_hmi_login');
     window.$cookies.erase('eva_hmi_password');
+  }
+
+  function seconds_to_pretty_string(seconds, max) {
+    seconds = seconds.toFixed(1);
+    var result = '';
+
+    if (seconds >= 3600) {
+      var hour = Math.floor(seconds / 3600);
+      var min = ('0' + Math.floor((seconds % 3600) / 60)).slice(-2);
+      result = hour + ':' + min;
+    } else if ((seconds >= 60 && seconds < 3600) || max === 'minute') {
+      var min = Math.floor(seconds / 60);
+      var sec = ('0' + Math.floor(seconds % 60)).slice(-2);
+      result = min + ':' + sec;
+    } else if (seconds < 60 || max === 'second') {
+      var sec = Math.floor(seconds);
+      var mill = Math.round((seconds - sec) * 10);
+      result = sec + '.' + mill;
+    }
+
+    return result;
   }
 
   function logout() {

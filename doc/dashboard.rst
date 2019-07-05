@@ -72,6 +72,9 @@ configuration looks like:
         #action: lvar:security/alarm
         #action_params:
         #value:
+        #value-always:
+        #timer:
+        #busy:
 
 * **icon** button :ref:`icon<state_icons>` of class
   *.eva_hmi_cbtn.i_<icon_name>*. The class should have subclasses for the
@@ -100,6 +103,13 @@ configuration looks like:
   *"°C"*, it will display units after the state value. As YAML doesn't like
   special characters, don't forget to quote it. If you don't want to display
   unit value, set this parameter to *false*
+
+* **value-always** Setting this option to true will force HMI to display unit
+  state value always, even if unit status is *OFF*.
+
+* **timer** any button can display a timer if you set this option to
+  corresponding timer lvar. Note: if this option is used, unit state value is
+  not displayed.
 
 * **busy** *busy* state checking behaviour (for units and macros)
   
