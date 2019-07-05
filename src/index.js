@@ -95,9 +95,12 @@
     var before_start = function() {
       el.addClass('busy');
     };
-    var after_start = function() {
-      el.removeClass('busy');
-    };
+    var after_start = function() {};
+    if (!action_item.startsWith('unit:')) {
+      after_start = function() {
+        el.removeClass('busy');
+      };
+    }
     if (
       (config.busy || (api_method == 'run' && config.busy !== false)) &&
       is_btn &&
@@ -147,26 +150,29 @@
         };
       } else if (config.busy.startsWith('lvar:')) {
         after_start = function(result) {
+          let state = $eva.state(config.busy);
+          if (!state.status || !state.value || state.value == '0') {
+            el.removeClass('busy');
+          }
           if (!result || !result.uuid) {
             server_error(err);
             on_error();
-          } else {
-            let checker = function() {
-              let state = $eva.state(config.busy);
-              if (state && state.status && state.value && state.value != '0') {
-                setTimeout(checker, 500);
-              } else {
-                el.removeClass('busy');
-              }
-            };
-            setTimeout(checker, 2000);
           }
         };
+        // set current busy on el
+        $eva.watch(config.busy, function(state) {
+          if (state.status && state.value && state.value != '0') {
+            el.addClass('busy');
+          } else {
+            el.removeClass('busy');
+          }
+        });
       } else {
         $eva.hmi.error('unknown busy class: ' + config.busy);
       }
     }
     return function() {
+      if (el.hasClass('busy')) return;
       before_start();
       $eva
         .call(api_method, action_item, params)
@@ -237,7 +243,7 @@
         e.preventDefault();
         e.stopPropagation();
         $('[data-toggle="popover"]').popover('hide');
-        el.popover('show');
+        if (!el.hasClass('busy')) el.popover('show');
       };
     } else if (config.slider && is_btn) {
       el.addClass('menu');
@@ -354,7 +360,7 @@
         e.preventDefault();
         e.stopPropagation();
         $('[data-toggle="popover"]').popover('hide');
-        el.popover('show');
+        if (!el.hasClass('busy')) el.popover('show');
       };
     } else if (action.startsWith('unit:')) {
       if (config.action_params && 's' in config.action_params) {
