@@ -18,7 +18,7 @@ done:
 	@which figlet > /dev/null && figlet -f slant "DONE" || echo -e "-----------------\nDONE"
 
 pub:
-	npm version patch
+	npm version --no-git-tag-version patch
 	npm publish --access public
 
 clean:
