@@ -1,6 +1,6 @@
 {
   "name": "@eva-ics/hmi-block_ui",
-  "version": "0.1.18",
+  "version": "0.1.19",
   "description": "Block UI for EVA ICS",
   "scripts": {
     "test": "echo 'Error: no test specified' && exit 1",
