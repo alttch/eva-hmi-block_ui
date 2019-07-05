@@ -159,14 +159,7 @@
             on_error();
           }
         };
-        // set current busy on el
-        $eva.watch(config.busy, function(state) {
-          if (state.status && state.value && state.value != '0') {
-            el.addClass('busy');
-          } else {
-            el.removeClass('busy');
-          }
-        });
+        set_el_busy_lvar(config.busy, el);
       } else {
         $eva.hmi.error('unknown busy class: ' + config.busy);
       }
@@ -186,6 +179,18 @@
     };
   }
 
+  function set_el_busy_lvar(lvar, el) {
+    if (!lvar || !lvar.startsWith('lvar:')) return false;
+    $eva.watch(lvar, function(state) {
+      if (state.status && state.value && state.value != '0') {
+        el.addClass('busy');
+      } else {
+        el.removeClass('busy');
+      }
+    });
+    el.custom_busy = true;
+  }
+
   function append_action(el, config, is_btn, item) {
     var action = config.action;
     var a = null;
@@ -199,6 +204,7 @@
     }
     if (config.menu) {
       if (is_btn) el.addClass('menu');
+      set_el_busy_lvar(config.busy, el);
       if (config.menu === true || typeof config.menu == 'number') {
         var ms;
         config.menu === true ? (ms = 2) : (ms = config.menu);
@@ -247,6 +253,7 @@
       };
     } else if (config.slider && is_btn) {
       el.addClass('menu');
+      set_el_busy_lvar(config.busy, el);
       var min = config.slider.min;
       var max = config.slider.max;
       var step = config.slider.step;
