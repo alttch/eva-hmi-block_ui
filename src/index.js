@@ -204,7 +204,6 @@
     }
     if (config.menu) {
       if (is_btn) el.addClass('menu');
-      set_el_busy_lvar(config.busy, el);
       if (config.menu === true || typeof config.menu == 'number') {
         var ms;
         config.menu === true ? (ms = 2) : (ms = config.menu);
