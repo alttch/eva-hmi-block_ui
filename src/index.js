@@ -477,10 +477,20 @@
           }
           button.attr(
             'class',
-            button.attr('class').replace(/\bs_\d*/g, 's_' + state.status)
+            button
+              .attr('class')
+              .replace(
+                /\bs_\d*/g,
+                's_' + (state.status >= 0 ? state.status : 0)
+              )
           );
+          if (state.status == -1) {
+            button.append($('<span />', {class: 'eva_hmi_cbtn_error'}));
+          } else {
+            button.find('.eva_hmi_cbtn_error').remove();
+          }
           if (button_value) {
-            if (state.status || value_always) {
+            if (state.status > 0 || value_always) {
               button_value.html(state.value);
               button_value_units.html(value_units);
             } else {
