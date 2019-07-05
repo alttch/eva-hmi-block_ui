@@ -472,14 +472,15 @@
     var istatus = btn_config.status;
     var timer = btn_config.timer;
     if (timer) {
+      let timer_max = btn_config['timer-max'];
       let timer_func = function() {
         let exp = $eva.expires_in(timer);
         if (exp > 0) {
-          button_value.html(seconds_to_pretty_string(exp));
+          button_value.html(seconds_to_pretty_string(exp, timer_max));
         } else {
           button_value.html('');
         }
-      }
+      };
       timers.push(setInterval(timer_func, 100));
     }
     if (!istatus) istatus = item;
@@ -1527,18 +1528,23 @@
     seconds = seconds.toFixed(1);
     var result = '';
 
-    if (seconds >= 3600) {
-      var hour = Math.floor(seconds / 3600);
-      var min = ('0' + Math.floor((seconds % 3600) / 60)).slice(-2);
-      result = hour + ':' + min;
-    } else if ((seconds >= 60 && seconds < 3600) || max === 'minute') {
-      var min = Math.floor(seconds / 60);
-      var sec = ('0' + Math.floor(seconds % 60)).slice(-2);
-      result = min + ':' + sec;
-    } else if (seconds < 60 || max === 'second') {
+    var spacer = parseInt(seconds * 2) % 2 ? ':' : '&nbsp;';
+
+    spacer =
+      '<div style="width: 5px; display: inline-block">' + spacer + '</div>';
+
+    if (seconds < 60 || max == 'seconds') {
       var sec = Math.floor(seconds);
       var mill = Math.round((seconds - sec) * 10);
       result = sec + '.' + mill;
+    } else if ((seconds >= 60 && seconds < 3600) || max == 'minutes') {
+      var min = Math.floor(seconds / 60);
+      var sec = ('0' + Math.floor(seconds % 60)).slice(-2);
+      result = min + spacer + sec;
+    } else {
+      var hour = Math.floor(seconds / 3600);
+      var min = ('0' + Math.floor((seconds % 3600) / 60)).slice(-2);
+      result = hour + spacer + min;
     }
 
     return result;

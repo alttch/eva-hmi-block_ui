@@ -74,6 +74,7 @@ configuration looks like:
         #value:
         #value-always:
         #timer:
+        #timer-max:
         #busy:
 
 * **icon** button :ref:`icon<state_icons>` of class
@@ -110,6 +111,9 @@ configuration looks like:
 * **timer** any button can display a timer if you set this option to
   corresponding timer lvar. Note: if this option is used, unit state value is
   not displayed.
+
+* **timer-max** max time units displayed on timer. Default is *hours*, can be
+  changed to *minutes* or *seconds*.
 
 * **busy** *busy* state checking behaviour (for units and macros)
   
