@@ -106,15 +106,16 @@ configuration looks like:
 If button action item is unit or macro, the button becomes busy until action is
 finished. For units action is busy when their *new state != current state*.
 Parameter **busy** allows to modify *busy* status logic: setting it to *uuid*
-will ask HMI to check until action is finished.
+will ask HMI to check until action is finished checking action uuid instead of
+unit state.
 
 Default *busy* state logic for macros is *uuid*, setting it to *false* turns
 *busy* state checking for macros completely off.
 
-Setting *busy* to *lvar:group/lvar_id* will tell HMI to check specified lvar
-state and turn off *busy* state on button when the state is off (*status != 1*,
-value is null or is zero). This allows to use timers and flags as *busy* state
-indicators for the complex actions.
+Setting *busy* option to logical variable (*lvar:group/lvar_id*) will tell HMI
+to check specified lvar state and turn off *busy* state on button when the
+state is off (*status != 1*, value is null or is zero). This allows to use
+timers and flags as *busy* state indicators for the complex actions.
 
 Button with menu
 ----------------
