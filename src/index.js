@@ -204,6 +204,7 @@
     }
     if (config.menu) {
       if (is_btn) el.addClass('menu');
+      set_el_busy_lvar(config.busy, el);
       if (config.menu === true || typeof config.menu == 'number') {
         var ms;
         config.menu === true ? (ms = 2) : (ms = config.menu);
@@ -248,7 +249,7 @@
         e.preventDefault();
         e.stopPropagation();
         $('[data-toggle="popover"]').popover('hide');
-        if (!el.hasClass('busy')) el.popover('show');
+        if (!el.hasClass('busy') || config['allow-if-busy']) el.popover('show');
       };
     } else if (config.slider && is_btn) {
       el.addClass('menu');
@@ -366,7 +367,7 @@
         e.preventDefault();
         e.stopPropagation();
         $('[data-toggle="popover"]').popover('hide');
-        if (!el.hasClass('busy')) el.popover('show');
+        if (!el.hasClass('busy') || config['allow-if-busy']) el.popover('show');
       };
     } else if (action.startsWith('unit:')) {
       if (config.action_params && 's' in config.action_params) {

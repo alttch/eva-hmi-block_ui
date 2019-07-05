@@ -128,9 +128,13 @@ Button can display additional pop-over menu:
         icon: window_right
         item: unit:windows/room2
         menu: 3
+        allow-if-busy: true
 
 *menu: 3* means display menu with 3 item states: 0, 1 and 2. If you want to
 display menu with only 2 states, you may just set *menu: true*.
+
+Option **allow-if-busy** allows to open menu even if the state item has *busy*
+state.
 
 The button can have a complex menu as well which contains other buttons:
 
@@ -166,6 +170,7 @@ moved.
     icon: thermostat
     item: unit:thermo/room2
     value: "°C"
+    allow-if-busy: true
     slider:
       min: 15
       max: 25
@@ -183,6 +188,9 @@ If *can_off: true* slider option is specified, unit *OFF* action (set status to
 
 To be displayed, a button must be included in a :ref:`control
 block<control-blocks>`.
+
+Option **allow-if-busy** allows to open slider even if the state item has
+*busy* state.
 
 * Slider action for unit sets its status to *1* (*0* if slider is *OFF*) and
   value to the corresponding slider value.
