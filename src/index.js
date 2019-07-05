@@ -417,6 +417,12 @@
     var data_item_value = $('<span />', {
       id: 'eva_hmi_data_value_' + data_item_id
     });
+    if ('title' in data_item_config) {
+      $('<span />')
+        .html(data_item_config['title'] + ':')
+        .addClass('eva_hmi_data_item_title')
+        .appendTo(data_item);
+    }
     data_item.append(data_item_value);
     $('<span />')
       .html(data_item_config['units'])
@@ -905,10 +911,14 @@
         'data block ' + block_id + ' is not defined or contains no elements'
       );
     }
-    $.each(window.eva_hmi_config_data_blocks[block_id]['elements'], function(
-      i,
-      v
-    ) {
+    var config = window.eva_hmi_config_data_blocks[block_id];
+    if ('size' in config) {
+      dh.addClass('size_' + config['size']);
+    }
+    if ('class' in config) {
+      dh.addClass(config['class']);
+    }
+    $.each(config['elements'], function(i, v) {
       dh.append(create_data_item(v));
     });
     append_action(dh, window.eva_hmi_config_data_blocks[block_id], false);

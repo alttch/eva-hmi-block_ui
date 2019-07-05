@@ -646,6 +646,10 @@ html, body {
   padding-top: 10px;
   order: 10;
 }
+.eva_hmi_data_item_title {
+  color: #999;
+  font-weight: bold;
+}
 .eva_hmi_data_holder {
   display: flex;
   flex-wrap: wrap;
@@ -664,6 +668,16 @@ html, body {
   color: #808080;
   background-position: 0 0;
   background-repeat: no-repeat;
+}
+.eva_hmi_data_holder.size_medium > div {
+  height: 49px;
+  padding: 10px 0 0 45px;
+  font-size: 30px;
+}
+.eva_hmi_data_holder.size_large > div {
+  height: 95px;
+  padding: 10px 0 0 82px;
+  font-size: 70px;
 }
 .eva_hmi_sysblock {
   width: 100%;
