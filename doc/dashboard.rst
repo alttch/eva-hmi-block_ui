@@ -101,6 +101,21 @@ configuration looks like:
   special characters, don't forget to quote it. If you don't want to display
   unit value, set this parameter to *false*
 
+* **busy** *busy* state checking behaviour (for units and macros)
+  
+If button action item is unit or macro, the button becomes busy until action is
+finished. For units action is busy when their *new state != current state*.
+Parameter **busy** allows to modify *busy* status logic: setting it to *uuid*
+will ask HMI to check until action is finished.
+
+Default *busy* state logic for macros is *uuid*, setting it to *false* turns
+*busy* state checking for macros completely off.
+
+Setting *busy* to *lvar:group/lvar_id* will tell HMI to check specified lvar
+state and turn off *busy* state on button when the state is off (*status != 1*,
+value is null or is zero). This allows to use timers and flags as *busy* state
+indicators for the complex actions.
+
 Button with menu
 ----------------
 
@@ -251,6 +266,8 @@ A data block groups :ref:`data<data>` items and looks like:
 .. code-block:: yaml
 
   room1:
+    #size: medium
+    #css-class: mycustomclass
     elements:
       - temp1_int
       - hum1_int
@@ -258,6 +275,9 @@ A data block groups :ref:`data<data>` items and looks like:
 
 .. figure:: images/data-block.png
     :scale: 100%
+
+* **size** data block size (small, medium or large, default: small)
+* **css-class** custom data block CSS class
 
 If on-click action is specified for the data block, it overrides actions,
 specified for the single data items.

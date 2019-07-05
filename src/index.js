@@ -30,9 +30,12 @@
     throw new Error(msg);
   }
 
-  function server_error(err) {
+  function server_error(err, wait) {
+    var t = wait !== undefined ? wait : 2;
+    var msg = err.message;
+    if (!msg) msg = err;
     $eva.toolbox
-      .popup('eva_hmi_popup', 'error', 'ERROR', err.message, {ct: 2})
+      .popup('eva_hmi_popup', 'error', 'ERROR', msg, {ct: t})
       .catch(err => {});
   }
 
@@ -78,6 +81,105 @@
     return cblk;
   }
 
+  function create_api_action(
+    api_method,
+    action_item,
+    params,
+    el,
+    config,
+    is_btn
+  ) {
+    var on_error = function() {
+      el.removeClass('busy');
+    };
+    var before_start = function() {
+      el.addClass('busy');
+    };
+    var after_start = function() {
+      el.removeClass('busy');
+    };
+    if (
+      (config.busy || (api_method == 'run' && config.busy !== false)) &&
+      is_btn &&
+      !action_item.startsWith('lvar:')
+    ) {
+      after_start = function(result) {
+        if (!result || !result.uuid) {
+          server_error(err);
+          on_error();
+        }
+      };
+      el.custom_busy = true;
+      if (!config.busy || config.busy == 'uuid') {
+        after_start = function(result) {
+          if (!result || !result.uuid) {
+            server_error('Action failed');
+            on_error();
+          } else {
+            let checker = function() {
+              $eva
+                .call('result', {u: result.uuid})
+                .then(function(result) {
+                  if (result.finished) {
+                    el.removeClass('busy');
+                    if (result.exitcode) {
+                      server_error(
+                        'Action ' +
+                          result.uuid +
+                          ' exit code: ' +
+                          result.exitcode +
+                          '<br />' +
+                          result.err,
+                        null
+                      );
+                    }
+                  } else {
+                    setTimeout(checker, 500);
+                  }
+                })
+                .catch(function(err) {
+                  on_error(err);
+                  server_error(err);
+                });
+            };
+            checker();
+          }
+        };
+      } else if (config.busy.startsWith('lvar:')) {
+        after_start = function(result) {
+          if (!result || !result.uuid) {
+            server_error(err);
+            on_error();
+          } else {
+            let checker = function() {
+              let state = $eva.state(config.busy);
+              if (state && state.status && state.value && state.value != '0') {
+                setTimeout(checker, 500);
+              } else {
+                el.removeClass('busy');
+              }
+            };
+            setTimeout(checker, 2000);
+          }
+        };
+      } else {
+        $eva.hmi.error('unknown busy class: ' + config.busy);
+      }
+    }
+    return function() {
+      before_start();
+      $eva
+        .call(api_method, action_item, params)
+        .then(function(result) {
+          after_start(result);
+        })
+        .catch(function(err) {
+          on_error(err);
+          server_error(err);
+        });
+    };
+  }
+
   function append_action(el, config, is_btn, item) {
     var action = config.action;
     var a = null;
@@ -104,13 +206,15 @@
           b.attr('eva-ui-status-to', i);
           b.on('click', function() {
             params['s'] = this.getAttribute('eva-ui-status-to');
-            $eva
-              .call('action', action, params)
-              .then(function(result) {})
-              .catch(function(err) {
-                if (is_btn) el.removeClass('busy');
-                server_error(err);
-              });
+            let afunc = create_api_action(
+              'action',
+              action,
+              params,
+              el,
+              config,
+              is_btn
+            );
+            afunc();
           });
           b.appendTo(mc);
         }
@@ -181,27 +285,27 @@
             params['s'] = 1;
             params['v'] = val;
           }
-          $eva
-            .call('action', action, params)
-            .then(function() {})
-            .catch(server_error);
+          let afunc = create_api_action(
+            'action',
+            action,
+            params,
+            el,
+            config,
+            is_btn
+          );
+          afunc();
         } else if (action.startsWith('lvar:')) {
           var v;
-          if (val < min) {
-            v = null;
-          } else {
-            v = val;
-          }
-          if (is_btn) el.addClass('busy');
-          $eva
-            .call('set', action, v)
-            .then(function() {
-              if (is_btn) el.removeClass('busy');
-            })
-            .catch(function(err) {
-              if (is_btn) el.removeClass('busy');
-              server_error(err);
-            });
+          v = val < min ? null : val;
+          let afunc = create_api_action(
+            'set',
+            action,
+            {v: v},
+            el,
+            config,
+            is_btn
+          );
+          afunc();
         } else if (action.startsWith('lmacro:')) {
           var params = $.extend({}, config.action_params);
           if (val < min) {
@@ -209,16 +313,15 @@
           } else {
             params['a'] = val;
           }
-          if (is_btn) el.addClass('busy');
-          $eva
-            .call('run', action, params)
-            .then(function() {
-              if (is_btn) el.removeClass('busy');
-            })
-            .catch(function(err) {
-              if (is_btn) el.removeClass('busy');
-              server_error(err);
-            });
+          let afunc = create_api_action(
+            'run',
+            action,
+            params,
+            el,
+            config,
+            is_btn
+          );
+          afunc();
         }
       });
       slider_update_funcs[item] = function(state) {
@@ -255,63 +358,41 @@
       };
     } else if (action.startsWith('unit:')) {
       if (config.action_params && 's' in config.action_params) {
-        a = function() {
-          $eva
-            .call('action', action, config.action_params)
-            .then(function() {})
-            .catch(server_error);
-        };
+        a = create_api_action(
+          'action',
+          action,
+          config.action_params,
+          el,
+          config,
+          is_btn
+        );
       } else {
-        a = function() {
-          $eva
-            .call('action_toggle', action, config.action_params)
-            .then(function(result) {})
-            .catch(server_error);
-        };
+        a = create_api_action(
+          'action_toggle',
+          action,
+          config.action_params,
+          el,
+          config,
+          is_btn
+        );
       }
     } else if (action.startsWith('lvar:')) {
       if (config.action_params && 'v' in config.action_params) {
-        a = function() {
-          if (is_btn) el.addClass('busy');
-          $eva
-            .call('set', action, config.action_params)
-            .then(function() {
-              if (is_btn) el.removeClass('busy');
-            })
-            .catch(function(err) {
-              if (is_btn) el.removeClass('busy');
-              server_error(err);
-            });
-        };
+        a = create_api_action(
+          'set',
+          action,
+          config.action_params,
+          el,
+          config,
+          is_btn
+        );
       } else {
-        a = function() {
-          if (is_btn) el.addClass('busy');
-          $eva
-            .call('toggle', action)
-            .then(function() {
-              if (is_btn) el.removeClass('busy');
-            })
-            .catch(function(err) {
-              if (is_btn) el.removeClass('busy');
-              server_error(err);
-            });
-        };
+        a = create_api_action('toggle', action, null, el, config, is_btn);
       }
     } else if (action.startsWith('lmacro:')) {
       if (is_btn) el.addClass('gear');
-      a = function() {
-        if (is_btn) el.addClass('busy');
-        var params = $.extend({}, config.action_params);
-        $eva
-          .call('run', action, params)
-          .then(function() {
-            if (is_btn) el.removeClass('busy');
-          })
-          .catch(function(err) {
-            if (is_btn) el.removeClass('busy');
-            server_error(err);
-          });
-      };
+      var params = $.extend({}, config.action_params);
+      a = create_api_action('run', action, params, el, config, is_btn);
     } else if (action.startsWith('url:')) {
       a = function() {
         document.location = action.substring(4);
@@ -362,6 +443,7 @@
     var item = btn_config.item;
     var istatus = btn_config.status;
     if (!istatus) istatus = item;
+    button.custom_busy = false;
     append_action(button, btn_config, true, istatus);
     if (istatus) {
       if (istatus.startsWith('unit:')) {
@@ -383,10 +465,12 @@
               button_value_units.html('');
             }
           }
-          if (state.status != state.nstatus || state.value != state.nvalue) {
-            button.addClass('busy');
-          } else {
-            button.removeClass('busy');
+          if (!button.custom_busy) {
+            if (state.status != state.nstatus || state.value != state.nvalue) {
+              button.addClass('busy');
+            } else {
+              button.removeClass('busy');
+            }
           }
         });
       } else if (istatus.startsWith('lvar:')) {
@@ -915,8 +999,8 @@
     if ('size' in config) {
       dh.addClass('size_' + config['size']);
     }
-    if ('class' in config) {
-      dh.addClass(config['class']);
+    if ('css-class' in config) {
+      dh.addClass(config['css-class']);
     }
     $.each(config['elements'], function(i, v) {
       dh.append(create_data_item(v));
