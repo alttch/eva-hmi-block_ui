@@ -51,6 +51,11 @@ motd
 
 "Message of the day". If present, will be shown on the login page.
 
+info-level
+----------
+
+Set to *warning* to disable info toasts (default is *info*).
+
 .. _buttons:
 
 buttons

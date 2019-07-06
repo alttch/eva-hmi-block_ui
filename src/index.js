@@ -9,6 +9,9 @@
   require('bootstrap/dist/css/bootstrap.min.css');
   require('swiped-events');
 
+  const VanillaToasts = require('vanillatoasts');
+  require('vanillatoasts/vanillatoasts.css');
+
   require('@eva-ics/framework');
   require('@eva-ics/toolbox');
 
@@ -31,13 +34,16 @@
     throw new Error(msg);
   }
 
-  function server_error(err, wait) {
-    var t = wait !== undefined ? wait : 2;
+  function server_error(err, wait, title) {
+    var t = wait !== undefined ? wait : 2000;
     var msg = err.message;
     if (!msg) msg = err;
-    $eva.toolbox
-      .popup('eva_hmi_popup', 'error', 'ERROR', msg, {ct: t})
-      .catch(err => {});
+    let toast = VanillaToasts.create({
+      title: title ? title : 'Error',
+      type: 'error',
+      text: msg,
+      timeout: t
+    });
   }
 
   function server_is_gone(err) {
@@ -82,6 +88,16 @@
     return cblk;
   }
 
+  function success(text, title) {
+    if (window.eva_hmi_config_info_level != 'info') return;
+    let toast = VanillaToasts.create({
+      title: title ? title : 'Completed',
+      type: 'success',
+      text: text ? text : 'Command successful',
+      timeout: 2000
+    });
+  }
+
   function create_api_action(
     api_method,
     action_item,
@@ -105,6 +121,7 @@
     if (!action_item.startsWith('unit:')) {
       after_start = function() {
         el.removeClass('busy');
+        success();
       };
     }
     if (action_item.startsWith('lmacro:') || action_item.startsWith('unit:')) {
@@ -130,8 +147,11 @@
                     '<br />' +
                     a.err +
                     '</div>',
-                  null
+                  null,
+                  'Action failed'
                 );
+              } else {
+                success('Action finished');
               }
             }
           });
@@ -519,7 +539,6 @@
             }
           }
           if (!button.custom_busy) {
-            console.log(1);
             if (state.status != state.nstatus || state.value != state.nvalue) {
               button.addClass('busy');
             } else {
@@ -614,6 +633,11 @@
     }
     if ('class' in window.eva_hmi_config) {
       window.eva_hmi_config_class = window.eva_hmi_config['class'];
+    }
+    if ('info-level' in window.eva_hmi_config) {
+      window.eva_hmi_config_info_level = window.eva_hmi_config['info-level'];
+    } else {
+      window.eva_hmi_config_info_level = 'info';
     }
     if ('title' in window.eva_hmi_config) {
       window.eva_hmi_config_title = window.eva_hmi_config['title'];
@@ -880,6 +904,7 @@
     topbar.append(create_sysblock(true, 'eva_hmi_top_bar_sysblock'));
     content_holder.addClass('with_topbar');
     content_holder.append(topbar);
+    $('#vanillatoasts-container').css('top', '35px');
     var menu_container = $('<div />', {id: 'eva_hmi_menu_container'});
     var menu_holder = $('<div />', {id: 'eva_hmi_menu', 'data-toggle': 'menu'});
     var menu = $('<div />', {class: 'eva_hmi_menu_holder'});
