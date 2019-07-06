@@ -143,8 +143,8 @@ as for multiple items chart:
 
 .. note::
 
-    Axis X is always formed from the last timeframe. If you want to change this,
-    put "t" before the necessary timeframe, e.g.: t2D:1D
+    Axis X is always formed from the first timeframe. If you want to change
+    this, put "t" before the necessary timeframe, e.g.: t2D:1D
 
 Multiple items and multiple timeframes
 --------------------------------------
