@@ -618,6 +618,19 @@
 
   function init() {
     initialized = true;
+    if (!$eva.in_evaHI) {
+      document.addEventListener('swiped-right', function(e) {
+        if (!menu_active) {
+          open_menu();
+        }
+      });
+
+      document.addEventListener('swiped-left', function(e) {
+        if (menu_active) {
+          close_menu();
+        }
+      });
+    }
     if (!window.eva_hmi_config) {
       error('HMI config not loaded');
     }
@@ -994,18 +1007,6 @@
     return menu_item;
   }
 
-  document.addEventListener('swiped-right', function(e) {
-    if (!menu_active) {
-      open_menu();
-    }
-  });
-
-  document.addEventListener('swiped-left', function(e) {
-    if (menu_active) {
-      close_menu();
-    }
-  });
-
   function toggle_menu() {
     if (menu_active) {
       close_menu();
@@ -1150,7 +1151,7 @@
     if (Array.isArray(config['params']['timeframe'])) {
       count *= config['params']['timeframe'].length;
     }
-    for (let i=0; i< count; i++) {
+    for (let i = 0; i < count; i++) {
       if (Array.isArray(config['label'])) {
         var c_label = config['label'][i];
       } else {
@@ -1187,7 +1188,7 @@
         backgroundColor: c_background
       };
       chart_cfg.data.datasets.push(dataset);
-    };
+    }
     if (config['cfg'] && config['cfg'] != 'default') {
       $eva.hmi.format_chart_config(config['cfg'], chart_cfg);
     }
