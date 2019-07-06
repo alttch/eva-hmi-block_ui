@@ -1146,7 +1146,11 @@
       },
       options: $.extend({}, eva_hmi_config_chart_options)
     };
-    $.each(item, function(i, v) {
+    var count = item.length;
+    if (Array.isArray(config['params']['timeframe'])) {
+      count *= config['params']['timeframe'].length;
+    }
+    for (let i=0; i< count; i++) {
       if (Array.isArray(config['label'])) {
         var c_label = config['label'][i];
       } else {
@@ -1183,7 +1187,7 @@
         backgroundColor: c_background
       };
       chart_cfg.data.datasets.push(dataset);
-    });
+    };
     if (config['cfg'] && config['cfg'] != 'default') {
       $eva.hmi.format_chart_config(config['cfg'], chart_cfg);
     }

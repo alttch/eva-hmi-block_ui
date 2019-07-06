@@ -110,6 +110,51 @@ Example:
 Note that upper chart items override lower, so e.g. if you have one item
 without fill and other with, place the first one before (as in example above)
 
+Chart with multiple timeframes
+------------------------------
+
+If you want to display data e.g. for today and yesterday on a single chart,
+specify timeframe param as an array. Other configuration options are the same
+as for multiple items chart:
+
+.. code-block:: yaml
+
+  temp:
+    icon: temp
+    item: sensor:env/temp_ext
+    title: Temperature
+    cfg: default
+    units: "°C"
+    color:
+        - blue
+        - orange
+    fill:
+        - "false"
+        - "start"
+    background-color: orange
+    point-radius: 0
+    decimals: 0
+    params:
+      timeframe:
+        - 2D:1D
+        - 1D
+      fill: 30T:1
+      prop: value
+
+.. note::
+
+    Axis X is always formed from the last timeframe. If you want to change this,
+    put "t" before the necessary timeframe, e.g.: t2D:1D
+
+Multiple items and multiple timeframes
+--------------------------------------
+
+If multiple timeframes and multiple items are specified, chart data is filled
+as: first timeframe for all items, second timeframe for all items etc. So the
+above config would require 4 x colors (first two for 2 items and the first
+timeframe, and another 2 for 2 items and the second one), 4 x fills (or one
+same fill option for all, e.g. "false" to display 4 lines) etc.
+
 layout
 ======
 
