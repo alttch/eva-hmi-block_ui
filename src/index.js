@@ -1304,11 +1304,13 @@
         }
       }
     } else if (window.eva_hmi_config_class == 'sensors') {
-      $('<a />')
-        .attr('href', window.eva_hmi_config_main_page)
-        .addClass('eva_hmi_close_btn')
-        .addClass('secondary_page')
-        .appendTo(content_holder);
+      if (!$eva.in_evaHI) {
+        $('<a />')
+          .attr('href', window.eva_hmi_config_main_page)
+          .addClass('eva_hmi_close_btn')
+          .addClass('secondary_page')
+          .appendTo(content_holder);
+      }
       $.each(window.eva_hmi_config_layout['charts'], function(i, v) {
         var chart = create_chart(v['id'], v['reload']);
         content_holder.append(chart);
