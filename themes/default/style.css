@@ -174,6 +174,7 @@ html, body {
   height: 100%;
   align-items: center;
   display: none;
+  overflow: hidden;
 }
 .eva_hmi_motd {
   font-size: 14px;
@@ -338,13 +339,19 @@ html, body {
 	box-shadow: none;
 }
 
-.eva_hmi_bg {
+.eva_hmi_container {
   width: 100%;
   min-height: 100%;
   padding-bottom: 20px;
-  background: url('images/patt.gif') 0 0;
 }
-.eva_hmi_bg.bg_sensors {
+.eva_hmi_bg {
+  width: 100%;
+  position: fixed;
+  min-height: 100%;
+  background: url('images/patt.gif') 0 0;
+  z-index: -1;
+}
+.eva_hmi_container.sensors {
   position: relative;
   width: 100%;
   padding: 5px 25px 25px 25px;
@@ -786,7 +793,7 @@ html, body {
   .eva_hmi_bar {
     width: 100%;
   }
-  .eva_hmi_bg.bg_sensors {
+  .eva_hmi_container.sensors {
     padding: 5px 15px 20px 15px
   }
   .eva_hmi_close_btn.secondary_page {

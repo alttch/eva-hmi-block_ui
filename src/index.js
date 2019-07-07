@@ -764,12 +764,13 @@
           .html(window.eva_hmi_config_motd);
         $('#eva_hmi_login_form').append(motd);
       }
-      var bg = $('<div />').addClass('eva_hmi_bg');
+      var cnt = $('<div />').addClass('eva_hmi_container');
       var main = $('<div />', {id: 'eva_hmi_main'});
       var container = $('<div />').addClass('container');
       var row = $('<div />').addClass('row');
-      bg.appendTo('body');
-      main.appendTo(bg);
+      $('<div />').addClass('eva_hmi_bg').appendTo('body');
+      cnt.appendTo('body');
+      main.appendTo(cnt);
       container.appendTo(main);
       row.appendTo(container);
       content_holder = $('<div />').addClass('eva_hmi_content_holder');
@@ -821,16 +822,17 @@
       $eva.on('login.failed', function(err) {
         document.location = window.eva_hmi_config_main_page;
       });
-      var bg = $('<div />')
-        .addClass('eva_hmi_bg')
-        .addClass('bg_sensors');
+      var cnt = $('<div />')
+        .addClass('eva_hmi_container')
+        .addClass('sensors');
       content_holder = $('<div />').addClass('eva_hmi_content_holder_sensors');
       content_holder.hide();
-      content_holder.appendTo(bg);
+      content_holder.appendTo(cnt);
       if (window.eva_hmi_config_layout['sys-block']) {
-        bg.append(create_sysblock());
+        cnt.append(create_sysblock());
       }
-      bg.appendTo('body');
+      $('<div />').addClass('eva_hmi_bg').appendTo('body');
+      cnt.appendTo('body');
     }
     var reload_ui = function() {
       document.location = document.location;
@@ -1473,7 +1475,7 @@
 
   function start_animation() {
     $('#login_window').hide();
-    $('.eva_hmi_bg').hide();
+    $('.eva_hmi_container').hide();
     $eva.toolbox.animate('eva_hmi_anim');
     $('#eva_hmi_anim')
       .show()
@@ -1483,7 +1485,7 @@
   function stop_animation() {
     $('#eva_hmi_anim').hide();
     $('#eva_hmi_anim').empty();
-    $('.eva_hmi_bg').show();
+    $('.eva_hmi_container').show();
   }
 
   function open_cc_setup(e) {
