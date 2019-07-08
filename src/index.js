@@ -601,6 +601,7 @@
     data_item.addClass('eva_hmi_data_item');
     if (data_item_config.icon) {
       data_item.addClass('i_' + data_item_config.icon);
+      data_item.css('background-repeat', 'no-repeat');
     } else {
       data_item.addClass('i_none');
     }
@@ -1259,8 +1260,7 @@
       .addClass('i_' + chart_config['icon'])
       .addClass('eva_hmi_data_item')
       .addClass('chart_info')
-    //chart_info.css('background-position', '20px 0');
-    //chart_info.css('background-repeat', 'no-repeat');
+    chart_info.css('background-repeat', 'no-repeat');
     var chart_item_state = $('<span />', {
       id: 'eva_hmi_chart_' + chart_id + '_state'
     }).appendTo(chart_info);
