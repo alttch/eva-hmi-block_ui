@@ -562,23 +562,36 @@
     return button;
   }
 
-  function create_data_item(data_item_id) {
+  function create_data_item(data_item_id, size, css_class) {
     if (
       !window.eva_hmi_config_data ||
       !(data_item_id in window.eva_hmi_config_data)
     ) {
       $eva.hmi.error('data item ' + data_item_id + ' is not defined');
     }
+    var d = $('<div />').addClass('eva_hmi_data_item_holder');
+      if (size) {
+        d.addClass('size_' + size);
+      }
+      if (css_class) {
+        d.addClass(css_class);
+      }
     var data_item_config = window.eva_hmi_config_data[data_item_id];
     var data_item = $('<div />');
     var data_item_value = $('<span />', {
       id: 'eva_hmi_data_value_' + data_item_id
     });
     if ('title' in data_item_config) {
-      $('<span />')
-        .html(data_item_config['title'] + ':')
-        .addClass('eva_hmi_data_item_title')
-        .appendTo(data_item);
+      let title = $('<div />')
+        .html(data_item_config['title'])
+        .addClass('eva_hmi_data_item_title');
+      if (size) {
+        title.addClass('size_' + size);
+      }
+      if (css_class) {
+        title.addClass(css_class);
+      }
+      title.appendTo(data_item);
     }
     data_item.append(data_item_value);
     $('<span />')
@@ -586,7 +599,11 @@
       .appendTo(data_item);
     data_item.attr('eva-display-decimals', data_item_config['decimals']);
     data_item.addClass('eva_hmi_data_item');
-    data_item.addClass('i_' + data_item_config.icon);
+    if (data_item_config.icon) {
+      data_item.addClass('i_' + data_item_config.icon);
+    } else {
+      data_item.addClass('i_none');
+    }
     data_item.css('background-repeat', 'no-repeat');
     append_action(data_item, data_item_config, false);
     var item = data_item_config['item'];
@@ -600,7 +617,13 @@
       }
       data_item_value.html(v);
     });
-    return data_item;
+    if (size) {
+      data_item.addClass('size_' + size);
+    }
+    if (css_class) {
+      data_item.addClass(css_class);
+    }
+    return d.append(data_item);
   }
 
   function recreate_objects() {
@@ -768,7 +791,9 @@
       var main = $('<div />', {id: 'eva_hmi_main'});
       var container = $('<div />').addClass('container');
       var row = $('<div />').addClass('row');
-      $('<div />').addClass('eva_hmi_bg').appendTo('body');
+      $('<div />')
+        .addClass('eva_hmi_bg')
+        .appendTo('body');
       cnt.appendTo('body');
       main.appendTo(cnt);
       container.appendTo(main);
@@ -831,7 +856,9 @@
       if (window.eva_hmi_config_layout['sys-block']) {
         cnt.append(create_sysblock());
       }
-      $('<div />').addClass('eva_hmi_bg').appendTo('body');
+      $('<div />')
+        .addClass('eva_hmi_bg')
+        .appendTo('body');
       cnt.appendTo('body');
     }
     var reload_ui = function() {
@@ -1089,7 +1116,7 @@
       dh.addClass(config['css-class']);
     }
     $.each(config['elements'], function(i, v) {
-      dh.append(create_data_item(v));
+      dh.append(create_data_item(v, config['size'], config['css-class']));
     });
     append_action(dh, window.eva_hmi_config_data_blocks[block_id], false);
     return dh;
@@ -1564,8 +1591,7 @@
 
     var spacer = parseInt(seconds * 2) % 2 ? ':' : '&nbsp;';
 
-    spacer =
-      '<div style="width: 5px; display: inline-block">' + spacer + '</div>';
+    spacer = '<div class="eva_hmi_timer_spacer">' + spacer + '</div>';
 
     if (seconds < 60 || max == 'seconds') {
       var sec = Math.floor(seconds);

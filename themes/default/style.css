@@ -412,6 +412,10 @@ html, body {
   width: 750px;
   height: 468px;
 }
+.eva_hmi_timer_spacer {
+  width: 5px;
+  display: inline-block;
+}
 .eva_hmi_bar {
   margin-top: 50px;
   width: 320px;
@@ -653,10 +657,6 @@ html, body {
   padding-top: 10px;
   order: 10;
 }
-.eva_hmi_data_item_title {
-  color: #999;
-  font-weight: bold;
-}
 .eva_hmi_data_holder {
   display: flex;
   flex-wrap: wrap;
@@ -666,25 +666,64 @@ html, body {
   border: 2px solid #e6e6e6;
   border-radius: 5px;
 }
-.eva_hmi_data_holder > div {
+.eva_hmi_data_item_holder {
+  width: 100px;
   height: 32px;
-  min-width: 75px;
-  padding: 10px 0 0 32px;
-  margin: 0 6px 6px 0;
   font: 15px Arial;
   color: #808080;
+  position: relative;
+}
+.eva_hmi_data_item_holder.size_medium {
+  width: 145px;
+  height: 50px;
+  margin-bottom: 8px;
+}
+.eva_hmi_data_item_holder.size_large {
+  width: 290px;
+  height: 95px;
+}
+.eva_hmi_data_item_title {
+  color: #999;
+  font-weight: bold;
+  font-size: 11px;
+  position: absolute;
+  top: -7px;
+  left: 0px;
+  width: 100%;
+  text-align: center;
+}
+.eva_hmi_data_item_title.size_medium {
+  font-size: 15px;
+  top: -8px;
+}
+.eva_hmi_data_item_title.size_large {
+  font-size: 25px;
+  top: -9px;
+}
+.eva_hmi_data_item {
+  width: 100%;
   background-position: 0 0;
   background-repeat: no-repeat;
+  white-space:nowrap;
+  height: 34px;
+  padding-left: 30px;
+  padding-top: 10px;
 }
-.eva_hmi_data_holder.size_medium > div {
-  height: 49px;
-  padding: 10px 0 0 45px;
+.eva_hmi_data_item.size_medium {
+  padding-left: 49px;
+  padding-top: 14px;
+  height: 58px;
   font-size: 30px;
 }
-.eva_hmi_data_holder.size_large > div {
+.eva_hmi_data_item.size_large {
+  padding-left: 85px;
+  padding-top: 14px;
   height: 95px;
-  padding: 10px 0 0 82px;
-  font-size: 70px;
+  font-size: 62px;
+}
+.eva_hmi_data_item.i_none {
+  padding-left: 0px;
+  text-align: center;
 }
 .eva_hmi_sysblock {
   width: 100%;
