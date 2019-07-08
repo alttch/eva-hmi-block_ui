@@ -551,14 +551,14 @@ html, body {
   margin-left: 20px;
   height: 55px;
   padding-top: 17px;
-  padding-left: 45px;
+  padding-left: 55px;
 }
 .eva_hmi_data_item_holder.chart_info {
   height: 55px;
 }
 .eva_hmi_chart_units {
   position: absolute;
-  right: 10px;
+  right: 30px;
   margin-top: -10px;
   color: #808080;
 }

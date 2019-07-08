@@ -1259,7 +1259,7 @@
     var chart_info = $('<div />')
       .addClass('i_' + chart_config['icon'])
       .addClass('eva_hmi_data_item')
-      .addClass('chart_info')
+      .addClass('chart_info');
     chart_info.css('background-repeat', 'no-repeat');
     var chart_item_state = $('<span />', {
       id: 'eva_hmi_chart_' + chart_id + '_state'
@@ -1268,7 +1268,11 @@
     $('<span />')
       .html(chart_config['units'])
       .appendTo(chart_info);
-    chart.append($('<div class="eva_hmi_data_item_holder chart_info" />').append(chart_info));
+    chart.append(
+      $('<div class="eva_hmi_data_item_holder chart_info" />').append(
+        chart_info
+      )
+    );
     if (
       'params' in chart_config &&
       chart_config['params']['prop'] == 'status'
@@ -1609,9 +1613,11 @@
     var spacer = parseInt(seconds * 2) % 2 ? ':' : '&nbsp;';
 
     spacer =
-      '<div class="eva_hmi_timer_spacer ' + (spacer_size
-        ? 'size_' + spacer_size
-        : '') + '">' + spacer + '</div>';
+      '<div class="eva_hmi_timer_spacer ' +
+      (spacer_size ? 'size_' + spacer_size : '') +
+      '">' +
+      spacer +
+      '</div>';
 
     if (seconds < 60 || max == 'seconds') {
       var sec = Math.floor(seconds);
