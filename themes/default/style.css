@@ -558,7 +558,7 @@ html, body {
 }
 .eva_hmi_chart_units {
   position: absolute;
-  right: 30px;
+  right: 10px;
   margin-top: -10px;
   color: #808080;
 }
