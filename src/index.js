@@ -570,12 +570,12 @@
       $eva.hmi.error('data item ' + data_item_id + ' is not defined');
     }
     var d = $('<div />').addClass('eva_hmi_data_item_holder');
-      if (size) {
-        d.addClass('size_' + size);
-      }
-      if (css_class) {
-        d.addClass(css_class);
-      }
+    if (size) {
+      d.addClass('size_' + size);
+    }
+    if (css_class) {
+      d.addClass(css_class);
+    }
     var data_item_config = window.eva_hmi_config_data[data_item_id];
     var data_item = $('<div />');
     var data_item_value = $('<span />', {
@@ -607,16 +607,31 @@
     data_item.css('background-repeat', 'no-repeat');
     append_action(data_item, data_item_config, false);
     var item = data_item_config['item'];
-    $eva.watch(item, function(state) {
-      var v = state.value;
-      var dc = data_item.attr('eva-display-decimals');
-      if (dc !== undefined && dc !== null && !isNaN(v)) {
-        try {
-          v = parseFloat(v).toFixed(dc);
-        } catch (e) {}
-      }
-      data_item_value.html(v);
-    });
+    if (data_item_config['timer']) {
+      let timer_max = data_item_config['timer-max'];
+      let timer_func = function() {
+        let exp = $eva.expires_in(item);
+        if (exp > 0) {
+          data_item_value.html(seconds_to_pretty_string(exp, timer_max, size));
+        } else if (exp == -1) {
+          data_item_value.html('DONE');
+        } else if (exp == -2) {
+          data_item_value.html('STOPPED');
+        }
+      };
+      timers.push(setInterval(timer_func, 100));
+    } else {
+      $eva.watch(item, function(state) {
+        var v = state.value;
+        var dc = data_item.attr('eva-display-decimals');
+        if (dc !== undefined && dc !== null && !isNaN(v)) {
+          try {
+            v = parseFloat(v).toFixed(dc);
+          } catch (e) {}
+        }
+        data_item_value.html(v);
+      });
+    }
     if (size) {
       data_item.addClass('size_' + size);
     }
@@ -1588,13 +1603,16 @@
     window.$cookies.erase('eva_hmi_password');
   }
 
-  function seconds_to_pretty_string(seconds, max) {
+  function seconds_to_pretty_string(seconds, max, spacer_size) {
     seconds = seconds.toFixed(1);
     var result = '';
 
     var spacer = parseInt(seconds * 2) % 2 ? ':' : '&nbsp;';
 
-    spacer = '<div class="eva_hmi_timer_spacer">' + spacer + '</div>';
+    spacer =
+      '<div class="eva_hmi_timer_spacer ' + (spacer_size
+        ? 'size_' + spacer_size
+        : '') + '">' + spacer + '</div>';
 
     if (seconds < 60 || max == 'seconds') {
       var sec = Math.floor(seconds);

@@ -421,6 +421,12 @@ html, body {
   width: 5px;
   display: inline-block;
 }
+.eva_hmi_timer_spacer.size_medium {
+  width: 11px;
+}
+.eva_hmi_timer_spacer.size_large {
+  width: 20px;
+}
 .eva_hmi_bar {
   margin-top: 50px;
   width: 320px;
@@ -699,7 +705,7 @@ html, body {
 }
 .eva_hmi_data_item_title.size_medium {
   font-size: 15px;
-  top: -8px;
+  top: -6px;
 }
 .eva_hmi_data_item_title.size_large {
   font-size: 25px;
