@@ -921,6 +921,7 @@
     content_holder.append(topbar);
     $('#vanillatoasts-container').css('top', '35px');
     var menu_container = $('<div />', {id: 'eva_hmi_menu_container'});
+    $('<div />', {class: 'bg_helper'}).appendTo(menu_container);
     var menu_holder = $('<div />', {id: 'eva_hmi_menu', 'data-toggle': 'menu'});
     var menu = $('<div />', {class: 'eva_hmi_menu_holder'});
     menu_holder.append(menu);
@@ -1023,6 +1024,7 @@
     $('#eva_hmi_hamb').addClass('open');
     $('#eva_hmi_menu').animate({width: 'toggle'}, 250);
     $('#eva_hmi_menu_container').fadeIn(250);
+    $('#eva_hmi_menu_container .bg_helper').show(500);
   }
 
   function close_menu() {
@@ -1032,6 +1034,7 @@
       $('#eva_hmi_hamb').removeClass('open');
       $('#eva_hmi_menu').animate({width: 'toggle'}, 250);
       $('#eva_hmi_menu_container').fadeOut(250);
+      $('#eva_hmi_menu_container .bg_helper').hide();
     }
   }
 
