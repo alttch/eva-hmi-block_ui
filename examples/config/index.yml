@@ -19,6 +19,7 @@ buttons:
     title: Vent.
     icon: vent
     item: unit:equipment/vent
+    busy: uuid
 
   window_room2:
     icon: window_right
@@ -99,6 +100,7 @@ data:
 
 data-blocks:
   room1:
+    size: medium
     elements:
       - temp1_int
       - hum1_int

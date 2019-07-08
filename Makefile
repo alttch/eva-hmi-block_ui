@@ -17,9 +17,15 @@ build-js:
 done:
 	@which figlet > /dev/null && figlet -f slant "DONE" || echo -e "-----------------\nDONE"
 
+release: pub build ver-pub
+
 pub:
-	npm version patch
+	npm version --no-git-tag-version patch
 	npm publish --access public
 
 clean:
 	rm -rf package-lock.json node_modules
+
+ver-pub:
+	git commit -a -m "version `jq < package.json -r .version`"; 
+	git push

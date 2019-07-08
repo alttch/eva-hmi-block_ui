@@ -51,6 +51,11 @@ motd
 
 "Message of the day". If present, will be shown on the login page.
 
+info-level
+----------
+
+Set to *warning* to disable info toasts (default is *info*).
+
 .. _buttons:
 
 buttons
@@ -72,6 +77,10 @@ configuration looks like:
         #action: lvar:security/alarm
         #action_params:
         #value:
+        #value-always:
+        #timer:
+        #timer-max:
+        #busy:
 
 * **icon** button :ref:`icon<state_icons>` of class
   *.eva_hmi_cbtn.i_<icon_name>*. The class should have subclasses for the
@@ -101,6 +110,32 @@ configuration looks like:
   special characters, don't forget to quote it. If you don't want to display
   unit value, set this parameter to *false*
 
+* **value-always** Setting this option to true will force HMI to display unit
+  state value always, even if unit status is *OFF*.
+
+* **timer** any button can display a timer if you set this option to
+  corresponding timer lvar. Note: if this option is used, unit state value is
+  not displayed.
+
+* **timer-max** max time units displayed on timer. Default is *hours*, can be
+  changed to *minutes* or *seconds*.
+
+* **busy** *busy* state checking behaviour (for units and macros)
+  
+If button action item is unit or macro, the button becomes busy until action is
+finished. For units action is busy when their *new state != current state*.
+Parameter **busy** allows to modify *busy* status logic: setting it to *uuid*
+will ask HMI to check until action is finished checking action uuid instead of
+unit state.
+
+Default *busy* state logic for macros is *uuid*, setting it to *false* turns
+*busy* state checking for macros completely off.
+
+Setting *busy* option to logical variable (*lvar:group/lvar_id*) will tell HMI
+to check specified lvar state and turn off *busy* state on button when the
+state is off (*status != 1*, value is null or is zero). This allows to use
+timers and flags as *busy* state indicators for the complex actions.
+
 Button with menu
 ----------------
 
@@ -112,9 +147,13 @@ Button can display additional pop-over menu:
         icon: window_right
         item: unit:windows/room2
         menu: 3
+        allow-if-busy: true
 
 *menu: 3* means display menu with 3 item states: 0, 1 and 2. If you want to
 display menu with only 2 states, you may just set *menu: true*.
+
+Option **allow-if-busy** allows to open menu even if the state item has *busy*
+state.
 
 The button can have a complex menu as well which contains other buttons:
 
@@ -150,6 +189,7 @@ moved.
     icon: thermostat
     item: unit:thermo/room2
     value: "°C"
+    allow-if-busy: true
     slider:
       min: 15
       max: 25
@@ -167,6 +207,18 @@ If *can_off: true* slider option is specified, unit *OFF* action (set status to
 
 To be displayed, a button must be included in a :ref:`control
 block<control-blocks>`.
+
+Option **allow-if-busy** allows to open slider even if the state item has
+*busy* state.
+
+* Slider action for unit sets its status to *1* (*0* if slider is *OFF*) and
+  value to the corresponding slider value.
+
+* Slider action for logical variable sets its value to the corresponding slider
+  value or null if slider is *OFF*.
+
+* Slider action for macro executes it with first argument = slider value (if
+  slider is *OFF*, argument is set to *OFF* too).
 
 .. _data:
 
@@ -251,6 +303,8 @@ A data block groups :ref:`data<data>` items and looks like:
 .. code-block:: yaml
 
   room1:
+    #size: medium
+    #css-class: mycustomclass
     elements:
       - temp1_int
       - hum1_int
@@ -258,6 +312,9 @@ A data block groups :ref:`data<data>` items and looks like:
 
 .. figure:: images/data-block.png
     :scale: 100%
+
+* **size** data block size (small, medium or large, default: small)
+* **css-class** custom data block CSS class
 
 If on-click action is specified for the data block, it overrides actions,
 specified for the single data items.

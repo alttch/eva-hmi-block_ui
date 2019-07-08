@@ -26,6 +26,9 @@ variable may be used if :doc:`navigation<navigation>` is not set up.
 charts
 ======
 
+Single-item chart
+-----------------
+
 In section *charts*, chart configurations are specified. Single chart
 configuration looks like:
 
@@ -40,6 +43,7 @@ configuration looks like:
     color: orange
     fill: "false"
     background-color: orange
+    point-radius: 0
     decimals: 0
     params:
       timeframe: 1D
@@ -56,12 +60,100 @@ configuration looks like:
   :ref:`$eva.hmi.format_chart_config<format_chart_config>` is called.
 * **units** value units. As YAML doesn't like special characters, should be
   quoted
-* **color** chart line color
-* **fill** if true, chart will be filled
-* **background-color** chart background color (to fill)
 * **decimals** value decimals after comma
 * **params** chart params for `$eva.toolbox.chart
   <https://www.npmjs.com/package/@eva-ics/toolbox>`_ function.
+* **color** chart line color (HTML color name or hex)
+* **fill** if true, chart will be filled
+* **background-color** chart background color (to fill)
+* **point-radius** chart point radius
+
+Multiple-item chart
+-------------------
+
+If you want to place multiple items on a chart, params **item**, **color**,
+**fill**, **background-color** and **point-radius** must be arrays.
+
+If **color** and other options are not arrays, a single value is used for all
+chart items.
+
+Example:
+
+.. figure:: images/sensor-multiple.png
+    :scale: 100%
+    :alt: Multiple items on a single chart
+
+.. code-block:: yaml
+
+  temp:
+    icon: temp
+    item:
+        - sensor:env/temp_ext
+        - sensor:env/temp1_int
+    title: Temperature
+    cfg: default
+    units: "°C"
+    color:
+        - blue
+        - orange
+    fill:
+        - "false"
+        - "start"
+    background-color: orange
+    point-radius: 0
+    decimals: 0
+    params:
+      timeframe: 1D
+      fill: 30T:1
+      prop: value
+
+Note that upper chart items override lower, so e.g. if you have one item
+without fill and other with, place the first one before (as in example above)
+
+Chart with multiple timeframes
+------------------------------
+
+If you want to display data e.g. for today and yesterday on a single chart,
+specify timeframe param as an array. Other configuration options are the same
+as for multiple items chart:
+
+.. code-block:: yaml
+
+  temp:
+    icon: temp
+    item: sensor:env/temp_ext
+    title: Temperature
+    cfg: default
+    units: "°C"
+    color:
+        - blue
+        - orange
+    fill:
+        - "false"
+        - "start"
+    background-color: orange
+    point-radius: 0
+    decimals: 0
+    params:
+      timeframe:
+        - 2D:1D
+        - 1D
+      fill: 30T:1
+      prop: value
+
+.. note::
+
+    Axis X is always formed from the first timeframe. If you want to change
+    this, put "t" before the necessary timeframe, e.g.: t2D:1D
+
+Multiple items and multiple timeframes
+--------------------------------------
+
+If multiple timeframes and multiple items are specified, chart data is filled
+as: first timeframe for all items, second timeframe for all items etc. So the
+above config would require 4 x colors (first two for 2 items and the first
+timeframe, and another 2 for 2 items and the second one), 4 x fills (or one
+same fill option for all, e.g. "false" to display 4 lines) etc.
 
 layout
 ======

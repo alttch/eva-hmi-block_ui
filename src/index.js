@@ -9,6 +9,9 @@
   require('bootstrap/dist/css/bootstrap.min.css');
   require('swiped-events');
 
+  const VanillaToasts = require('vanillatoasts');
+  require('vanillatoasts/vanillatoasts.css');
+
   require('@eva-ics/framework');
   require('@eva-ics/toolbox');
 
@@ -25,19 +28,26 @@
   var slider_update_funcs = Array();
   var menu_active = false;
   var popover_cbtns = Array();
+  var timers = Array();
 
   function error(msg) {
     throw new Error(msg);
   }
 
-  function server_error(err) {
-    $eva.toolbox
-      .popup('eva_hmi_popup', 'error', 'ERROR', err.message, {ct: 2})
-      .catch(err => {});
+  function server_error(err, wait, title) {
+    var t = wait !== undefined ? wait : 2000;
+    var msg = err.message;
+    if (!msg) msg = err;
+    let toast = VanillaToasts.create({
+      title: title ? title : 'Error',
+      type: 'error',
+      text: msg,
+      timeout: t
+    });
   }
 
   function server_is_gone(err) {
-    stop_cams();
+    stop_intervals();
     var ct = 10;
     var auto_reconnect = setTimeout(function() {
       $eva.start();
@@ -78,13 +88,158 @@
     return cblk;
   }
 
+  function success(text, title) {
+    if (window.eva_hmi_config_info_level != 'info') return;
+    let toast = VanillaToasts.create({
+      title: title ? title : 'Completed',
+      type: 'success',
+      text: text ? text : 'Command successful',
+      timeout: 2000
+    });
+  }
+
+  function create_api_action(
+    api_method,
+    action_item,
+    params,
+    el,
+    config,
+    is_btn
+  ) {
+    var on_error = function() {
+      el.removeClass('busy');
+    };
+    if (action_item.startsWith('unit:')) {
+      var before_start = function() {};
+    } else {
+      var before_start = function() {
+        el.addClass('busy');
+      };
+    }
+    var process_result = function() {};
+    var after_start = function() {};
+    if (!action_item.startsWith('unit:')) {
+      after_start = function() {
+        el.removeClass('busy');
+        success();
+      };
+    }
+    if (action_item.startsWith('lmacro:') || action_item.startsWith('unit:')) {
+      process_result = function(result) {
+        if (!result || !result.uuid) {
+          server_error('Action failed');
+        } else {
+          $eva.watch_action(result.uuid, function(a) {
+            if (a.finished) {
+              if (
+                a.exitcode ||
+                (a.status != 'completed' && a.status != 'ignored')
+              ) {
+                server_error(
+                  '<div align="left" width="100%">' +
+                    a.uuid +
+                    '<br />action: ' +
+                    a.item_oid +
+                    '<br />code: ' +
+                    a.exitcode +
+                    '; status: ' +
+                    a.status +
+                    '<br />' +
+                    a.err +
+                    '</div>',
+                  null,
+                  'Action failed'
+                );
+              } else {
+                success('Action finished');
+              }
+            }
+          });
+        }
+      };
+    }
+    if (
+      (config.busy || (api_method == 'run' && config.busy !== false)) &&
+      is_btn &&
+      !action_item.startsWith('lvar:')
+    ) {
+      after_start = function(result) {
+        if (!result || !result.uuid) {
+          server_error(err);
+          on_error();
+        }
+      };
+      el.custom_busy = true;
+      if (!config.busy || config.busy == 'uuid') {
+        after_start = function(result) {
+          if (!result || !result.uuid) {
+            el.removeClass('busy');
+          } else {
+            $eva.watch_action(result.uuid, function(a) {
+              if (a.finished) {
+                el.removeClass('busy');
+              }
+            });
+          }
+        };
+      } else if (config.busy.startsWith('lvar:')) {
+        after_start = function(result) {
+          let state = $eva.state(config.busy);
+          if (!state.status || !state.value || state.value == '0') {
+            el.removeClass('busy');
+          }
+          if (!result || !result.uuid) {
+            server_error(err);
+            on_error();
+          }
+        };
+        set_el_busy_lvar(config.busy, el);
+      } else {
+        $eva.hmi.error('unknown busy class: ' + config.busy);
+      }
+    }
+    return function() {
+      if (el.hasClass('busy')) return;
+      before_start();
+      $eva
+        .call(api_method, action_item, params)
+        .then(function(result) {
+          after_start(result);
+          process_result(result);
+        })
+        .catch(function(err) {
+          on_error(err);
+          server_error(err);
+        });
+    };
+  }
+
+  function set_el_busy_lvar(lvar, el) {
+    if (!lvar || !lvar.startsWith('lvar:')) return false;
+    $eva.watch(lvar, function(state) {
+      if (state.status && state.value && state.value != '0') {
+        el.addClass('busy');
+      } else {
+        el.removeClass('busy');
+      }
+    });
+    el.custom_busy = true;
+  }
+
   function append_action(el, config, is_btn, item) {
     var action = config.action;
     var a = null;
-    if (!action) action = config.item;
-    if (!action) return;
+    if (!action) {
+      if (is_btn) {
+        action = config.item;
+        if (!action) return;
+      } else {
+        return;
+      }
+    }
     if (config.menu) {
       if (is_btn) el.addClass('menu');
+      set_el_busy_lvar(config.busy, el);
       if (config.menu === true || typeof config.menu == 'number') {
         var ms;
         config.menu === true ? (ms = 2) : (ms = config.menu);
@@ -130,10 +285,11 @@
         e.preventDefault();
         e.stopPropagation();
         $('[data-toggle="popover"]').popover('hide');
-        el.popover('show');
+        if (!el.hasClass('busy') || config['allow-if-busy']) el.popover('show');
       };
     } else if (config.slider && is_btn) {
       el.addClass('menu');
+      set_el_busy_lvar(config.busy, el);
       var min = config.slider.min;
       var max = config.slider.max;
       var step = config.slider.step;
@@ -178,27 +334,27 @@
             params['s'] = 1;
             params['v'] = val;
           }
-          $eva
-            .call('action', action, params)
-            .then(function() {})
-            .catch(server_error);
+          let afunc = create_api_action(
+            'action',
+            action,
+            params,
+            el,
+            config,
+            is_btn
+          );
+          afunc();
         } else if (action.startsWith('lvar:')) {
           var v;
-          if (val < min) {
-            v = null;
-          } else {
-            v = val;
-          }
-          if (is_btn) el.addClass('busy');
-          $eva
-            .call('set', action, v)
-            .then(function() {
-              if (is_btn) el.removeClass('busy');
-            })
-            .catch(function(err) {
-              if (is_btn) el.removeClass('busy');
-              server_error(err);
-            });
+          v = val < min ? null : val;
+          let afunc = create_api_action(
+            'set',
+            action,
+            {v: v},
+            el,
+            config,
+            is_btn
+          );
+          afunc();
         } else if (action.startsWith('lmacro:')) {
           var params = $.extend({}, config.action_params);
           if (val < min) {
@@ -206,19 +362,15 @@
           } else {
             params['a'] = val;
           }
-          if (is_btn) el.addClass('busy');
-          if (!('w' in params)) {
-            params['w'] = 60;
-          }
-          $eva
-            .call('run', action, params)
-            .then(function() {
-              if (is_btn) el.removeClass('busy');
-            })
-            .catch(function(err) {
-              if (is_btn) el.removeClass('busy');
-              server_error(err);
-            });
+          let afunc = create_api_action(
+            'run',
+            action,
+            params,
+            el,
+            config,
+            is_btn
+          );
+          afunc();
         }
       });
       slider_update_funcs[item] = function(state) {
@@ -251,70 +403,45 @@
         e.preventDefault();
         e.stopPropagation();
         $('[data-toggle="popover"]').popover('hide');
-        el.popover('show');
+        if (!el.hasClass('busy') || config['allow-if-busy']) el.popover('show');
       };
     } else if (action.startsWith('unit:')) {
       if (config.action_params && 's' in config.action_params) {
-        a = function() {
-          $eva
-            .call('action', action, config.action_params)
-            .then(function() {})
-            .catch(server_error);
-        };
+        a = create_api_action(
+          'action',
+          action,
+          config.action_params,
+          el,
+          config,
+          is_btn
+        );
       } else {
-        a = function() {
-          $eva
-            .call('action_toggle', action, config.action_params)
-            .then(function(result) {})
-            .catch(server_error);
-        };
+        a = create_api_action(
+          'action_toggle',
+          action,
+          config.action_params,
+          el,
+          config,
+          is_btn
+        );
       }
     } else if (action.startsWith('lvar:')) {
       if (config.action_params && 'v' in config.action_params) {
-        a = function() {
-          if (is_btn) el.addClass('busy');
-          $eva
-            .call('set', action, config.action_params)
-            .then(function() {
-              if (is_btn) el.removeClass('busy');
-            })
-            .catch(function(err) {
-              if (is_btn) el.removeClass('busy');
-              server_error(err);
-            });
-        };
+        a = create_api_action(
+          'set',
+          action,
+          config.action_params,
+          el,
+          config,
+          is_btn
+        );
       } else {
-        a = function() {
-          if (is_btn) el.addClass('busy');
-          $eva
-            .call('toggle', action)
-            .then(function() {
-              if (is_btn) el.removeClass('busy');
-            })
-            .catch(function(err) {
-              if (is_btn) el.removeClass('busy');
-              server_error(err);
-            });
-        };
+        a = create_api_action('toggle', action, null, el, config, is_btn);
       }
     } else if (action.startsWith('lmacro:')) {
       if (is_btn) el.addClass('gear');
-      a = function() {
-        if (is_btn) el.addClass('busy');
-        var params = $.extend({}, config.action_params);
-        if (!('w' in params)) {
-          params['w'] = 60;
-        }
-        $eva
-          .call('run', action, params)
-          .then(function() {
-            if (is_btn) el.removeClass('busy');
-          })
-          .catch(function(err) {
-            if (is_btn) el.removeClass('busy');
-            server_error(err);
-          });
-      };
+      var params = $.extend({}, config.action_params);
+      a = create_api_action('run', action, params, el, config, is_btn);
     } else if (action.startsWith('url:')) {
       a = function() {
         document.location = action.substring(4);
@@ -352,19 +479,33 @@
         .appendTo(button);
     }
     var button_value = null;
-    if (btn_config.value !== false) {
+    if (btn_config.value !== false || btn_config.timer) {
       button_value = $('<span />');
       var bv = $('<span />').addClass('value');
       bv.append(button_value);
       var button_value_units = $('<span />');
       bv.append(button_value_units);
       button.append(bv);
-      var value_always = btn_config.value_always;
+      var value_always = btn_config['value-always'];
       var value_units = btn_config.value;
     }
     var item = btn_config.item;
     var istatus = btn_config.status;
+    var timer = btn_config.timer;
+    if (timer) {
+      let timer_max = btn_config['timer-max'];
+      let timer_func = function() {
+        let exp = $eva.expires_in(timer);
+        if (exp > 0) {
+          button_value.html(seconds_to_pretty_string(exp, timer_max));
+        } else {
+          button_value.html('');
+        }
+      };
+      timers.push(setInterval(timer_func, 100));
+    }
     if (!istatus) istatus = item;
+    button.custom_busy = false;
     append_action(button, btn_config, true, istatus);
     if (istatus) {
       if (istatus.startsWith('unit:')) {
@@ -375,21 +516,35 @@
           }
           button.attr(
             'class',
-            button.attr('class').replace(/\bs_\d*/g, 's_' + state.status)
+            button
+              .attr('class')
+              .replace(
+                /\bs_\d*/g,
+                's_' + (state.status >= 0 ? state.status : 0)
+              )
           );
+          if (state.status == -1) {
+            button.append($('<span />', {class: 'eva_hmi_cbtn_error'}));
+          } else {
+            button.find('.eva_hmi_cbtn_error').remove();
+          }
           if (button_value) {
-            if (state.status || value_always) {
-              button_value.html(state.value);
-              button_value_units.html(value_units);
-            } else {
-              button_value.html('');
-              button_value_units.html('');
+            if (!timer) {
+              if (state.status > 0 || value_always) {
+                button_value.html(state.value);
+                button_value_units.html(value_units);
+              } else {
+                button_value.html('');
+                button_value_units.html('');
+              }
             }
           }
-          if (state.status != state.nstatus || state.value != state.nvalue) {
-            button.addClass('busy');
-          } else {
-            button.removeClass('busy');
+          if (!button.custom_busy) {
+            if (state.status != state.nstatus || state.value != state.nvalue) {
+              button.addClass('busy');
+            } else {
+              button.removeClass('busy');
+            }
           }
         });
       } else if (istatus.startsWith('lvar:')) {
@@ -420,6 +575,12 @@
     var data_item_value = $('<span />', {
       id: 'eva_hmi_data_value_' + data_item_id
     });
+    if ('title' in data_item_config) {
+      $('<span />')
+        .html(data_item_config['title'] + ':')
+        .addClass('eva_hmi_data_item_title')
+        .appendTo(data_item);
+    }
     data_item.append(data_item_value);
     $('<span />')
       .html(data_item_config['units'])
@@ -427,6 +588,7 @@
     data_item.attr('eva-display-decimals', data_item_config['decimals']);
     data_item.addClass('eva_hmi_data_item');
     data_item.addClass('i_' + data_item_config.icon);
+    data_item.css('background-repeat', 'no-repeat');
     append_action(data_item, data_item_config, false);
     var item = data_item_config['item'];
     $eva.watch(item, function(state) {
@@ -457,6 +619,19 @@
 
   function init() {
     initialized = true;
+    if (!$eva.in_evaHI) {
+      document.addEventListener('swiped-right', function(e) {
+        if (!menu_active) {
+          open_menu();
+        }
+      });
+
+      document.addEventListener('swiped-left', function(e) {
+        if (menu_active) {
+          close_menu();
+        }
+      });
+    }
     if (!window.eva_hmi_config) {
       error('HMI config not loaded');
     }
@@ -472,6 +647,11 @@
     }
     if ('class' in window.eva_hmi_config) {
       window.eva_hmi_config_class = window.eva_hmi_config['class'];
+    }
+    if ('info-level' in window.eva_hmi_config) {
+      window.eva_hmi_config_info_level = window.eva_hmi_config['info-level'];
+    } else {
+      window.eva_hmi_config_info_level = 'info';
     }
     if ('title' in window.eva_hmi_config) {
       window.eva_hmi_config_title = window.eva_hmi_config['title'];
@@ -585,12 +765,13 @@
           .html(window.eva_hmi_config_motd);
         $('#eva_hmi_login_form').append(motd);
       }
-      var bg = $('<div />').addClass('eva_hmi_bg');
+      var cnt = $('<div />').addClass('eva_hmi_container');
       var main = $('<div />', {id: 'eva_hmi_main'});
       var container = $('<div />').addClass('container');
       var row = $('<div />').addClass('row');
-      bg.appendTo('body');
-      main.appendTo(bg);
+      $('<div />').addClass('eva_hmi_bg').appendTo('body');
+      cnt.appendTo('body');
+      main.appendTo(cnt);
       container.appendTo(main);
       row.appendTo(container);
       content_holder = $('<div />').addClass('eva_hmi_content_holder');
@@ -608,7 +789,7 @@
           .catch(server_is_gone);
       });
       $eva.on('login.failed', function(err) {
-        stop_cams();
+        stop_intervals();
         if (err.code == 2) {
           stop_animation();
           erase_login_cookies();
@@ -642,16 +823,17 @@
       $eva.on('login.failed', function(err) {
         document.location = window.eva_hmi_config_main_page;
       });
-      var bg = $('<div />')
-        .addClass('eva_hmi_bg')
-        .addClass('bg_sensors');
+      var cnt = $('<div />')
+        .addClass('eva_hmi_container')
+        .addClass('sensors');
       content_holder = $('<div />').addClass('eva_hmi_content_holder_sensors');
       content_holder.hide();
-      content_holder.appendTo(bg);
+      content_holder.appendTo(cnt);
       if (window.eva_hmi_config_layout['sys-block']) {
-        bg.append(create_sysblock());
+        cnt.append(create_sysblock());
       }
-      bg.appendTo('body');
+      $('<div />').addClass('eva_hmi_bg').appendTo('body');
+      cnt.appendTo('body');
     }
     var reload_ui = function() {
       document.location = document.location;
@@ -678,7 +860,7 @@
     });
     $eva.on('server.restart', function() {
       var ct = 15;
-      stop_cams();
+      stop_intervals();
       $eva.stop(true).catch(err => {});
       $eva.toolbox
         .popup(
@@ -716,9 +898,13 @@
     }
   }
 
-  function stop_cams() {
+  function stop_intervals() {
     while (camera_reloader.length > 0) {
-      var reloader = camera_reloader.pop();
+      let reloader = camera_reloader.pop();
+      clearInterval(reloader);
+    }
+    while (timers.length > 0) {
+      let reloader = timers.pop();
       clearInterval(reloader);
     }
   }
@@ -734,6 +920,7 @@
     topbar.append(create_sysblock(true, 'eva_hmi_top_bar_sysblock'));
     content_holder.addClass('with_topbar');
     content_holder.append(topbar);
+    $('#vanillatoasts-container').css('top', '35px');
     var menu_container = $('<div />', {id: 'eva_hmi_menu_container'});
     var menu_holder = $('<div />', {id: 'eva_hmi_menu', 'data-toggle': 'menu'});
     var menu = $('<div />', {class: 'eva_hmi_menu_holder'});
@@ -823,18 +1010,6 @@
     return menu_item;
   }
 
-  document.addEventListener('swiped-right', function(e) {
-    if (!menu_active) {
-      open_menu();
-    }
-  });
-
-  document.addEventListener('swiped-left', function(e) {
-    if (menu_active) {
-      close_menu();
-    }
-  });
-
   function toggle_menu() {
     if (menu_active) {
       close_menu();
@@ -882,7 +1057,7 @@
     clear_layout();
     $eva.hmi.prepare_layout();
     $eva.hmi.top_bar();
-    stop_cams();
+    stop_intervals();
     chart_creators = Array();
     if ($(window).width() < 768) {
       draw_compact_layout();
@@ -907,10 +1082,14 @@
         'data block ' + block_id + ' is not defined or contains no elements'
       );
     }
-    $.each(window.eva_hmi_config_data_blocks[block_id]['elements'], function(
-      i,
-      v
-    ) {
+    var config = window.eva_hmi_config_data_blocks[block_id];
+    if ('size' in config) {
+      dh.addClass('size_' + config['size']);
+    }
+    if ('css-class' in config) {
+      dh.addClass(config['css-class']);
+    }
+    $.each(config['elements'], function(i, v) {
       dh.append(create_data_item(v));
     });
     append_action(dh, window.eva_hmi_config_data_blocks[block_id], false);
@@ -953,29 +1132,66 @@
 
   function create_chart_config(config) {
     var c_type = config['type'] ? config['type'] : 'line';
-    var c_label = config['label'] ? config['label'] : '';
-    var c_fill = config['fill'] ? config['fill'] : 'start';
-    var c_color = config['color'] ? config['color'] : '#aaaaaa';
-    var c_background = config['background-color']
-      ? config['background-color']
-      : '#eeeeee';
+
+    var item;
+    if (!('item' in config)) {
+      $eva.hmi.error('No item in chart config');
+    }
+    if (Array.isArray(config['item'])) {
+      item = config['item'];
+    } else {
+      item = config['item'].split(',');
+    }
     var chart_cfg = {
       type: c_type,
       data: {
         labels: [],
-        datasets: [
-          {
-            label: c_label,
-            data: [],
-            fill: c_fill,
-            pointRadius: 0,
-            borderColor: c_color,
-            backgroundColor: c_background
-          }
-        ]
+        datasets: []
       },
       options: $.extend({}, eva_hmi_config_chart_options)
     };
+    var count = item.length;
+    if (Array.isArray(config['params']['timeframe'])) {
+      count *= config['params']['timeframe'].length;
+    }
+    for (let i = 0; i < count; i++) {
+      if (Array.isArray(config['label'])) {
+        var c_label = config['label'][i];
+      } else {
+        var c_label = config['label'] ? config['label'] : 'start';
+      }
+      if (Array.isArray(config['fill'])) {
+        var c_fill = config['fill'][i];
+      } else {
+        var c_fill = config['fill'] ? config['fill'] : 'start';
+      }
+      if (Array.isArray(config['color'])) {
+        var c_color = config['color'][i];
+      } else {
+        var c_color = config['color'] ? config['color'] : '#aaaaaa';
+      }
+      if (Array.isArray(config['pointr'])) {
+        var c_pointr = config['point-radius'][i];
+      } else {
+        var c_pointr = config['point-radius'] ? config['point-radius'] : 0;
+      }
+      if (Array.isArray(config['background-color'])) {
+        var c_background = config['background-color'][i];
+      } else {
+        var c_background = config['background-color']
+          ? config['background-color']
+          : '#eeeeee';
+      }
+      var dataset = {
+        label: c_label,
+        data: [],
+        fill: c_fill,
+        pointRadius: c_pointr,
+        borderColor: c_color,
+        backgroundColor: c_background
+      };
+      chart_cfg.data.datasets.push(dataset);
+    }
     if (config['cfg'] && config['cfg'] != 'default') {
       $eva.hmi.format_chart_config(config['cfg'], chart_cfg);
     }
@@ -985,6 +1201,9 @@
   function create_chart(chart_id, reload) {
     var reload_int = reload;
     var chart_config = window.eva_hmi_config_charts[chart_id];
+    if (!chart_config) {
+      $eva.hmi.error('No config for chart ' + chart_id);
+    }
     if (!reload_int) reload_int = 60;
     var chart = $('<div />').addClass('eva_hmi_chart_item');
     var chart_title = chart_config['title'];
@@ -994,9 +1213,11 @@
       .html(chart_title)
       .appendTo(chart);
     var chart_info = $('<div />')
+      .addClass('i_' + chart_config['icon'])
       .addClass('eva_hmi_chart_value')
-      .addClass('eva_hmi_data_item')
-      .addClass('c_' + chart_config['icon']);
+      .addClass('eva_hmi_data_item');
+    chart_info.css('background-position', '20px 0');
+    chart_info.css('background-repeat', 'no-repeat');
     var chart_item_state = $('<span />', {
       id: 'eva_hmi_chart_' + chart_id + '_state'
     }).appendTo(chart_info);
@@ -1086,11 +1307,13 @@
         }
       }
     } else if (window.eva_hmi_config_class == 'sensors') {
-      $('<a />')
-        .attr('href', window.eva_hmi_config_main_page)
-        .addClass('eva_hmi_close_btn')
-        .addClass('secondary_page')
-        .appendTo(content_holder);
+      if (!$eva.in_evaHI) {
+        $('<a />')
+          .attr('href', window.eva_hmi_config_main_page)
+          .addClass('eva_hmi_close_btn')
+          .addClass('secondary_page')
+          .appendTo(content_holder);
+      }
       $.each(window.eva_hmi_config_layout['charts'], function(i, v) {
         var chart = create_chart(v['id'], v['reload']);
         content_holder.append(chart);
@@ -1253,7 +1476,7 @@
 
   function start_animation() {
     $('#login_window').hide();
-    $('.eva_hmi_bg').hide();
+    $('.eva_hmi_container').hide();
     $eva.toolbox.animate('eva_hmi_anim');
     $('#eva_hmi_anim')
       .show()
@@ -1263,7 +1486,7 @@
   function stop_animation() {
     $('#eva_hmi_anim').hide();
     $('#eva_hmi_anim').empty();
-    $('.eva_hmi_bg').show();
+    $('.eva_hmi_container').show();
   }
 
   function open_cc_setup(e) {
@@ -1334,6 +1557,32 @@
   function erase_login_cookies() {
     window.$cookies.erase('eva_hmi_login');
     window.$cookies.erase('eva_hmi_password');
+  }
+
+  function seconds_to_pretty_string(seconds, max) {
+    seconds = seconds.toFixed(1);
+    var result = '';
+
+    var spacer = parseInt(seconds * 2) % 2 ? ':' : '&nbsp;';
+
+    spacer =
+      '<div style="width: 5px; display: inline-block">' + spacer + '</div>';
+
+    if (seconds < 60 || max == 'seconds') {
+      var sec = Math.floor(seconds);
+      var mill = Math.round((seconds - sec) * 10);
+      result = sec + '.' + mill;
+    } else if ((seconds >= 60 && seconds < 3600) || max == 'minutes') {
+      var min = Math.floor(seconds / 60);
+      var sec = ('0' + Math.floor(seconds % 60)).slice(-2);
+      result = min + spacer + sec;
+    } else {
+      var hour = Math.floor(seconds / 3600);
+      var min = ('0' + Math.floor((seconds % 3600) / 60)).slice(-2);
+      result = hour + spacer + min;
+    }
+
+    return result;
   }
 
   function logout() {

@@ -5,7 +5,8 @@ For navigation, `evaHI <https://github.com/alttch/evaHI>`_ configuration is
 being parsed. This allows to use the same navigation config as for smartphone
 app, as for the usual web clients.
 
-The navigation configuration looks like:
+The navigation configuration (placed by default in
+*/opt/eva/ui/.evahi/config.yml*) looks like:
 
 .. code-block:: yaml
 

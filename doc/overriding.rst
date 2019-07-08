@@ -62,7 +62,7 @@ Let's tune it:
 
    $eva.hmi.format_chart_config = function(cfg_id, cfg) {
       if (cfg_id == 'realtime') {
-        cfg.options.scales.xAxes[0].time.unit = 'second';
+        cfg.options.scales.xAxes[0].time.unit = 'minute';
         cfg.options.scales.xAxes[0].time.round = 'second';
         cfg.options.scales.xAxes[0].ticks.maxTicksLimit = 4;
       }
