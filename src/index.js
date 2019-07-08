@@ -604,7 +604,6 @@
     } else {
       data_item.addClass('i_none');
     }
-    data_item.css('background-repeat', 'no-repeat');
     append_action(data_item, data_item_config, false);
     var item = data_item_config['item'];
     if (data_item_config['timer']) {
@@ -1258,10 +1257,10 @@
       .appendTo(chart);
     var chart_info = $('<div />')
       .addClass('i_' + chart_config['icon'])
-      .addClass('eva_hmi_chart_value')
-      .addClass('eva_hmi_data_item');
-    chart_info.css('background-position', '20px 0');
-    chart_info.css('background-repeat', 'no-repeat');
+      .addClass('eva_hmi_data_item')
+      .addClass('chart_info')
+    //chart_info.css('background-position', '20px 0');
+    //chart_info.css('background-repeat', 'no-repeat');
     var chart_item_state = $('<span />', {
       id: 'eva_hmi_chart_' + chart_id + '_state'
     }).appendTo(chart_info);
@@ -1269,7 +1268,7 @@
     $('<span />')
       .html(chart_config['units'])
       .appendTo(chart_info);
-    chart.append(chart_info);
+    chart.append($('<div class="eva_hmi_data_item_holder chart_info" />').append(chart_info));
     if (
       'params' in chart_config &&
       chart_config['params']['prop'] == 'status'
@@ -1290,7 +1289,7 @@
       });
     }
     $('<div />')
-      .addClass('eva_hmi_chart_value_units')
+      .addClass('eva_hmi_chart_units')
       .html(chart_config['units'])
       .appendTo(chart);
     $('<div />', {id: 'eva_hmi_chart_content_' + chart_id})

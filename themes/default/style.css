@@ -545,14 +545,18 @@ html, body {
   font-size: 14px;
   color: #808080;
 }
-.eva_hmi_chart_value {
-  height: 50px;
-  padding-left: 70px;
+.eva_hmi_data_item.chart_info {
   font-size: 24px;
-  line-height: 55px;
   color: #808080;
-  }
-.eva_hmi_chart_value_units {
+  margin-left: 20px;
+  height: 55px;
+  padding-top: 17px;
+  padding-left: 45px;
+}
+.eva_hmi_data_item_holder.chart_info {
+  height: 55px;
+}
+.eva_hmi_chart_units {
   position: absolute;
   right: 10px;
   margin-top: -10px;
