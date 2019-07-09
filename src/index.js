@@ -1236,6 +1236,34 @@
       };
       chart_cfg.data.datasets.push(dataset);
     }
+    if (!chart_cfg.options.legend) {
+      if (config['legend']) {
+        let legend = Array.isArray(config['legend'])
+          ? config['legend']
+          : [config['legend']];
+        chart_cfg.options.legend = {
+          display: true,
+          labels: {
+            generateLabels: function(chart) {
+              let result = [];
+              legend.map((l, i) => {
+                let z = {
+                  text: l,
+                  strokeStyle: chart.config.data.datasets[i].borderColor
+                };
+                if (chart.config.data.datasets[i].backgroundColor) {
+                  z.fillStyle = chart.config.data.datasets[i].backgroundColor;
+                }
+                result.push(z);
+              });
+              return result;
+            }
+          }
+        };
+      } else {
+        chart_cfg.options.legend = {display: false};
+      }
+    }
     if (config['cfg'] && config['cfg'] != 'default') {
       $eva.hmi.format_chart_config(config['cfg'], chart_cfg);
     }
