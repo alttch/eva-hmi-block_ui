@@ -235,3 +235,5 @@ and look like:
 
 .. literalinclude:: ../examples/config/chart_options.js
     :language: javascript
+
+Chart options can be either variable or function (preferred).

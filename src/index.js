@@ -1192,7 +1192,12 @@
         labels: [],
         datasets: []
       },
-      options: $.extend({}, eva_hmi_config_chart_options)
+      options: $.extend(
+        {},
+        typeof eva_hmi_config_chart_options === 'function'
+          ? eva_hmi_config_chart_options()
+          : eva_hmi_config_chart_options
+      )
     };
     var count = item.length;
     if (Array.isArray(config['params']['timeframe'])) {
