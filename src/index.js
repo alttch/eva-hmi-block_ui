@@ -1682,7 +1682,7 @@
   $eva.hmi.logo.href = 'https://www.eva-ics.com/';
   $eva.hmi.logo.text = 'www.eva-ics.com';
   $eva.hmi.format_camera_src = function() {};
-  $eva.hmi.format_cmart_config = format_chart_config();
+  $eva.hmi.format_chart_config = format_chart_config();
   $eva.hmi.after_draw = function() {};
   $eva.hmi.prepare_layout = function() {};
   $eva.hmi.error = error;
