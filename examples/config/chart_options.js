@@ -1,7 +1,8 @@
 var eva_hmi_config_chart_options = {
+  /* override legend auto generation
   legend: {
     display: false,
-  },
+  },*/
   scales: {
     yAxes: [{
       ticks: {
