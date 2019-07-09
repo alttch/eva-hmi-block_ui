@@ -1195,7 +1195,7 @@
       options: $.extend(
         {},
         typeof eva_hmi_config_chart_options === 'function'
-          ? eva_hmi_config_chart_options()
+          ? eva_hmi_config_chart_options(config['cfg'])
           : eva_hmi_config_chart_options
       )
     };
