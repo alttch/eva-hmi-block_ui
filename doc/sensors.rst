@@ -3,7 +3,7 @@ Sensors page
 
 Sensor page class is used to display a charts.
 
-.. figure:: images/sensors.jpg
+.. figure:: images/sensors.png
     :scale: 50%
     :alt: sensors page
 
