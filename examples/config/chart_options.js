@@ -41,7 +41,14 @@ function eva_hmi_config_chart_options() {
             fontColor: '#ccc',
             maxTicksLimit: 12,
             maxRotation: 0,
-            autoSkip: true
+            autoSkip: true,
+            callback: function(value, index, values) {
+              if (index == values.length - 1) {
+                return '';
+              } else {
+                return value;
+              }
+            }
           },
           gridLines: {
             display: true,
