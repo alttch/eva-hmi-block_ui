@@ -1352,7 +1352,7 @@
     var cams = Array();
     if (window.eva_hmi_config_class == 'dashboard') {
       var eva_bar_holder = $('<div />', {class: 'eva_hmi_bar_holder'});
-      for (i = 1; i < 20; i++) {
+      for (i = 1; i < 100; i++) {
         if ('bar' + i in window.eva_hmi_config_layout) {
           var bar = $('<div />').addClass('eva_hmi_bar');
           var bar_cfg = window.eva_hmi_config_layout['bar' + i];
