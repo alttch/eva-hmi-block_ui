@@ -199,6 +199,14 @@ State icons
   :width: 42px
   :align: middle
 
+.. |si_out.s_0| image:: ../themes/default/icons/out.off.svg
+  :width: 42px
+  :align: middle
+
+.. |si_out.s_1| image:: ../themes/default/icons/out.on.svg
+  :width: 42px
+  :align: middle
+
 .. |si_pc.s_0| image:: ../themes/default/icons/pc.off.svg
   :width: 42px
   :align: middle
@@ -389,6 +397,8 @@ State icons
 | moon                    | |si_moon.s_0|           | |si_moon.s_1|           |                         | 
 +-------------------------+-------------------------+-------------------------+-------------------------+
 | music                   | |si_music.s_0|          | |si_music.s_1|          |                         | 
++-------------------------+-------------------------+-------------------------+-------------------------+
+| out                     | |si_out.s_0|            | |si_out.s_1|            |                         | 
 +-------------------------+-------------------------+-------------------------+-------------------------+
 | pc                      | |si_pc.s_0|             | |si_pc.s_1|             |                         | 
 +-------------------------+-------------------------+-------------------------+-------------------------+

@@ -74,12 +74,18 @@
   border-top-left-radius: 4px;
   background: url('icons/_error.svg') 0 0 no-repeat;
 }
-/* relay */
+/* relays, douts */
 .eva_hmi_cbtn.i_relay.s_0 {
   background-image: url('icons/relay.off.svg');
 }
 .eva_hmi_cbtn.i_relay.s_1 {
   background-image: url('icons/relay.on.svg');
+}
+.eva_hmi_cbtn.i_out.s_0 {
+  background-image: url('icons/out.off.svg');
+}
+.eva_hmi_cbtn.i_out.s_1 {
+  background-image: url('icons/out.on.svg');
 }
 /* light */
 .eva_hmi_cbtn.i_lamp.s_0 {
