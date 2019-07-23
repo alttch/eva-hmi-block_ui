@@ -223,6 +223,14 @@ State icons
   :width: 42px
   :align: middle
 
+.. |si_relay.s_0| image:: ../themes/default/icons/relay.off.svg
+  :width: 42px
+  :align: middle
+
+.. |si_relay.s_1| image:: ../themes/default/icons/relay.on.svg
+  :width: 42px
+  :align: middle
+
 .. |si_reload.s_0| image:: ../themes/default/icons/reload.off.svg
   :width: 42px
   :align: middle
@@ -387,6 +395,8 @@ State icons
 | piano                   | |si_piano.s_0|          | |si_piano.s_1|          |                         | 
 +-------------------------+-------------------------+-------------------------+-------------------------+
 | pump                    | |si_pump.s_0|           | |si_pump.s_1|           |                         | 
++-------------------------+-------------------------+-------------------------+-------------------------+
+| relay                   | |si_relay.s_0|          | |si_relay.s_1|          |                         | 
 +-------------------------+-------------------------+-------------------------+-------------------------+
 | reload                  | |si_reload.s_0|         | |si_reload.s_1|         |                         | 
 +-------------------------+-------------------------+-------------------------+-------------------------+

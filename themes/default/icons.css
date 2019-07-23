@@ -74,6 +74,13 @@
   border-top-left-radius: 4px;
   background: url('icons/_error.svg') 0 0 no-repeat;
 }
+/* relay */
+.eva_hmi_cbtn.i_relay.s_0 {
+  background-image: url('icons/relay.off.svg');
+}
+.eva_hmi_cbtn.i_relay.s_1 {
+  background-image: url('icons/relay.on.svg');
+}
 /* light */
 .eva_hmi_cbtn.i_lamp.s_0 {
   background-image: url('icons/lamp.off.svg');
