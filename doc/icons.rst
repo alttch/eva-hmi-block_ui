@@ -13,6 +13,10 @@ Data icons
   :width: 42px
   :align: middle
 
+.. |di_in| image:: ../themes/default/data_icons/in.svg
+  :width: 42px
+  :align: middle
+
 .. |di_indoor_hum| image:: ../themes/default/data_icons/hum_in.svg
   :width: 42px
   :align: middle
@@ -61,6 +65,8 @@ Data icons
 | name             | icon                  |
 +==================+=======================+
 | hum              | |di_hum|              |
++------------------+-----------------------+
+| in               | |di_in|               |
 +------------------+-----------------------+
 | indoor_hum       | |di_indoor_hum|       |
 +------------------+-----------------------+

@@ -28,6 +28,9 @@
   filter: grayscale(0%);
 }
 /* data icons */
+.eva_hmi_data_item.i_in {
+  background: url('data_icons/in.svg');
+}
 .eva_hmi_data_item.i_temp {
   background: url('data_icons/temp.svg');
 }
