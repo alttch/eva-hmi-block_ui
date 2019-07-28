@@ -126,7 +126,7 @@ To embed, add two parameters to page URI:
 
 * **embedded** *1* or *friendly* (see below)
 * **k** EVA SFA API key (not required if you use basic authentication or log
-  into to HMI Block UI separately)
+  in to HMI Block UI in parallel browser session)
 
 If both HMI Block UI and 3rd party UI run on the same domain (e.g. via common
 front-end), you may set *embedded=friendly*. This will allow HMI Block UI to
