@@ -921,9 +921,13 @@
       }
     }
     if (embedded) {
-      content_holder = $('<div />')
-        .addClass('eva_hmi_content_holder')
-        .addClass('embedded');
+      content_holder = $('<div />');
+      if (window.eva_hmi_config_class == 'sensors') {
+        content_holder.addClass('eva_hmi_content_holder_sensors')
+      } else {
+        content_holder.addClass('eva_hmi_content_holder')
+      }
+      content_holder.addClass('embedded');
       content_holder.appendTo('body');
       $eva.on('login.success', function() {
         update_sysblock();
@@ -1466,7 +1470,7 @@
         }
       }
     } else if (window.eva_hmi_config_class == 'sensors') {
-      if (!$eva.in_evaHI) {
+      if (!$eva.in_evaHI && !embedded) {
         $('<a />')
           .attr('href', window.eva_hmi_config_main_page)
           .addClass('eva_hmi_close_btn')

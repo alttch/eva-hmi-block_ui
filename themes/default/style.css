@@ -417,6 +417,9 @@ html, body {
   border-radius: 5px;
   border: 2px solid #ccc;
 }
+.eva_hmi_content_holder_sensors.embedded {
+    margin: 0px;
+  }
 .eva_hmi_cam_img {
   background-image: -webkit-repeating-linear-gradient(135deg, rgba(0,0,0,.3),
     rgba(0,0,0,.3) 1px, transparent 2px, transparent 2px, rgba(0,0,0,.3) 3px);
