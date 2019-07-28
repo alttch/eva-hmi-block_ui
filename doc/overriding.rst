@@ -134,9 +134,9 @@ communicate with parent window, e.g. close popover windows on body click:
 
     /ui/grafana.j2?embedded=friendly
 
-Example file for `Grafana <https://grafana.com/>`_ dark theme, embedded with
-`AJAX panel plugin <https://grafana.com/grafana/plugins/ryantxu-ajax-panel>`_,
-embed as:
+Page example file for `Grafana <https://grafana.com/>`_ dark theme, embedded
+with `AJAX panel plugin
+<https://grafana.com/grafana/plugins/ryantxu-ajax-panel>`_:
 
 .. literalinclude:: ../examples/grafana.j2
     :language: html
