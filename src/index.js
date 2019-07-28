@@ -30,20 +30,43 @@
   var popover_cbtns = Array();
   var timers = Array();
 
+  var embedded = false;
+
   function error(msg) {
     throw new Error(msg);
+  }
+
+  function body_error_message(msg) {
+    content_holder.html('<div class="eva_hmi_body_error">' + msg + '</div>');
+  }
+
+  function show_info_bar(msg, cl, timeout) {
+    if (!cl) cl = 'info';
+    if (!timeout) timeout = 2;
+    $('#eva_hmi_popup').removeClass();
+    $('#eva_hmi_popup').addClass('infobar');
+    $('#eva_hmi_popup').addClass(cl);
+    $('#eva_hmi_popup').html(msg);
+    $('#eva_hmi_popup').show();
+    setTimeout(function() {
+      $('#eva_hmi_popup').fadeOut(200);
+    }, timeout * 1000);
   }
 
   function server_error(err, wait, title) {
     var t = wait !== undefined ? wait : 2000;
     var msg = err.message;
     if (!msg) msg = err;
-    let toast = VanillaToasts.create({
-      title: title ? title : 'Error',
-      type: 'error',
-      text: msg,
-      timeout: t
-    });
+    if (!embedded) {
+      let toast = VanillaToasts.create({
+        title: title ? title : 'Error',
+        type: 'error',
+        text: msg,
+        timeout: t
+      });
+    } else {
+      show_info_bar(msg, 'error');
+    }
   }
 
   function server_is_gone(err) {
@@ -52,22 +75,26 @@
     var auto_reconnect = setTimeout(function() {
       $eva.start();
     }, (ct + 1) * 1000);
-    $eva.toolbox
-      .popup(
-        'eva_hmi_popup',
-        'error',
-        'Server error',
-        'Connection to server failed',
-        {
-          ct: ct,
-          btn1: 'Retry'
-        }
-      )
-      .then(function() {
-        clearTimeout(auto_reconnect);
-        $eva.start();
-      })
-      .catch(err => {});
+    if (embedded) {
+      body_error_message('SERVER ERROR');
+    } else {
+      $eva.toolbox
+        .popup(
+          'eva_hmi_popup',
+          'error',
+          'Server error',
+          'Connection to server failed',
+          {
+            ct: ct,
+            btn1: 'Retry'
+          }
+        )
+        .then(function() {
+          clearTimeout(auto_reconnect);
+          $eva.start();
+        })
+        .catch(err => {});
+    }
   }
 
   function create_control_block(block_id) {
@@ -89,7 +116,7 @@
   }
 
   function success(text, title) {
-    if (window.eva_hmi_config_info_level != 'info') return;
+    if (embedded || window.eva_hmi_config_info_level != 'info') return;
     let toast = VanillaToasts.create({
       title: title ? title : 'Completed',
       type: 'success',
@@ -656,18 +683,24 @@
 
   function init() {
     initialized = true;
-    if (!$eva.in_evaHI) {
-      document.addEventListener('swiped-right', function(e) {
-        if (!menu_active) {
-          open_menu();
-        }
-      });
+    var u = new URLSearchParams(window.location.search);
+    embedded = u.get('embedded');
+    if (!embedded) {
+      if (!$eva.in_evaHI) {
+        document.addEventListener('swiped-right', function(e) {
+          if (!menu_active) {
+            open_menu();
+          }
+        });
 
-      document.addEventListener('swiped-left', function(e) {
-        if (menu_active) {
-          close_menu();
-        }
-      });
+        document.addEventListener('swiped-left', function(e) {
+          if (menu_active) {
+            close_menu();
+          }
+        });
+      }
+    } else {
+      $eva.apikey = u.get('k');
     }
     if (!window.eva_hmi_config) {
       error('HMI config not loaded');
@@ -708,7 +741,7 @@
       window.eva_hmi_config['layout-compact']
     );
     $('body').empty();
-    $('body').on('click', function(e) {
+    var close_popover = function(e) {
       if (
         $(e.target).data('toggle') !== 'popover' &&
         $(e.target).parents('.popover.in').length === 0
@@ -724,27 +757,32 @@
       ) {
         close_menu();
       }
-    });
+    };
+    $('body').on('click', close_popover);
+    if (embedded == 'friendly')
+      $('body', window.parent.document).on('click', close_popover);
     $('<div />', {id: 'eva_hmi_popup'}).appendTo('body');
     $('<div />', {id: 'eva_hmi_anim'}).appendTo('body');
-    $('<div />')
-      .addClass('eva_hmi_dialog_window_holder')
-      .addClass('evacc_setup')
-      .on('click', close_cc_setup)
-      .html(
-        '<div class="eva_hmi_dialog_window"> \
-            <div class="eva_hmi_setup_form"> \
-              <div class="eva_hmi_close_btn"></div> \
-              <a href="https://play.google.com/store/apps/details?id=com.altertech.evacc" \
-              class="eva_hmi_andr_app"></a> \
-              <span>Scan this code with </span> \
-              <a href="https://play.google.com/store/apps/details?id=com.altertech.evacc" \
-                class="eva_hmi_app_link">EVA Control Center app</a> \
-              <div class="eva_hmi_qr_install"><canvas id="evaccqr"></canvas></div> \
-            </div> \
-          </div>'
-      )
-      .appendTo('body');
+    if (!embedded) {
+      $('<div />')
+        .addClass('eva_hmi_dialog_window_holder')
+        .addClass('evacc_setup')
+        .on('click', close_cc_setup)
+        .html(
+          '<div class="eva_hmi_dialog_window"> \
+              <div class="eva_hmi_setup_form"> \
+                <div class="eva_hmi_close_btn"></div> \
+                <a href="https://play.google.com/store/apps/details?id=com.altertech.evacc" \
+                class="eva_hmi_andr_app"></a> \
+                <span>Scan this code with </span> \
+                <a href="https://play.google.com/store/apps/details?id=com.altertech.evacc" \
+                  class="eva_hmi_app_link">EVA Control Center app</a> \
+                <div class="eva_hmi_qr_install"><canvas id="evaccqr"></canvas></div> \
+              </div> \
+            </div>'
+        )
+        .appendTo('body');
+    }
     if (
       window.eva_hmi_config_class == 'dashboard' ||
       window.eva_hmi_config_class == 'simple'
@@ -769,12 +807,13 @@
         window.eva_hmi_config_cameras,
         window.eva_hmi_config['cameras']
       );
-      login_window = $('<div >/', {
-        id: 'login_window'
-      }).addClass('eva_hmi_dialog_window_holder');
-      login_window.hide();
-      login_window.html(
-        '<div class="eva_hmi_dialog_window"> \
+      if (!embedded) {
+        login_window = $('<div >/', {
+          id: 'login_window'
+        }).addClass('eva_hmi_dialog_window_holder');
+        login_window.hide();
+        login_window.html(
+          '<div class="eva_hmi_dialog_window"> \
         <form id="eva_hmi_login_form"> \
           <div class="form-group eva_hmi_input_form"> \
             <div class="eva_hmi_error_message" id="eva_hmi_login_error"></div> \
@@ -793,31 +832,100 @@
           </div> \
         </form> \
       </div>'
-      );
-      login_window.appendTo('body');
-      $('#eva_hmi_login_form').on('submit', submit_login);
-      if (window.eva_hmi_config_motd) {
-        var motd = $('<div />')
-          .addClass('eva_hmi_motd')
-          .html(window.eva_hmi_config_motd);
-        $('#eva_hmi_login_form').append(motd);
+        );
+        login_window.appendTo('body');
+        $('#eva_hmi_login_form').on('submit', submit_login);
+        if (window.eva_hmi_config_motd) {
+          var motd = $('<div />')
+            .addClass('eva_hmi_motd')
+            .html(window.eva_hmi_config_motd);
+          $('#eva_hmi_login_form').append(motd);
+        }
+        var cnt = $('<div />').addClass('eva_hmi_container');
+        var main = $('<div />', {id: 'eva_hmi_main'});
+        var container = $('<div />').addClass('container');
+        var row = $('<div />').addClass('row');
+        $('<div />')
+          .addClass('eva_hmi_bg')
+          .appendTo('body');
+        cnt.appendTo('body');
+        main.appendTo(cnt);
+        container.appendTo(main);
+        row.appendTo(container);
+        content_holder = $('<div />').addClass('eva_hmi_content_holder');
+        content_holder.hide();
+        content_holder.appendTo(row);
+        $eva.on('login.success', function() {
+          login_window.hide();
+          update_sysblock();
+          run();
+        });
+        $eva.on('heartbeat.error', function() {
+          $eva
+            .stop(true)
+            .then(server_is_gone)
+            .catch(server_is_gone);
+        });
+        $eva.on('login.failed', function(err) {
+          stop_intervals();
+          if (err.code == 2) {
+            stop_animation();
+            erase_login_cookies();
+            content_holder.hide();
+            login_window.show();
+            if (first_time_login) {
+              first_time_login = false;
+            } else {
+              $('#eva_hmi_login_error').html(err.message);
+              $('#eva_hmi_login_error').show();
+            }
+            $('#eva_hmi_login').val($eva.login);
+            $('#eva_hmi_password').val('');
+            focus_login_form();
+          } else {
+            server_is_gone(err);
+          }
+        });
       }
-      var cnt = $('<div />').addClass('eva_hmi_container');
-      var main = $('<div />', {id: 'eva_hmi_main'});
-      var container = $('<div />').addClass('container');
-      var row = $('<div />').addClass('row');
-      $('<div />')
-        .addClass('eva_hmi_bg')
-        .appendTo('body');
-      cnt.appendTo('body');
-      main.appendTo(cnt);
-      container.appendTo(main);
-      row.appendTo(container);
-      content_holder = $('<div />').addClass('eva_hmi_content_holder');
-      content_holder.hide();
-      content_holder.appendTo(row);
+    } else if (window.eva_hmi_config_class == 'sensors') {
+      if ('main-page' in window.eva_hmi_config) {
+        window.eva_hmi_config_main_page = window.eva_hmi_config['main-page'];
+      }
+      window.eva_hmi_config_charts = $.extend(
+        window.eva_hmi_config_charts,
+        window.eva_hmi_config['charts']
+      );
+      if (!embedded) {
+        $eva.on('login.success', function() {
+          update_sysblock();
+          run();
+        });
+        $eva.on('login.failed', function(err) {
+          document.location = window.eva_hmi_config_main_page;
+        });
+        var cnt = $('<div />')
+          .addClass('eva_hmi_container')
+          .addClass('sensors');
+        content_holder = $('<div />').addClass(
+          'eva_hmi_content_holder_sensors'
+        );
+        content_holder.hide();
+        content_holder.appendTo(cnt);
+        if (window.eva_hmi_config_layout['sys-block']) {
+          cnt.append(create_sysblock());
+        }
+        $('<div />')
+          .addClass('eva_hmi_bg')
+          .appendTo('body');
+        cnt.appendTo('body');
+      }
+    }
+    if (embedded) {
+      content_holder = $('<div />')
+        .addClass('eva_hmi_content_holder')
+        .addClass('embedded');
+      content_holder.appendTo('body');
       $eva.on('login.success', function() {
-        login_window.hide();
         update_sysblock();
         run();
       });
@@ -831,50 +939,11 @@
         stop_intervals();
         if (err.code == 2) {
           stop_animation();
-          erase_login_cookies();
-          content_holder.hide();
-          login_window.show();
-          if (first_time_login) {
-            first_time_login = false;
-          } else {
-            $('#eva_hmi_login_error').html(err.message);
-            $('#eva_hmi_login_error').show();
-          }
-          $('#eva_hmi_login').val($eva.login);
-          $('#eva_hmi_password').val('');
-          focus_login_form();
+          body_error_message('ACCESS DENIED');
         } else {
           server_is_gone(err);
         }
       });
-    } else if (window.eva_hmi_config_class == 'sensors') {
-      if ('main-page' in window.eva_hmi_config) {
-        window.eva_hmi_config_main_page = window.eva_hmi_config['main-page'];
-      }
-      window.eva_hmi_config_charts = $.extend(
-        window.eva_hmi_config_charts,
-        window.eva_hmi_config['charts']
-      );
-      $eva.on('login.success', function() {
-        update_sysblock();
-        run();
-      });
-      $eva.on('login.failed', function(err) {
-        document.location = window.eva_hmi_config_main_page;
-      });
-      var cnt = $('<div />')
-        .addClass('eva_hmi_container')
-        .addClass('sensors');
-      content_holder = $('<div />').addClass('eva_hmi_content_holder_sensors');
-      content_holder.hide();
-      content_holder.appendTo(cnt);
-      if (window.eva_hmi_config_layout['sys-block']) {
-        cnt.append(create_sysblock());
-      }
-      $('<div />')
-        .addClass('eva_hmi_bg')
-        .appendTo('body');
-      cnt.appendTo('body');
     }
     var reload_ui = function() {
       document.location = document.location;
@@ -882,6 +951,7 @@
     $eva.on('server.reload', function() {
       var ct = 5;
       var ui_reloader = setTimeout(reload_ui, ct * 1000);
+      if (!embedded) {
       $eva.toolbox
         .popup(
           'eva_hmi_popup',
@@ -898,11 +968,15 @@
           reload_ui();
         })
         .catch(err => {});
+      } else {
+        show_info_bar('EVA ICS asked to reload UI', 'info', 5);
+      }
     });
     $eva.on('server.restart', function() {
       var ct = 15;
       stop_intervals();
       $eva.stop(true).catch(err => {});
+      if (!embedded) {
       $eva.toolbox
         .popup(
           'eva_hmi_popup',
@@ -915,6 +989,9 @@
           }
         )
         .catch(err => {});
+      } else {
+        show_info_bar('Waiting for server restart', 'warning', 15);
+      }
       setTimeout(function() {
         $eva.start();
       }, ct * 1000);
@@ -1100,7 +1177,7 @@
   function redraw_layout() {
     clear_layout();
     $eva.hmi.prepare_layout();
-    $eva.hmi.top_bar();
+    if (!embedded) $eva.hmi.top_bar();
     stop_intervals();
     chart_creators = Array();
     if ($(window).width() < 768) {
@@ -1352,9 +1429,11 @@
     var cams = Array();
     if (window.eva_hmi_config_class == 'dashboard') {
       var eva_bar_holder = $('<div />', {class: 'eva_hmi_bar_holder'});
+      if (embedded) eva_bar_holder.addClass('embedded');
       for (i = 1; i < 100; i++) {
         if ('bar' + i in window.eva_hmi_config_layout) {
           var bar = $('<div />').addClass('eva_hmi_bar');
+          if (embedded) bar.addClass('embedded');
           var bar_cfg = window.eva_hmi_config_layout['bar' + i];
           if ('camera' in bar_cfg) {
             var cam = create_cam(bar_cfg['camera']);
@@ -1464,6 +1543,7 @@
     var cams = Array();
     if (window.eva_hmi_config_class == 'dashboard') {
       var row = $('<div />', {class: 'mob_layout'});
+      if (embedded) row.addClass('embedded');
       var fcb = true;
       $.each(window.eva_hmi_config_layout_compact['elements'], function(i, v) {
         if (v['type'] == 'control-block') {

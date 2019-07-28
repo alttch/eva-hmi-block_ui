@@ -46,6 +46,33 @@ html, body {
   height: 150%;
   z-index: 1201;
 }
+.infobar {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  padding: 3px;
+  z-index: 1300;
+}
+.infobar.error {
+  background-color: #990000;
+  color: white;
+  font-weight: bold;
+}
+.infobar.warning {
+  background-color: #FF8C00;
+  color: white;
+  font-weight: bold;
+}
+.infobar.info {
+  background-color: #336699;
+  color: white;
+  font-weight: bold;
+}
+.eva_hmi_body_error {
+  color: red;
+  font-weight: bold;
+  margin-top: 20px;
+}
 .eva_hmi_menu_holder {
   position: relative;
   min-height: 100%;
@@ -367,6 +394,11 @@ html, body {
   width: 320px;
   /*margin: auto;*/
 }
+.eva_hmi_content_holder.embedded {
+    margin-top: -55px;
+    margin-bottom: 5px;
+    margin-left: 10px;
+  }
 .eva_hmi_bar_holder {
   display: flex;
   flex-wrap: wrap;
@@ -828,6 +860,9 @@ html, body {
     margin-top: 3px;
     margin-top: 3px;
   }
+  .eva_hmi_bar:first-child {
+    margin-top: 0px;
+  }
   .eva_hmi_cam_preview_big {
     width: 100%;
     height: auto;
@@ -861,6 +896,9 @@ html, body {
   .eva_hmi_content_holder.with_topbar {
     margin-top: 15px;
   }
+  .eva_hmi_content_holder.embedded {
+    margin-top: -5px;
+  }
   .eva_hmi_content_holder.with_topbar.compact {
     margin-top: 40px;
   }
@@ -870,9 +908,15 @@ html, body {
   .eva_hmi_bar_holder {
     padding: 0 35px;
   }
+  .eva_hmi_bar_holder.embedded {
+    padding: 0 0;
+  }
   .mob_layout {
     width: 100%;
     padding: 0 35px;
+  }
+  .mob_layout.embedded {
+    padding: 0 10px;
   }
   .eva_hmi_cam_preview {
     width: 100%;
@@ -884,6 +928,9 @@ html, body {
 }
 
 @media (min-width: 768px) {
+  .eva_hmi_body_error {
+    margin-top: 60px;
+  }
   .container {
     padding-left: 5px;
     padding-right: 5px;
