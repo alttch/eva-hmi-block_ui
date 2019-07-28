@@ -1,5 +1,5 @@
-Overriding app methods and variables
-************************************
+Overriding and embedding
+************************
 
 The following app methods can be overriden:
 
@@ -112,6 +112,12 @@ To override logo image, change background image of CSS class *.eva_hmi_logo*.
 Embedding (experimental)
 ========================
 
+.. figure:: images/grafana-hmi.jpg
+    :scale: 30%
+    :alt: Grafana dashboard
+
+    `Grafana <https://grafana.com/>`_ dashboard with EVA HMI Block UI controls
+
 Block UI pages can be embedded into 3rd party interface via iframe.
 
 To embed, add two parameters to page URI:
@@ -119,6 +125,7 @@ To embed, add two parameters to page URI:
 * **embedded** *1* or *friendly* (see below)
 * **k** EVA SFA API key
 
-If both HMI block UI and 3rd party UI run on the same domain (e.g. via common
-front-end), you may set *embedded=friendly*. This will allow HMI block UI to
+If both HMI Block UI and 3rd party UI run on the same domain (e.g. via common
+front-end), you may set *embedded=friendly*. This will allow HMI Block UI to
 communicate with parent window, e.g. close popover windows on body click.
+
