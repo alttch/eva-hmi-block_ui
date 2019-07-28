@@ -117,7 +117,7 @@ Block UI pages can be embedded into 3rd party interface via iframe.
 To embed, add two parameters to page URI:
 
 * **embedded** *1* or *friendly* (see below)
-* **apikey** EVA SFA API key
+* **k** EVA SFA API key
 
 If both HMI block UI and 3rd party UI run on the same domain (e.g. via common
 front-end), you may set *embedded=friendly*. This will allow HMI block UI to
