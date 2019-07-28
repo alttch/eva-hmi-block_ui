@@ -116,11 +116,13 @@ Embedding (experimental)
     :scale: 30%
     :alt: Grafana dashboard
 
-    `Grafana <https://grafana.com/>`_ dashboard with EVA HMI Block UI controls
+    Grafana dashboard with EVA HMI Block UI controls
 
 Block UI pages can be embedded into 3rd party interface via iframe.
 
 To embed, add two parameters to page URI:
+
+    https://my.domain/ui/page.j2?embedded=1&k=mykey
 
 * **embedded** *1* or *friendly* (see below)
 * **k** EVA SFA API key (not required if you use basic authentication or log
@@ -128,5 +130,13 @@ To embed, add two parameters to page URI:
 
 If both HMI Block UI and 3rd party UI run on the same domain (e.g. via common
 front-end), you may set *embedded=friendly*. This will allow HMI Block UI to
-communicate with parent window, e.g. close popover windows on body click.
+communicate with parent window, e.g. close popover windows on body click:
 
+    /ui/grafana.j2?embedded=friendly
+
+Example file for `Grafana <https://grafana.com/>`_ dark theme, embedded with
+`AJAX panel plugin <https://grafana.com/grafana/plugins/ryantxu-ajax-panel>`_,
+embed as:
+
+.. literalinclude:: ../examples/grafana.j2
+    :language: html
