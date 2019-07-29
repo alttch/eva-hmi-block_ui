@@ -140,3 +140,8 @@ with `AJAX panel plugin
 
 .. literalinclude:: ../examples/grafana.j2
     :language: html
+
+*grafana_dark.css*:
+
+.. literalinclude:: ../examples/grafana_dark.css
+    :language: css
