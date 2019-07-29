@@ -109,8 +109,8 @@ set custom logo text and URI when main menu is opened.
 
 To override logo image, change background image of CSS class *.eva_hmi_logo*.
 
-Embedding (experimental)
-========================
+Embedding
+=========
 
 .. figure:: images/grafana-hmi.jpg
     :scale: 30%
