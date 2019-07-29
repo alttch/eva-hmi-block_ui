@@ -528,8 +528,8 @@ html, body {
   position: absolute;
   top: 0;
   left: 0;
-  height: 71px;
-  width: 71px;
+  height: 100%;
+  width: 100%;
   background: url('btn/x_busy.svg') 50% 50%  no-repeat rgba(255, 255, 255, 0.3);
   background-size: 50px;
 }
