@@ -4,9 +4,6 @@
 
 # -*- coding: utf-8 -*-
 #
-# EVA ICS documentation build configuration file, created by
-# sphinx-quickstart on Wed Jun  6 09:24:43 2018.
-#
 # This file is execfile()d with the current directory set to its
 # containing dir.
 #
@@ -223,7 +220,7 @@ html_show_sourcelink = False
 #html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'EVAICSdoc'
+htmlhelp_basename = 'EVAHMIblockuidoc'
 
 # -- Options for LaTeX output ---------------------------------------------
 

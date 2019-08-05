@@ -13,6 +13,10 @@ Data icons
   :width: 42px
   :align: middle
 
+.. |di_in| image:: ../themes/default/data_icons/in.svg
+  :width: 42px
+  :align: middle
+
 .. |di_indoor_hum| image:: ../themes/default/data_icons/hum_in.svg
   :width: 42px
   :align: middle
@@ -61,6 +65,8 @@ Data icons
 | name             | icon                  |
 +==================+=======================+
 | hum              | |di_hum|              |
++------------------+-----------------------+
+| in               | |di_in|               |
 +------------------+-----------------------+
 | indoor_hum       | |di_indoor_hum|       |
 +------------------+-----------------------+
@@ -199,6 +205,14 @@ State icons
   :width: 42px
   :align: middle
 
+.. |si_out.s_0| image:: ../themes/default/icons/out.off.svg
+  :width: 42px
+  :align: middle
+
+.. |si_out.s_1| image:: ../themes/default/icons/out.on.svg
+  :width: 42px
+  :align: middle
+
 .. |si_pc.s_0| image:: ../themes/default/icons/pc.off.svg
   :width: 42px
   :align: middle
@@ -220,6 +234,14 @@ State icons
   :align: middle
 
 .. |si_pump.s_1| image:: ../themes/default/icons/pump.on.svg
+  :width: 42px
+  :align: middle
+
+.. |si_relay.s_0| image:: ../themes/default/icons/relay.off.svg
+  :width: 42px
+  :align: middle
+
+.. |si_relay.s_1| image:: ../themes/default/icons/relay.on.svg
   :width: 42px
   :align: middle
 
@@ -382,11 +404,15 @@ State icons
 +-------------------------+-------------------------+-------------------------+-------------------------+
 | music                   | |si_music.s_0|          | |si_music.s_1|          |                         | 
 +-------------------------+-------------------------+-------------------------+-------------------------+
+| out                     | |si_out.s_0|            | |si_out.s_1|            |                         | 
++-------------------------+-------------------------+-------------------------+-------------------------+
 | pc                      | |si_pc.s_0|             | |si_pc.s_1|             |                         | 
 +-------------------------+-------------------------+-------------------------+-------------------------+
 | piano                   | |si_piano.s_0|          | |si_piano.s_1|          |                         | 
 +-------------------------+-------------------------+-------------------------+-------------------------+
 | pump                    | |si_pump.s_0|           | |si_pump.s_1|           |                         | 
++-------------------------+-------------------------+-------------------------+-------------------------+
+| relay                   | |si_relay.s_0|          | |si_relay.s_1|          |                         | 
 +-------------------------+-------------------------+-------------------------+-------------------------+
 | reload                  | |si_reload.s_0|         | |si_reload.s_1|         |                         | 
 +-------------------------+-------------------------+-------------------------+-------------------------+

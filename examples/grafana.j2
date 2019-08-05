@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1,
+        user-scalable=no" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="text/javascript"
+        src="config/grafana.yml?as=js&var=eva_hmi_config"></script>
+    <script type="text/javascript"
+        src="lib/eva.min.js"></script>
+    <script type="text/javascript"
+        src="apps/eva-hmi-block_ui/index.min.js"></script>
+    <link rel="stylesheet"
+        href="apps/eva-hmi-block_ui/themes/default/style.css" />
+    <link rel="stylesheet"
+        href="apps/eva-hmi-block_ui/themes/default/icons.css" />
+    <link rel="stylesheet" href="grafana_dark.css" />
+    <script type="text/javascript">
+      document.addEventListener('DOMContentLoaded', function() {
+        $eva.hmi.start();
+      });
+    </script>
+  </head>
+</html>

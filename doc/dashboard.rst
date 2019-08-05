@@ -237,6 +237,9 @@ Data item looks like:
     units: "°C"
     decimals: 0
     #action: 
+    #title:
+    #timer: true
+    #timer-max:
 
 * **icon** item :ref:`icon<data_icons>` (CSS class
   *.eva_hmi_data_item.i_<icon_name>*)
@@ -246,7 +249,11 @@ Data item looks like:
   quoted
 * **decimals** value decimals after comma
 * **action** for any data item, :ref:`action<actions>` can be defined
-
+* **title** element title
+* **timer** if data item is lvar and this lvar is being used as a timer, you
+   may display its countdown, specifying *timer: true*
+* **timer-max** max time units displayed on timer. Default is *hours*, can be
+  changed to *minutes* or *seconds*.
 
 To be displayed, sensor data item must be included in a :ref:`data
 block<data-blocks>`.
@@ -340,7 +347,7 @@ was already told, layout is split to bars. And *bar* section looks like:
     data-block: room1
     #sys-block: true
 
-Bar can have ID from 1 to 20 (*bar1-bar20*).
+Bar can have ID from 1 to 100 (*bar1-bar100*).
 
 All parameters are optional. If *sys-block* parameter is specified and is
 *true*, system block (system info, evaHI setup, logout link) will be displayed

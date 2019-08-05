@@ -3,7 +3,7 @@ Sensors page
 
 Sensor page class is used to display a charts.
 
-.. figure:: images/sensors.jpg
+.. figure:: images/sensors.png
     :scale: 50%
     :alt: sensors page
 
@@ -42,6 +42,7 @@ configuration looks like:
     units: "°C"
     color: orange
     fill: "false"
+    #legend:
     background-color: orange
     point-radius: 0
     decimals: 0
@@ -155,6 +156,45 @@ above config would require 4 x colors (first two for 2 items and the first
 timeframe, and another 2 for 2 items and the second one), 4 x fills (or one
 same fill option for all, e.g. "false" to display 4 lines) etc.
 
+Legend
+------
+
+If option **legend** is specified, chart legend is automatically generated.
+Example:
+
+.. code-block:: yaml
+
+    charts:
+      room1_temp:
+        icon: indoor_temp
+        item: sensor:env/temp1_int
+        title: Room 1 temperature
+        cfg: default
+        units: "°C"
+        color:
+          - orange
+          - red
+        fill: "false"
+        background-color:
+          - orange
+          - red
+        decimals: 0
+        legend:
+          - today
+          - yesterday
+        params:
+          timeframe:
+            - 2D:1D
+            - 1D
+          #timeframe: 1D
+          fill: 30T:1
+          prop: value
+
+.. note::
+
+    If *legend* is present in *eva_hmi_config_chart_options*, legend auto
+    generation is skipped.
+
 layout
 ======
 
@@ -195,3 +235,5 @@ and look like:
 
 .. literalinclude:: ../examples/config/chart_options.js
     :language: javascript
+
+Chart options can be either variable or function (preferred).

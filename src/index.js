@@ -30,20 +30,43 @@
   var popover_cbtns = Array();
   var timers = Array();
 
+  var embedded = false;
+
   function error(msg) {
     throw new Error(msg);
+  }
+
+  function body_error_message(msg) {
+    content_holder.html('<div class="eva_hmi_body_error">' + msg + '</div>');
+  }
+
+  function show_info_bar(msg, cl, timeout) {
+    if (!cl) cl = 'info';
+    if (!timeout) timeout = 2;
+    $('#eva_hmi_popup').removeClass();
+    $('#eva_hmi_popup').addClass('infobar');
+    $('#eva_hmi_popup').addClass(cl);
+    $('#eva_hmi_popup').html(msg);
+    $('#eva_hmi_popup').show();
+    setTimeout(function() {
+      $('#eva_hmi_popup').fadeOut(200);
+    }, timeout * 1000);
   }
 
   function server_error(err, wait, title) {
     var t = wait !== undefined ? wait : 2000;
     var msg = err.message;
     if (!msg) msg = err;
-    let toast = VanillaToasts.create({
-      title: title ? title : 'Error',
-      type: 'error',
-      text: msg,
-      timeout: t
-    });
+    if (!embedded) {
+      let toast = VanillaToasts.create({
+        title: title ? title : 'Error',
+        type: 'error',
+        text: msg,
+        timeout: t
+      });
+    } else {
+      show_info_bar(msg, 'error');
+    }
   }
 
   function server_is_gone(err) {
@@ -52,22 +75,26 @@
     var auto_reconnect = setTimeout(function() {
       $eva.start();
     }, (ct + 1) * 1000);
-    $eva.toolbox
-      .popup(
-        'eva_hmi_popup',
-        'error',
-        'Server error',
-        'Connection to server failed',
-        {
-          ct: ct,
-          btn1: 'Retry'
-        }
-      )
-      .then(function() {
-        clearTimeout(auto_reconnect);
-        $eva.start();
-      })
-      .catch(err => {});
+    if (embedded) {
+      body_error_message('SERVER ERROR');
+    } else {
+      $eva.toolbox
+        .popup(
+          'eva_hmi_popup',
+          'error',
+          'Server error',
+          'Connection to server failed',
+          {
+            ct: ct,
+            btn1: 'Retry'
+          }
+        )
+        .then(function() {
+          clearTimeout(auto_reconnect);
+          $eva.start();
+        })
+        .catch(err => {});
+    }
   }
 
   function create_control_block(block_id) {
@@ -89,7 +116,7 @@
   }
 
   function success(text, title) {
-    if (window.eva_hmi_config_info_level != 'info') return;
+    if (embedded || window.eva_hmi_config_info_level != 'info') return;
     let toast = VanillaToasts.create({
       title: title ? title : 'Completed',
       type: 'success',
@@ -569,12 +596,19 @@
     return button;
   }
 
-  function create_data_item(data_item_id) {
+  function create_data_item(data_item_id, size, css_class) {
     if (
       !window.eva_hmi_config_data ||
       !(data_item_id in window.eva_hmi_config_data)
     ) {
       $eva.hmi.error('data item ' + data_item_id + ' is not defined');
+    }
+    var d = $('<div />').addClass('eva_hmi_data_item_holder');
+    if (size) {
+      d.addClass('size_' + size);
+    }
+    if (css_class) {
+      d.addClass(css_class);
     }
     var data_item_config = window.eva_hmi_config_data[data_item_id];
     var data_item = $('<div />');
@@ -582,10 +616,16 @@
       id: 'eva_hmi_data_value_' + data_item_id
     });
     if ('title' in data_item_config) {
-      $('<span />')
-        .html(data_item_config['title'] + ':')
-        .addClass('eva_hmi_data_item_title')
-        .appendTo(data_item);
+      let title = $('<div />')
+        .html(data_item_config['title'])
+        .addClass('eva_hmi_data_item_title');
+      if (size) {
+        title.addClass('size_' + size);
+      }
+      if (css_class) {
+        title.addClass(css_class);
+      }
+      title.appendTo(data_item);
     }
     data_item.append(data_item_value);
     $('<span />')
@@ -593,21 +633,46 @@
       .appendTo(data_item);
     data_item.attr('eva-display-decimals', data_item_config['decimals']);
     data_item.addClass('eva_hmi_data_item');
-    data_item.addClass('i_' + data_item_config.icon);
-    data_item.css('background-repeat', 'no-repeat');
+    if (data_item_config.icon) {
+      data_item.addClass('i_' + data_item_config.icon);
+      data_item.css('background-repeat', 'no-repeat');
+    } else {
+      data_item.addClass('i_none');
+    }
     append_action(data_item, data_item_config, false);
     var item = data_item_config['item'];
-    $eva.watch(item, function(state) {
-      var v = state.value;
-      var dc = data_item.attr('eva-display-decimals');
-      if (dc !== undefined && dc !== null && !isNaN(v)) {
-        try {
-          v = parseFloat(v).toFixed(dc);
-        } catch (e) {}
-      }
-      data_item_value.html(v);
-    });
-    return data_item;
+    if (data_item_config['timer']) {
+      let timer_max = data_item_config['timer-max'];
+      let timer_func = function() {
+        let exp = $eva.expires_in(item);
+        if (exp > 0) {
+          data_item_value.html(seconds_to_pretty_string(exp, timer_max, size));
+        } else if (exp == -1) {
+          data_item_value.html('DONE');
+        } else if (exp == -2) {
+          data_item_value.html('STOPPED');
+        }
+      };
+      timers.push(setInterval(timer_func, 100));
+    } else {
+      $eva.watch(item, function(state) {
+        var v = state.value;
+        var dc = data_item.attr('eva-display-decimals');
+        if (dc !== undefined && dc !== null && !isNaN(v)) {
+          try {
+            v = parseFloat(v).toFixed(dc);
+          } catch (e) {}
+        }
+        data_item_value.html(v);
+      });
+    }
+    if (size) {
+      data_item.addClass('size_' + size);
+    }
+    if (css_class) {
+      data_item.addClass(css_class);
+    }
+    return d.append(data_item);
   }
 
   function recreate_objects() {
@@ -625,18 +690,24 @@
 
   function init() {
     initialized = true;
-    if (!$eva.in_evaHI) {
-      document.addEventListener('swiped-right', function(e) {
-        if (!menu_active) {
-          open_menu();
-        }
-      });
+    var u = new URLSearchParams(window.location.search);
+    embedded = u.get('embedded');
+    if (!embedded) {
+      if (!$eva.in_evaHI) {
+        document.addEventListener('swiped-right', function(e) {
+          if (!menu_active) {
+            open_menu();
+          }
+        });
 
-      document.addEventListener('swiped-left', function(e) {
-        if (menu_active) {
-          close_menu();
-        }
-      });
+        document.addEventListener('swiped-left', function(e) {
+          if (menu_active) {
+            close_menu();
+          }
+        });
+      }
+    } else {
+      $eva.apikey = u.get('k');
     }
     if (!window.eva_hmi_config) {
       error('HMI config not loaded');
@@ -677,7 +748,7 @@
       window.eva_hmi_config['layout-compact']
     );
     $('body').empty();
-    $('body').on('click', function(e) {
+    var close_popover = function(e) {
       if (
         $(e.target).data('toggle') !== 'popover' &&
         $(e.target).parents('.popover.in').length === 0
@@ -693,27 +764,32 @@
       ) {
         close_menu();
       }
-    });
+    };
+    $('body').on('click', close_popover);
+    if (embedded == 'friendly')
+      $('body', window.parent.document).on('click', close_popover);
     $('<div />', {id: 'eva_hmi_popup'}).appendTo('body');
     $('<div />', {id: 'eva_hmi_anim'}).appendTo('body');
-    $('<div />')
-      .addClass('eva_hmi_dialog_window_holder')
-      .addClass('evacc_setup')
-      .on('click', close_cc_setup)
-      .html(
-        '<div class="eva_hmi_dialog_window"> \
-            <div class="eva_hmi_setup_form"> \
-              <div class="eva_hmi_close_btn"></div> \
-              <a href="https://play.google.com/store/apps/details?id=com.altertech.evacc" \
-              class="eva_hmi_andr_app"></a> \
-              <span>Scan this code with </span> \
-              <a href="https://play.google.com/store/apps/details?id=com.altertech.evacc" \
-                class="eva_hmi_app_link">EVA Control Center app</a> \
-              <div class="eva_hmi_qr_install"><canvas id="evaccqr"></canvas></div> \
-            </div> \
-          </div>'
-      )
-      .appendTo('body');
+    if (!embedded) {
+      $('<div />')
+        .addClass('eva_hmi_dialog_window_holder')
+        .addClass('evacc_setup')
+        .on('click', close_cc_setup)
+        .html(
+          '<div class="eva_hmi_dialog_window"> \
+              <div class="eva_hmi_setup_form"> \
+                <div class="eva_hmi_close_btn"></div> \
+                <a href="https://play.google.com/store/apps/details?id=com.altertech.evacc" \
+                class="eva_hmi_andr_app"></a> \
+                <span>Scan this code with </span> \
+                <a href="https://play.google.com/store/apps/details?id=com.altertech.evacc" \
+                  class="eva_hmi_app_link">EVA Control Center app</a> \
+                <div class="eva_hmi_qr_install"><canvas id="evaccqr"></canvas></div> \
+              </div> \
+            </div>'
+        )
+        .appendTo('body');
+    }
     if (
       window.eva_hmi_config_class == 'dashboard' ||
       window.eva_hmi_config_class == 'simple'
@@ -738,12 +814,13 @@
         window.eva_hmi_config_cameras,
         window.eva_hmi_config['cameras']
       );
-      login_window = $('<div >/', {
-        id: 'login_window'
-      }).addClass('eva_hmi_dialog_window_holder');
-      login_window.hide();
-      login_window.html(
-        '<div class="eva_hmi_dialog_window"> \
+      if (!embedded) {
+        login_window = $('<div >/', {
+          id: 'login_window'
+        }).addClass('eva_hmi_dialog_window_holder');
+        login_window.hide();
+        login_window.html(
+          '<div class="eva_hmi_dialog_window"> \
         <form id="eva_hmi_login_form"> \
           <div class="form-group eva_hmi_input_form"> \
             <div class="eva_hmi_error_message" id="eva_hmi_login_error"></div> \
@@ -762,29 +839,104 @@
           </div> \
         </form> \
       </div>'
-      );
-      login_window.appendTo('body');
-      $('#eva_hmi_login_form').on('submit', submit_login);
-      if (window.eva_hmi_config_motd) {
-        var motd = $('<div />')
-          .addClass('eva_hmi_motd')
-          .html(window.eva_hmi_config_motd);
-        $('#eva_hmi_login_form').append(motd);
+        );
+        login_window.appendTo('body');
+        $('#eva_hmi_login_form').on('submit', submit_login);
+        if (window.eva_hmi_config_motd) {
+          var motd = $('<div />')
+            .addClass('eva_hmi_motd')
+            .html(window.eva_hmi_config_motd);
+          $('#eva_hmi_login_form').append(motd);
+        }
+        var cnt = $('<div />').addClass('eva_hmi_container');
+        var main = $('<div />', {id: 'eva_hmi_main'});
+        var container = $('<div />').addClass('container');
+        var row = $('<div />').addClass('row');
+        $('<div />')
+          .addClass('eva_hmi_bg')
+          .appendTo('body');
+        cnt.appendTo('body');
+        main.appendTo(cnt);
+        container.appendTo(main);
+        row.appendTo(container);
+        content_holder = $('<div />').addClass('eva_hmi_content_holder');
+        content_holder.hide();
+        content_holder.appendTo(row);
+        $eva.on('login.success', function() {
+          login_window.hide();
+          update_sysblock();
+          run();
+        });
+        $eva.on('heartbeat.error', function() {
+          $eva
+            .stop(true)
+            .then(server_is_gone)
+            .catch(server_is_gone);
+        });
+        $eva.on('login.failed', function(err) {
+          stop_intervals();
+          if (err.code == 2) {
+            stop_animation();
+            erase_login_cookies();
+            content_holder.hide();
+            login_window.show();
+            if (first_time_login) {
+              first_time_login = false;
+            } else {
+              $('#eva_hmi_login_error').html(err.message);
+              $('#eva_hmi_login_error').show();
+            }
+            $('#eva_hmi_login').val($eva.login);
+            $('#eva_hmi_password').val('');
+            focus_login_form();
+          } else {
+            server_is_gone(err);
+          }
+        });
       }
-      var cnt = $('<div />').addClass('eva_hmi_container');
-      var main = $('<div />', {id: 'eva_hmi_main'});
-      var container = $('<div />').addClass('container');
-      var row = $('<div />').addClass('row');
-      $('<div />').addClass('eva_hmi_bg').appendTo('body');
-      cnt.appendTo('body');
-      main.appendTo(cnt);
-      container.appendTo(main);
-      row.appendTo(container);
-      content_holder = $('<div />').addClass('eva_hmi_content_holder');
-      content_holder.hide();
-      content_holder.appendTo(row);
+    } else if (window.eva_hmi_config_class == 'sensors') {
+      if ('main-page' in window.eva_hmi_config) {
+        window.eva_hmi_config_main_page = window.eva_hmi_config['main-page'];
+      }
+      window.eva_hmi_config_charts = $.extend(
+        window.eva_hmi_config_charts,
+        window.eva_hmi_config['charts']
+      );
+      if (!embedded) {
+        $eva.on('login.success', function() {
+          update_sysblock();
+          run();
+        });
+        $eva.on('login.failed', function(err) {
+          document.location = window.eva_hmi_config_main_page;
+        });
+        var cnt = $('<div />')
+          .addClass('eva_hmi_container')
+          .addClass('sensors');
+        content_holder = $('<div />').addClass(
+          'eva_hmi_content_holder_sensors'
+        );
+        content_holder.hide();
+        content_holder.appendTo(cnt);
+        if (window.eva_hmi_config_layout['sys-block']) {
+          cnt.append(create_sysblock());
+        }
+        $('<div />')
+          .addClass('eva_hmi_bg')
+          .appendTo('body');
+        cnt.appendTo('body');
+      }
+    }
+    if (embedded) {
+      content_holder = $('<div />');
+      if (window.eva_hmi_config_class == 'sensors') {
+        content_holder.addClass('eva_hmi_content_holder_sensors')
+      } else {
+        content_holder.addClass('eva_hmi_content_holder')
+      }
+      content_holder.addClass('embedded');
+      content_holder.appendTo('body');
       $eva.on('login.success', function() {
-        login_window.hide();
         update_sysblock();
         run();
       });
@@ -798,48 +950,11 @@
         stop_intervals();
         if (err.code == 2) {
           stop_animation();
-          erase_login_cookies();
-          content_holder.hide();
-          login_window.show();
-          if (first_time_login) {
-            first_time_login = false;
-          } else {
-            $('#eva_hmi_login_error').html(err.message);
-            $('#eva_hmi_login_error').show();
-          }
-          $('#eva_hmi_login').val($eva.login);
-          $('#eva_hmi_password').val('');
-          focus_login_form();
+          body_error_message('ACCESS DENIED');
         } else {
           server_is_gone(err);
         }
       });
-    } else if (window.eva_hmi_config_class == 'sensors') {
-      if ('main-page' in window.eva_hmi_config) {
-        window.eva_hmi_config_main_page = window.eva_hmi_config['main-page'];
-      }
-      window.eva_hmi_config_charts = $.extend(
-        window.eva_hmi_config_charts,
-        window.eva_hmi_config['charts']
-      );
-      $eva.on('login.success', function() {
-        update_sysblock();
-        run();
-      });
-      $eva.on('login.failed', function(err) {
-        document.location = window.eva_hmi_config_main_page;
-      });
-      var cnt = $('<div />')
-        .addClass('eva_hmi_container')
-        .addClass('sensors');
-      content_holder = $('<div />').addClass('eva_hmi_content_holder_sensors');
-      content_holder.hide();
-      content_holder.appendTo(cnt);
-      if (window.eva_hmi_config_layout['sys-block']) {
-        cnt.append(create_sysblock());
-      }
-      $('<div />').addClass('eva_hmi_bg').appendTo('body');
-      cnt.appendTo('body');
     }
     var reload_ui = function() {
       document.location = document.location;
@@ -847,6 +962,7 @@
     $eva.on('server.reload', function() {
       var ct = 5;
       var ui_reloader = setTimeout(reload_ui, ct * 1000);
+      if (!embedded) {
       $eva.toolbox
         .popup(
           'eva_hmi_popup',
@@ -863,11 +979,15 @@
           reload_ui();
         })
         .catch(err => {});
+      } else {
+        show_info_bar('EVA ICS asked to reload UI', 'info', 5);
+      }
     });
     $eva.on('server.restart', function() {
       var ct = 15;
       stop_intervals();
       $eva.stop(true).catch(err => {});
+      if (!embedded) {
       $eva.toolbox
         .popup(
           'eva_hmi_popup',
@@ -880,6 +1000,9 @@
           }
         )
         .catch(err => {});
+      } else {
+        show_info_bar('Waiting for server restart', 'warning', 15);
+      }
       setTimeout(function() {
         $eva.start();
       }, ct * 1000);
@@ -1065,7 +1188,7 @@
   function redraw_layout() {
     clear_layout();
     $eva.hmi.prepare_layout();
-    $eva.hmi.top_bar();
+    if (!embedded) $eva.hmi.top_bar();
     stop_intervals();
     chart_creators = Array();
     if ($(window).width() < 768) {
@@ -1099,7 +1222,7 @@
       dh.addClass(config['css-class']);
     }
     $.each(config['elements'], function(i, v) {
-      dh.append(create_data_item(v));
+      dh.append(create_data_item(v, config['size'], config['css-class']));
     });
     append_action(dh, window.eva_hmi_config_data_blocks[block_id], false);
     return dh;
@@ -1157,7 +1280,12 @@
         labels: [],
         datasets: []
       },
-      options: $.extend({}, eva_hmi_config_chart_options)
+      options: $.extend(
+        {},
+        typeof eva_hmi_config_chart_options === 'function'
+          ? eva_hmi_config_chart_options(config['cfg'])
+          : eva_hmi_config_chart_options
+      )
     };
     var count = item.length;
     if (Array.isArray(config['params']['timeframe'])) {
@@ -1201,6 +1329,34 @@
       };
       chart_cfg.data.datasets.push(dataset);
     }
+    if (!chart_cfg.options.legend) {
+      if (config['legend']) {
+        let legend = Array.isArray(config['legend'])
+          ? config['legend']
+          : [config['legend']];
+        chart_cfg.options.legend = {
+          display: true,
+          labels: {
+            generateLabels: function(chart) {
+              let result = [];
+              legend.map((l, i) => {
+                let z = {
+                  text: l,
+                  strokeStyle: chart.config.data.datasets[i].borderColor
+                };
+                if (chart.config.data.datasets[i].backgroundColor) {
+                  z.fillStyle = chart.config.data.datasets[i].backgroundColor;
+                }
+                result.push(z);
+              });
+              return result;
+            }
+          }
+        };
+      } else {
+        chart_cfg.options.legend = {display: false};
+      }
+    }
     if (config['cfg'] && config['cfg'] != 'default') {
       $eva.hmi.format_chart_config(config['cfg'], chart_cfg);
     }
@@ -1223,9 +1379,8 @@
       .appendTo(chart);
     var chart_info = $('<div />')
       .addClass('i_' + chart_config['icon'])
-      .addClass('eva_hmi_chart_value')
-      .addClass('eva_hmi_data_item');
-    chart_info.css('background-position', '20px 0');
+      .addClass('eva_hmi_data_item')
+      .addClass('chart_info');
     chart_info.css('background-repeat', 'no-repeat');
     var chart_item_state = $('<span />', {
       id: 'eva_hmi_chart_' + chart_id + '_state'
@@ -1234,7 +1389,11 @@
     $('<span />')
       .html(chart_config['units'])
       .appendTo(chart_info);
-    chart.append(chart_info);
+    chart.append(
+      $('<div class="eva_hmi_data_item_holder chart_info" />').append(
+        chart_info
+      )
+    );
     if (
       'params' in chart_config &&
       chart_config['params']['prop'] == 'status'
@@ -1255,7 +1414,7 @@
       });
     }
     $('<div />')
-      .addClass('eva_hmi_chart_value_units')
+      .addClass('eva_hmi_chart_units')
       .html(chart_config['units'])
       .appendTo(chart);
     $('<div />', {id: 'eva_hmi_chart_content_' + chart_id})
@@ -1281,9 +1440,11 @@
     var cams = Array();
     if (window.eva_hmi_config_class == 'dashboard') {
       var eva_bar_holder = $('<div />', {class: 'eva_hmi_bar_holder'});
-      for (i = 1; i < 20; i++) {
+      if (embedded) eva_bar_holder.addClass('embedded');
+      for (i = 1; i < 100; i++) {
         if ('bar' + i in window.eva_hmi_config_layout) {
           var bar = $('<div />').addClass('eva_hmi_bar');
+          if (embedded) bar.addClass('embedded');
           var bar_cfg = window.eva_hmi_config_layout['bar' + i];
           if ('camera' in bar_cfg) {
             var cam = create_cam(bar_cfg['camera']);
@@ -1316,7 +1477,7 @@
         }
       }
     } else if (window.eva_hmi_config_class == 'sensors') {
-      if (!$eva.in_evaHI) {
+      if (!$eva.in_evaHI && !embedded) {
         $('<a />')
           .attr('href', window.eva_hmi_config_main_page)
           .addClass('eva_hmi_close_btn')
@@ -1393,6 +1554,7 @@
     var cams = Array();
     if (window.eva_hmi_config_class == 'dashboard') {
       var row = $('<div />', {class: 'mob_layout'});
+      if (embedded) row.addClass('embedded');
       var fcb = true;
       $.each(window.eva_hmi_config_layout_compact['elements'], function(i, v) {
         if (v['type'] == 'control-block') {
@@ -1568,14 +1730,18 @@
     window.$cookies.erase('eva_hmi_password');
   }
 
-  function seconds_to_pretty_string(seconds, max) {
+  function seconds_to_pretty_string(seconds, max, spacer_size) {
     seconds = seconds.toFixed(1);
     var result = '';
 
     var spacer = parseInt(seconds * 2) % 2 ? ':' : '&nbsp;';
 
     spacer =
-      '<div style="width: 5px; display: inline-block">' + spacer + '</div>';
+      '<div class="eva_hmi_timer_spacer ' +
+      (spacer_size ? 'size_' + spacer_size : '') +
+      '">' +
+      spacer +
+      '</div>';
 
     if (seconds < 60 || max == 'seconds') {
       var sec = Math.floor(seconds);
@@ -1632,7 +1798,7 @@
   $eva.hmi.logo.href = 'https://www.eva-ics.com/';
   $eva.hmi.logo.text = 'www.eva-ics.com';
   $eva.hmi.format_camera_src = function() {};
-  $eva.hmi.format_cmart_config = format_chart_config();
+  $eva.hmi.format_chart_config = format_chart_config();
   $eva.hmi.after_draw = function() {};
   $eva.hmi.prepare_layout = function() {};
   $eva.hmi.error = error;

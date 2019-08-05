@@ -17,7 +17,7 @@ while i < len(css):
         data_icons[c[2:]] = img
         l = len(c) - 2
         if l > di_maxlength: di_maxlength = l
-    elif s.startswith('.eva_hmi_cbtn'):
+    elif s.startswith('.eva_hmi_cbtn.'):
         subclasses = s.split(',')
         i += 1
         img = css[i].split('\'')[1]

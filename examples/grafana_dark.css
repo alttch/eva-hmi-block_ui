@@ -1,0 +1,40 @@
+body {
+  background-color: #161719;
+  overflow: hidden;
+}
+html {
+  overflow: hidden;
+}
+.eva_hmi_bar:nth-child(2n + 1) {
+  border: 0px;
+}
+.eva_hmi_bar:nth-child(3n + 2) {
+  border: 0px;
+}
+.eva_hmi_bar_holder  {
+  background-color: #161719;
+  border: 0;
+  width: auto;
+}
+.eva_hmi_cbtn {
+  background-color: #212124;
+  border-color: #313134;
+}
+.eva_hmi_cbtn:not(:disabled):hover {
+  background-color: #313134;
+}
+.eva_hmi_cbtn.busy::after {
+  background-color: rgba(49, 49, 52, 0.3);
+}
+.popover-body {
+  background-color: #161719;
+}
+.popover {
+  border-color: #313134;
+}   
+.popover > .arrow:before {
+  border-bottom-color: #313134;
+}
+.popover > .arrow:after {
+  border-bottom-color: #313134;
+}
