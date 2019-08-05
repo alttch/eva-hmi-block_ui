@@ -249,6 +249,8 @@
           b.addClass('eva_hmi_cbtn');
           b.addClass('i_' + config.icon);
           b.addClass('s_' + i);
+          b.append($('<span />', {class: 'btn_border'}));
+          b.append($('<span />', {class: 'btn_img'}));
           var params = $.extend({}, config.action_params);
           b.attr('eva-ui-status-to', i);
           b.on('click', function() {
@@ -472,6 +474,10 @@
     $.each(btn_config.icon.split('.'), function(i, v) {
       button.addClass((i == 0 ? 'i_' : '') + v);
     });
+    $('<span />')
+      .addClass('btn_border')
+      .appendTo(button);
+    button.append($('<span />', {class: 'btn_img'}));
     if (btn_config.title) {
       $('<span />')
         .addClass('title')
