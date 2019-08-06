@@ -392,15 +392,23 @@ html, body {
   /*margin: auto;*/
 }
 .eva_hmi_content_holder.embedded {
-    margin-top: -55px;
-    margin-bottom: 5px;
-    margin-left: 10px;
-  }
+  width: calc(100% - 20px)!important;  
+  margin-top: 0;
+  margin-bottom: 5px;
+  margin-left: 10px;
+}
 .eva_hmi_bar_holder {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
   margin-top: 55px;
+}
+.eva_hmi_bar_holder.embedded {
+  margin-top: 0;
+}
+.eva_hmi_bar.embedded {
+  width: 336px!important;
+  border: none!important;
 }
 .eva_hmi_bar_holder.single_bar_holder {
 	width: 760px;
@@ -461,7 +469,7 @@ html, body {
   width: 20px;
 }
 .eva_hmi_bar {
-  margin-top: 50px;
+  margin-top: 5px;
   width: 320px;
 	display: flex;
 	flex-wrap: wrap;
@@ -470,7 +478,6 @@ html, body {
 .eva_hmi_camera_block {
   width: 100%;
   text-align: center;
-  margin-top: 10px;
   border: 1px solid #989eaa;
 }
 .eva_hmi_control_block {
@@ -1129,6 +1136,9 @@ html, body {
     width: 341px;
     padding: 10px;
     border: 2px solid rgba(28, 67, 99, 0.5);    
+  }
+  .eva_hmi_bar.embedded {
+    padding: 10px!important;
   }
   .eva_hmi_bar:nth-child(2n + 1) {
     border-top-left-radius: 20px;

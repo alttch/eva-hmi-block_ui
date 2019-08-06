@@ -814,6 +814,9 @@
         window.eva_hmi_config_cameras,
         window.eva_hmi_config['cameras']
       );
+      $('<div />')
+        .addClass('eva_hmi_bg')
+        .appendTo('body');
       if (!embedded) {
         login_window = $('<div >/', {
           id: 'login_window'
@@ -852,9 +855,6 @@
         var main = $('<div />', {id: 'eva_hmi_main'});
         var container = $('<div />').addClass('container');
         var row = $('<div />').addClass('row');
-        $('<div />')
-          .addClass('eva_hmi_bg')
-          .appendTo('body');
         cnt.appendTo('body');
         main.appendTo(cnt);
         container.appendTo(main);
