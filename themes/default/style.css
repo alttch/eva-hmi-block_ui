@@ -9,9 +9,14 @@ html, body {
   left: 0;
   width: 100%;
   height: 40px;
-  background-color: #0e385a;
+  background-color: #fff;
+  border-bottom: 2px solid #ccc;
   z-index: 1250;
   overflow: hidden;
+}
+.dark_theme #eva_hmi_top_bar {
+  background-color: #0e385a;
+  border-bottom: none;
 }
 #eva_hmi_top_bar > .eva_hmi_menu_item {
   width: 36px;
@@ -79,14 +84,20 @@ html, body {
 }
 .eva_hmi_menu_item {
   padding: 10px 15px;
-  color: #5684e2;
+  color: #999;
   font-size: 18px;
   cursor: pointer;
 }
+.dark_theme .eva_hmi_menu_item {
+  color: #5684e2;
+}
 .eva_hmi_menu_item:not(:disabled):hover {
+  background: #eee;
+}
+.dark_theme .eva_hmi_menu_item:not(:disabled):hover {
   background: #244a69;
 }
-.eva_hmi_menu_holder .eva_hmi_menu_item:not(:disabled):hover {
+.dark_theme .eva_hmi_menu_holder .eva_hmi_menu_item:not(:disabled):hover {
   background: #eee;
 }
 .eva_hmi_menu_title {
@@ -105,8 +116,11 @@ html, body {
   right: 0px;
   top: 0px;
   padding: 10px 10px;
-  color: #5686e4;
+  color: #808080;
   font-size: 12px;
+}
+.dark_theme .eva_hmi_top_bar_sysblock {
+  color: #5686e4;
 }
 .eva_hmi_logo_container {
   position: absolute;
@@ -153,7 +167,7 @@ html, body {
   position: absolute;
   height: 4px;
   width: 30px;
-  background: #5686e4;
+  background: #808080;
   border-radius: 7px;
   opacity: 1;
   left: 8px;
@@ -165,6 +179,9 @@ html, body {
   -moz-transition: .25s ease-in-out;
   -o-transition: .25s ease-in-out;
   transition: .25s ease-in-out;
+}
+.dark_theme #eva_hmi_hamb span {
+  background: #5686e4;
 }
 
 #eva_hmi_hamb span:nth-child(1) {
@@ -208,6 +225,12 @@ html, body {
 .eva_hmi_motd {
   font-size: 14px;
   font-style: italic
+}
+.dark_theme .eva_hmi_motd {
+  color: #989eaa;
+}
+.dark_theme .eva_hmi_motd a {
+  color: #5684e2;
 }
 .eva_hmi_slider_container {
   width: 270px;
@@ -277,6 +300,10 @@ html, body {
 	background: rgba(230, 230, 230, 0.5);
 	background: linear-gradient(0.222turn, rgb(230, 230, 230) 0%, rgba(230, 230, 230, 0.5) 50%, rgba(230, 230, 230, 0.5) 100%)
 }
+.dark_theme .eva_hmi_dialog_window #eva_hmi_login_form {
+  background: #131b2e;
+  border-color: #0e385a;
+}
 #eva_hmi_login_form > div {
 	max-width: 224px;
 	margin-left: auto;
@@ -299,8 +326,16 @@ html, body {
 	color: #4d4d4d;
 	border-radius: 2px;
 }
+.dark_theme .eva_hmi_input_form input {
+  color: #fff;
+  background-color: #131b2e;
+  border-color: #5a6580;
+}
 .eva_hmi_input_form input:focus {
 	box-shadow: none;
+}
+.dark_theme .eva_hmi_input_form input:focus {
+  border-color: #fff;
 }
 .eva_hmi_input_form input.error_key {
 	border-color: #c1272d;
@@ -310,8 +345,11 @@ html, body {
 	font: 14px Arial;
 	color: #4d4d4d;
 }
+.dark_theme #eva_hmi_login_form label {
+  color: #5a6580;
+}
 .eva_hmi_custom_checkbox {
-	margin-bottom: 8px;
+	margin-bottom: 24px;
 }
 .eva_hmi_custom_checkbox input[type=checkbox] {
 	opacity: 0;
@@ -334,6 +372,10 @@ html, body {
 	border-radius: 2px;
 	background: #fff;
 }
+.dark_theme .eva_hmi_custom_checkbox input[type=checkbox] + label::before {
+  background-color: transparent;
+  border-color: #5a6580;
+}
 .eva_hmi_custom_checkbox input[type=checkbox]:checked + label::after {
 	content: "";
 	position: absolute;
@@ -347,6 +389,14 @@ html, body {
 	border-top: none;
 	border-right: none;
 }
+.dark_theme .eva_hmi_custom_checkbox input[type=checkbox]:checked + label::before,
+.dark_theme .eva_hmi_custom_checkbox input[type=checkbox]:checked + label::after {
+  border-color: #fff;
+}
+.dark_theme .eva_hmi_custom_checkbox input[type=checkbox]:checked + label {
+  color: #fff!important;
+}
+
 .btn {
 	width: 100%;
 	font: 18px Arial;
@@ -358,6 +408,10 @@ html, body {
 	border-radius: 2px;
 	box-shadow: none;
 }
+.dark_theme .btn {
+  color: #fff;
+  background: #5684e2;
+}
 .btn:hover, .btn:focus {
 	color: #000;
 	background-image: linear-gradient(100deg, #f79200, #fa5f00);
@@ -366,6 +420,14 @@ html, body {
 .btn:active {
 	background-image: linear-gradient(100deg, #f76100, #d04600);
 	box-shadow: none;
+}
+.dark_theme .btn:hover,
+.dark_theme .btn:focus {
+  color: #fff;
+  background: #00aaff;
+}
+.dark_theme .btn:active {
+  background: #5fbeff;
 }
 
 .eva_hmi_container {
@@ -377,8 +439,14 @@ html, body {
   width: 100%;
   position: fixed;
   min-height: 150%;
-  background: #131b2e;
+  background: url('images/patt.gif') 0 0;
   z-index: -1;
+}
+.eva_hmi_bg.embedded {
+  background-image: none;
+}
+.dark_theme .eva_hmi_bg {
+  background: #131b2e;
 }
 .eva_hmi_container.sensors {
   position: relative;
@@ -403,11 +471,14 @@ html, body {
   width: 100%;
   margin-top: 55px;
 }
-.eva_hmi_bar_holder.embedded {
+.embedded .eva_hmi_bar_holder {
+  margin-top: 5px;
+}
+.embedded .eva_hmi_bar_holder.embedded {
   margin-top: 0;
 }
 .eva_hmi_bar.embedded {
-  width: 336px!important;
+  width: 337px!important;
   border: none!important;
 }
 .eva_hmi_bar_holder.single_bar_holder {
@@ -419,8 +490,12 @@ html, body {
   display: flex;
   flex-wrap: wrap;
   padding: 20px 0;
-  background: transparent;
+  background: #fafafa;
   border-radius: 5px;
+  border: 2px solid #ccc;
+}
+.dark_theme .eva_hmi_content_holder_sensors {
+  background: transparent;
   border: 2px solid #0e385a;
 }
 .eva_hmi_content_holder_sensors.embedded {
@@ -474,6 +549,10 @@ html, body {
 	display: flex;
 	flex-wrap: wrap;
 	flex-direction: column;
+  background-color: #fff;
+}
+.dark_theme .eva_hmi_bar {
+  background-color: transparent;
 }
 .eva_hmi_camera_block {
   width: 100%;
@@ -485,6 +564,10 @@ html, body {
   width: 100%;
   margin-top: 7px;
   padding-top: 7px;
+  border-top: 2px solid #ccc;
+}
+.dark_theme .eva_hmi_control_block {
+  border-top: none;
 }
 .eva_hmi_control_block.first {
 	padding-top: 0;
@@ -496,14 +579,24 @@ html, body {
   width: 72px;
   height: 72px;
   margin-right: 9px;
-  border: 2px solid #0e385a;
+  border: 2px solid rgba(152, 158, 170, 0.68);
   border-radius: 100%;
+  background-color: #fff;
+}
+.dark_theme .eva_hmi_cbtn,
+.dark_theme .eva_hmi_cbtn.s_0 {
+  border-color: #0e385a;
   background-color: transparent;
 }
-.eva_hmi_cbtn.s_0 .btn_border {
+.eva_hmi_cbtn.s_0 {
+  border-color: #efefef;
+}
+.eva_hmi_cbtn.s_0 .btn_border,
+.dark_theme .eva_hmi_cbtn.s_0 .btn_border {
   background-color: rgba(14, 56, 90, 0);
 }
-.eva_hmi_cbtn.s_0 .btn_border::before {
+.eva_hmi_cbtn.s_0 .btn_border::before,
+.dark_theme .eva_hmi_cbtn.s_0 .btn_border::before {
   border: 1px solid rgba(255, 255, 255, 0);
 }
 .eva_hmi_cbtn .btn_img,
@@ -515,6 +608,10 @@ html, body {
   right: 9px;
   border-radius: 100%;
   border: none;
+  background-color: rgba(14, 56, 90, 0.1);
+}
+.dark_theme .eva_hmi_cbtn .btn_img,
+.dark_theme .eva_hmi_cbtn .btn_border {
   background-color: rgba(14, 56, 90, 0.68);
 }
 .eva_hmi_cbtn .btn_img {
@@ -524,6 +621,15 @@ html, body {
   background-repeat: no-repeat;
   transition: background-image 0.2s linear;
 }
+.eva_hmi_cbtn.s_0 .btn_img {
+  opacity: 0.2;
+}
+.dark_theme .eva_hmi_cbtn.s_0 .btn_img {
+  opacity: 1;
+}
+.dark_theme .eva_hmi_cbtn .btn_img {
+  background-color: transparent;
+}
 .eva_hmi_cbtn .btn_border::before {
   content: "";
   position: absolute;
@@ -532,8 +638,11 @@ html, body {
   bottom: -2px;
   right: -2px;
   background-color: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(14, 56, 90, 0.68);
   border-radius: 100%;
+}
+.dark_theme .eva_hmi_cbtn .btn_border::before {
+  border: 1px solid rgba(255, 255, 255, 0.18);
 }
 .eva_hmi_cbtn:last-of-type {
   margin-right: 0;
@@ -563,9 +672,12 @@ html, body {
   left: 0;
   height: 100%;
   width: 100%;
-  background: url('btn/x_busy.svg') 50% 50%  no-repeat rgba(255, 255, 255, 0.3);
+  background: url('btn/x_busy.svg') 50% 50%  no-repeat rgba(255, 255, 255, 0.6);
   background-size: 50px;
   border-radius: 100%;
+}
+.dark_theme .eva_hmi_cbtn.busy::after {
+  background-color: rgba(255, 255, 255, 0.3);
 }
 .eva_hmi_cbtn:not(:disabled):hover {
   outline: none;
@@ -591,6 +703,10 @@ html, body {
   border-radius: 7px;
 }
 .eva_hmi_cbtn.s_0 .title {
+  background-color: #bec2c9;
+  color: #fff;
+}
+.dark_theme .eva_hmi_cbtn.s_0 .title {
   background-color: #3a424a;
   color: #6d7a86;
 }
@@ -629,15 +745,21 @@ html, body {
 .eva_hmi_chart_title {
   padding-left: 30px;
   font-size: 14px;
+  color: #808080;
+}
+.dark_theme .eva_hmi_chart_title {
   color: #919293;
 }
 .eva_hmi_data_item.chart_info {
   font-size: 24px;
-  color: #919293;
+  color: #808080;
   margin-left: 20px;
   height: 55px;
   padding-top: 17px;
   padding-left: 55px;
+}
+.dark_theme .eva_hmi_data_item.chart_info {
+  color: #919293;
 }
 .eva_hmi_data_item_holder.chart_info {
   height: 55px;
@@ -646,6 +768,9 @@ html, body {
   position: absolute;
   right: 10px;
   margin-top: -10px;
+  color: #808080;
+}
+.dark_theme .eva_hmi_chart_units {
   color: #919293;
 }
 .popover {
@@ -664,6 +789,10 @@ html, body {
 .bs-popover-auto[x-placement^=bottom] .arrow::after,
 .bs-popover-bottom .arrow::after {
   top: 3px;
+}
+.dark_theme .bs-popover-bottom .arrow::after,
+.dark_theme .bs-popover-auto[x-placement^=bottom] .arrow::after,
+.dark_theme .bs-popover-bottom .arrow::after {
   border-bottom-color: #131b2e;
 }
 .bs-popover-auto[x-placement^=left] .arrow::before,
@@ -673,6 +802,9 @@ html, body {
 .bs-popover-auto[x-placement^=left] .arrow::after,
 .bs-popover-left .arrow::after {
   right: 3px;
+}
+.dark_theme .bs-popover-auto[x-placement^=left] .arrow::after,
+.dark_theme .bs-popover-left .arrow::after {
   border-left-color: #131b2e;
 }
 .bs-popover-top .arrow::before {
@@ -680,6 +812,8 @@ html, body {
 }
 .bs-popover-top .arrow::after {
   bottom: 3px;
+}
+.dark_theme .bs-popover-top .arrow::after {
   border-top-color: #131b2e;
 }
 .bs-popover-top {
@@ -696,6 +830,8 @@ html, body {
   height: 100%;
   overflow: hidden;
   padding: .5rem;
+}
+.dark_theme .popover-body {
   background: #131b2e;
 }
 @-webkit-keyframes fade-in {
@@ -751,17 +887,26 @@ html, body {
   to { left: 0px; }
 }
 .eva_hmi_data_block {
+  border-top: 2px solid #ccc;
   margin-top: 7px;
   padding-top: 10px;
   order: 10;
+}
+.dark_theme .eva_hmi_data_block {
+  border-top: none;
 }
 .eva_hmi_data_holder {
   display: flex;
   flex-wrap: wrap;
   position: relative;
   padding: 10px 10px;
-  border: 2px solid #0e385a;
+  background: #fff;
+  border: 2px solid #e6e6e6;
   border-radius: 5px;
+}
+.dark_theme .eva_hmi_data_holder {
+  background-color: transparent;
+  border-color: #0e385a;
 }
 .eva_hmi_data_item_holder {
   width: 95px;
@@ -799,13 +944,16 @@ html, body {
 }
 .eva_hmi_data_item {
   width: 100%;
-  color: #a8b0b8;
+  color: #808080;
   background-position: 0 0;
   background-repeat: no-repeat;
   white-space:nowrap;
   height: 34px;
   padding-left: 30px;
   padding-top: 10px;
+}
+.dark_theme .eva_hmi_data_item {
+  color: #a8b0b8;
 }
 .eva_hmi_data_item.size_medium {
   padding-left: 49px;
@@ -895,6 +1043,46 @@ html, body {
 .eva_hmi_chart_item {
   margin-top: 20px;
   position: relative;
+}
+.vanillatoasts-toast {
+  border: 2px solid #efefef;
+}
+.dark_theme .vanillatoasts-toast {
+  background-color: #0e385a;
+  border: 2px solid #0e385a;
+}
+.dark_theme .vanillatoasts-title {
+  color: #989eaa;
+}
+.vanillatoasts-toast::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 20px;
+  border-radius: 10px;
+}
+.vanillatoasts-icon::before {
+  border-radius: 100%;
+}
+.vanillatoasts-success::before {
+  border-bottom: 2px solid #49d278;
+}
+.vanillatoasts-success .vanillatoasts-title {
+  color: #49d278;
+}
+.vanillatoasts-warning::before {
+  border-bottom: 2px solid #f5b05a;
+}
+.vanillatoasts-warning .vanillatoasts-title {
+  color: #f5b05a;
+}
+.vanillatoasts-error::before {
+  border-bottom: 2px solid #ee4941;
+}
+.vanillatoasts-error .vanillatoasts-title {
+  color: #ee4941;
 }
 
 @media (max-width: 567px) {
@@ -999,6 +1187,9 @@ html, body {
     left: 7px;
     right: 7px;
     background-color: rgba(14, 56, 90, 0);
+    border: 1px solid rgba(14, 56, 90, 0.68);
+  }
+  .dark_theme .eva_hmi_cbtn:not(:disabled):hover .btn_border {
     border: 1px solid rgba(255, 255, 255, 0.18);
   }
   .eva_hmi_cbtn:not(:disabled):hover .btn_border::before {
@@ -1007,13 +1198,19 @@ html, body {
     bottom: 1px;
     left: 1px;
     right: 1px;
-    background-color: rgba(14, 56, 90, 0.68);
+    background-color: rgba(14, 56, 90, 0.1);
     animation: pulsed_btn .4s;
+  }
+  .dark_theme .eva_hmi_cbtn:not(:disabled):hover .btn_border::before {
+    background-color: rgba(14, 56, 90, 0.68);
   }
   .eva_hmi_cbtn.s_0:not(:disabled):hover .btn_border {
     border: 1px solid rgba(255, 255, 255, 0);
   }
   .eva_hmi_cbtn.s_0:not(:disabled):hover .btn_border::before {
+    border: 1px solid rgba(14, 56, 90, 0.68);
+  }
+  .dark_theme .eva_hmi_cbtn.s_0:not(:disabled):hover .btn_border::before {
     border: 1px solid rgba(255, 255, 255, 0.18);
   }
   @-webkit-keyframes pulsed_btn {
@@ -1135,21 +1332,27 @@ html, body {
   .eva_hmi_bar {
     width: 341px;
     padding: 10px;
-    border: 2px solid rgba(28, 67, 99, 0.5);    
+    border: 2px solid rgba(204, 204, 204, 0.5);
+  }
+  .dark_theme .eva_hmi_bar {
+    border: 2px solid rgba(28, 67, 99, 0.5);
   }
   .eva_hmi_bar.embedded {
     padding: 10px!important;
   }
-  .eva_hmi_bar:nth-child(2n + 1) {
+  .eva_hmi_bar:nth-child(2n + 1),
+  .dark_theme .eva_hmi_bar:nth-child(2n + 1) {
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
   }
-  .eva_hmi_bar:nth-child(2n + 2) {
+  .eva_hmi_bar:nth-child(2n + 2),
+  .dark_theme .eva_hmi_bar:nth-child(2n + 2) {
     border-left: none;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
   }
-  .eva_hmi_bar:last-child {
+  .eva_hmi_bar:last-child,
+  .dark_theme .eva_hmi_bar:last-child {
     margin-right: auto !important;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
@@ -1176,10 +1379,15 @@ html, body {
     padding: 10px 2px;
   }
   .eva_hmi_bar:nth-child(2n + 2) {
+    border: 2px solid rgba(204, 204, 204, 0.5);
+  }
+  .dark_theme .eva_hmi_bar:nth-child(2n + 2) {
     border: 2px solid rgba(28, 67, 99, 0.5);
   }
   .eva_hmi_bar:nth-child(3n + 1),
-  .eva_hmi_bar:nth-child(3n + 2) {
+  .eva_hmi_bar:nth-child(3n + 2),
+  .dark_theme .eva_hmi_bar:nth-child(3n + 1),
+  .dark_theme .eva_hmi_bar:nth-child(3n + 2) {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
   }
@@ -1189,7 +1397,9 @@ html, body {
     border-bottom-left-radius: 20px;
   }
   .eva_hmi_bar:nth-child(3n + 2),
-  .eva_hmi_bar:nth-child(3n + 3) {
+  .eva_hmi_bar:nth-child(3n + 3),
+  .dark_theme .eva_hmi_bar:nth-child(3n + 2),
+  .dark_theme .eva_hmi_bar:nth-child(3n + 3) {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     border-left: none;

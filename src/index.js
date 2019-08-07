@@ -814,10 +814,11 @@
         window.eva_hmi_config_cameras,
         window.eva_hmi_config['cameras']
       );
-      $('<div />')
-        .addClass('eva_hmi_bg')
+      var page_bg = $('<div />')
+        .addClass('eva_hmi_bg embedded')
         .appendTo('body');
       if (!embedded) {
+        page_bg.removeClass('embedded');
         login_window = $('<div >/', {
           id: 'login_window'
         }).addClass('eva_hmi_dialog_window_holder');

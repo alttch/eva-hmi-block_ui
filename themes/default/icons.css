@@ -50,6 +50,9 @@
 .eva_hmi_data_item.i_pressure {
   background-image: url('data_icons/pressure.svg');
 }
+.dark_theme .eva_hmi_data_item.i_pressure {
+  background-image: url('data_icons/pressure_dark.svg');
+}
 .eva_hmi_data_item.i_indoor_temp {
   background-image: url('data_icons/temp_in.svg');
 }
@@ -64,7 +67,9 @@
 }
 .eva_hmi_data_item.i_outdoor_pressure {
   background-image: url('data_icons/pressure_out.svg');
-  background-position-x: -4px;
+}
+.dark_theme .eva_hmi_data_item.i_outdoor_pressure {
+  background-image: url('data_icons/pressure_out_dark.svg');
 }
 .eva_hmi_data_item.i_soil_temp {
   background-image: url('data_icons/temp_soil.svg');
