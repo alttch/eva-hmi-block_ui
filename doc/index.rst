@@ -20,6 +20,10 @@ Screenshots:
     :width: 30%
 .. image:: images/sensors.png
     :width: 30%
+.. image:: images/dashboard_dark.jpg
+    :width: 30%
+.. image:: images/sensors_dark.jpg
+    :width: 30%
 
 Live demo: `<https://smarthome.demo.eva-ics.com/>`_
 

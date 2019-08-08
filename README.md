@@ -12,6 +12,8 @@ https://eva-hmi-block-ui.readthedocs.io/
 <img src="https://github.com/alttch/eva-hmi-block_ui/raw/master/doc/images/dashboard.jpg" width="200" />
 <img src="https://github.com/alttch/eva-hmi-block_ui/raw/master/doc/images/simple.jpg" width="200" />
 <img src="https://github.com/alttch/eva-hmi-block_ui/raw/master/doc/images/sensors.png" width="200" />
+<img src="https://github.com/alttch/eva-hmi-block_ui/raw/master/doc/images/dashboard_dark.jpg" width="200" />
+<img src="https://github.com/alttch/eva-hmi-block_ui/raw/master/doc/images/sensors_dark.jpg" width="200" />
 
 ## Live demo
 
