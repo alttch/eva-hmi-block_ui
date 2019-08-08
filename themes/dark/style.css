@@ -9,8 +9,8 @@ html, body {
   left: 0;
   width: 100%;
   height: 40px;
-  background-color: #fff;
-  border-bottom: 2px solid #ccc;
+  background-color: #0e385a;
+  border-bottom: none;
   z-index: 1250;
   overflow: hidden;
 }
@@ -80,11 +80,14 @@ html, body {
 }
 .eva_hmi_menu_item {
   padding: 10px 15px;
-  color: #999;
+  color: #5684e2;
   font-size: 18px;
   cursor: pointer;
 }
 .eva_hmi_menu_item:not(:disabled):hover {
+  background: #244a69;
+}
+.eva_hmi_menu_holder .eva_hmi_menu_item:not(:disabled):hover {
   background: #eee;
 }
 .eva_hmi_menu_title {
@@ -103,7 +106,7 @@ html, body {
   right: 0px;
   top: 0px;
   padding: 10px 10px;
-  color: #808080;
+  color: #5686e4;
   font-size: 12px;
 }
 .eva_hmi_logo_container {
@@ -151,7 +154,7 @@ html, body {
   position: absolute;
   height: 4px;
   width: 30px;
-  background: #808080;
+  background: #5686e4;
   border-radius: 7px;
   opacity: 1;
   left: 8px;
@@ -205,7 +208,11 @@ html, body {
 }
 .eva_hmi_motd {
   font-size: 14px;
-  font-style: italic
+  font-style: italic;
+  color: #989eaa;
+}
+.eva_hmi_motd a {
+  color: #5684e2;
 }
 .eva_hmi_slider_container {
   width: 270px;
@@ -270,10 +277,9 @@ html, body {
 	max-width: 370px;
 	margin: auto;
 	padding: 30px 20px;
-	border: 4px solid #fff;
+	border: 4px solid #0e385a;
 	border-radius: 3px;
-	background: rgba(230, 230, 230, 0.5);
-	background: linear-gradient(0.222turn, rgb(230, 230, 230) 0%, rgba(230, 230, 230, 0.5) 50%, rgba(230, 230, 230, 0.5) 100%)
+  background: #131b2e;
 }
 #eva_hmi_login_form > div {
 	max-width: 224px;
@@ -294,11 +300,15 @@ html, body {
 	height: 37px;
 	margin-bottom: 10px;
 	font: 14px Arial;
-	color: #4d4d4d;
+	color: #fff;
 	border-radius: 2px;
+  background-color: #131b2e;
+  border-color: #5a6580;
 }
 .eva_hmi_input_form input:focus {
 	box-shadow: none;
+  background-color: #131b2e;
+  border-color: #fff;
 }
 .eva_hmi_input_form input.error_key {
 	border-color: #c1272d;
@@ -306,7 +316,7 @@ html, body {
 }
 #eva_hmi_login_form label {
 	font: 14px Arial;
-	color: #4d4d4d;
+  color: #5a6580;
 }
 .eva_hmi_custom_checkbox {
 	margin-bottom: 24px;
@@ -330,7 +340,8 @@ html, body {
 	height: 16px;
 	border: 1px solid #000;
 	border-radius: 2px;
-	background: #fff;
+  background-color: transparent;
+  border-color: #5a6580;
 }
 .eva_hmi_custom_checkbox input[type=checkbox]:checked + label::after {
 	content: "";
@@ -339,11 +350,17 @@ html, body {
 	top: 4px;
 	width: 10px;
 	height: 6px;
-	border: 2px solid #4d4d4d;
+	border: 2px solid #fff;
 	transform: rotate(-45deg);
 	border-radius: 0;
 	border-top: none;
 	border-right: none;
+}
+.eva_hmi_custom_checkbox input[type=checkbox]:checked + label::before {
+  border-color: #fff;
+}
+.eva_hmi_custom_checkbox input[type=checkbox]:checked + label {
+  color: #fff!important;
 }
 
 .btn {
@@ -351,19 +368,18 @@ html, body {
 	font: 18px Arial;
   font-weight: bold;
 	border: none;
-	color: #000;
-	background-color: #009bac;
-	background-image: linear-gradient(100deg, #ffb715, #fb9333);
+	color: #fff;
+	background: #5684e2;
 	border-radius: 2px;
 	box-shadow: none;
 }
 .btn:hover, .btn:focus {
-	color: #000;
-	background-image: linear-gradient(100deg, #f79200, #fa5f00);
+	color: #fff;
+  background: #00aaff;
 	box-shadow: none;
 }
 .btn:active {
-	background-image: linear-gradient(100deg, #f76100, #d04600);
+  background: #5fbeff;
 	box-shadow: none;
 }
 
@@ -376,11 +392,8 @@ html, body {
   width: 100%;
   position: fixed;
   min-height: 150%;
-  background: url('images/patt.gif') 0 0;
+  background: #131b2e;
   z-index: -1;
-}
-.eva_hmi_bg.embedded {
-  background-image: none;
 }
 .eva_hmi_container.sensors {
   position: relative;
@@ -424,9 +437,9 @@ html, body {
   display: flex;
   flex-wrap: wrap;
   padding: 20px 0;
-  background: #fafafa;
+  background: transparent;
   border-radius: 5px;
-  border: 2px solid #ccc;
+  border: 2px solid #0e385a;
 }
 .eva_hmi_content_holder_sensors.embedded {
     margin: 0px;
@@ -479,7 +492,7 @@ html, body {
 	display: flex;
 	flex-wrap: wrap;
 	flex-direction: column;
-  background-color: #fff;
+  background-color: transparent;
 }
 .eva_hmi_camera_block {
   width: 100%;
@@ -491,7 +504,7 @@ html, body {
   width: 100%;
   margin-top: 7px;
   padding-top: 7px;
-  border-top: 2px solid #ccc;
+  border-top: none;
 }
 .eva_hmi_control_block.first {
 	padding-top: 0;
@@ -503,12 +516,13 @@ html, body {
   width: 72px;
   height: 72px;
   margin-right: 9px;
-  border: 2px solid rgba(152, 158, 170, 0.68);
+  border: 2px solid #0e385a;
   border-radius: 100%;
-  background-color: #fff;
+  background-color: transparent;
 }
 .eva_hmi_cbtn.s_0 {
-  border-color: #efefef;
+  border-color: #0e385a;
+  background-color: transparent;
 }
 .eva_hmi_cbtn.s_0 .btn_border {
   background-color: rgba(14, 56, 90, 0);
@@ -525,7 +539,7 @@ html, body {
   right: 9px;
   border-radius: 100%;
   border: none;
-  background-color: rgba(14, 56, 90, 0.1);
+  background-color: rgba(14, 56, 90, 0.68);
 }
 .eva_hmi_cbtn .btn_img {
   background-color: transparent;
@@ -535,7 +549,7 @@ html, body {
   transition: background-image 0.2s linear;
 }
 .eva_hmi_cbtn.s_0 .btn_img {
-  opacity: 0.2;
+  opacity: 1;
 }
 .eva_hmi_cbtn .btn_border::before {
   content: "";
@@ -545,7 +559,7 @@ html, body {
   bottom: -2px;
   right: -2px;
   background-color: transparent;
-  border: 1px solid rgba(14, 56, 90, 0.68);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 100%;
 }
 .eva_hmi_cbtn:last-of-type {
@@ -576,7 +590,7 @@ html, body {
   left: 0;
   height: 100%;
   width: 100%;
-  background: url('btn/x_busy.svg') 50% 50%  no-repeat rgba(255, 255, 255, 0.6);
+  background: url('btn/x_busy.svg') 50% 50%  no-repeat rgba(255, 255, 255, 0.3);
   background-size: 50px;
   border-radius: 100%;
 }
@@ -604,8 +618,8 @@ html, body {
   border-radius: 7px;
 }
 .eva_hmi_cbtn.s_0 .title {
-  background-color: #bec2c9;
-  color: #fff;
+  background-color: #3a424a;
+  color: #6d7a86;
 }
 .eva_hmi_cbtn .value {
 	position: absolute;
@@ -642,11 +656,11 @@ html, body {
 .eva_hmi_chart_title {
   padding-left: 30px;
   font-size: 14px;
-  color: #808080;
+  color: #919293;
 }
 .eva_hmi_data_item.chart_info {
   font-size: 24px;
-  color: #808080;
+  color: #919293;
   margin-left: 20px;
   height: 55px;
   padding-top: 17px;
@@ -659,7 +673,7 @@ html, body {
   position: absolute;
   right: 10px;
   margin-top: -10px;
-  color: #808080;
+  color: #919293;
 }
 .popover {
   z-index: 1000,
@@ -677,6 +691,7 @@ html, body {
 .bs-popover-auto[x-placement^=bottom] .arrow::after,
 .bs-popover-bottom .arrow::after {
   top: 3px;
+  border-bottom-color: #131b2e;
 }
 .bs-popover-auto[x-placement^=left] .arrow::before,
 .bs-popover-left .arrow::before {
@@ -685,12 +700,14 @@ html, body {
 .bs-popover-auto[x-placement^=left] .arrow::after,
 .bs-popover-left .arrow::after {
   right: 3px;
+  border-left-color: #131b2e;
 }
 .bs-popover-top .arrow::before {
   border-top-color: #999;
 }
 .bs-popover-top .arrow::after {
   bottom: 3px;
+  border-top-color: #131b2e;
 }
 .bs-popover-top {
   position: absolute;
@@ -706,6 +723,7 @@ html, body {
   height: 100%;
   overflow: hidden;
   padding: .5rem;
+  background: #131b2e;
 }
 @-webkit-keyframes fade-in {
   from { opacity: 0; }
@@ -760,7 +778,7 @@ html, body {
   to { left: 0px; }
 }
 .eva_hmi_data_block {
-  border-top: 2px solid #ccc;
+  border-top: none;
   margin-top: 7px;
   padding-top: 10px;
   order: 10;
@@ -770,8 +788,8 @@ html, body {
   flex-wrap: wrap;
   position: relative;
   padding: 10px 10px;
-  background: #fff;
-  border: 2px solid #e6e6e6;
+  background: transparent;
+  border: 2px solid #0e385a;
   border-radius: 5px;
 }
 .eva_hmi_data_item_holder {
@@ -810,7 +828,7 @@ html, body {
 }
 .eva_hmi_data_item {
   width: 100%;
-  color: #808080;
+  color: #a8b0b8;
   background-position: 0 0;
   background-repeat: no-repeat;
   white-space:nowrap;
@@ -908,7 +926,11 @@ html, body {
   position: relative;
 }
 .vanillatoasts-toast {
-  border: 2px solid #efefef;
+  background-color: #0e385a;
+  border: 2px solid #0e385a;
+}
+.vanillatoasts-title {
+  color: #989eaa;
 }
 .vanillatoasts-toast::before {
   content: "";
@@ -1043,7 +1065,7 @@ html, body {
     left: 7px;
     right: 7px;
     background-color: rgba(14, 56, 90, 0);
-    border: 1px solid rgba(14, 56, 90, 0.68);
+    border: 1px solid rgba(255, 255, 255, 0.18);
   }
   .eva_hmi_cbtn:not(:disabled):hover .btn_border::before {
     border: 1px solid rgba(255, 255, 255, 0);
@@ -1051,14 +1073,14 @@ html, body {
     bottom: 1px;
     left: 1px;
     right: 1px;
-    background-color: rgba(14, 56, 90, 0.1);
+    background-color: rgba(14, 56, 90, 0.68);
     animation: pulsed_btn .4s;
   }
   .eva_hmi_cbtn.s_0:not(:disabled):hover .btn_border {
     border: 1px solid rgba(255, 255, 255, 0);
   }
   .eva_hmi_cbtn.s_0:not(:disabled):hover .btn_border::before {
-    border: 1px solid rgba(14, 56, 90, 0.68);
+    border: 1px solid rgba(14, 56, 90, 0.18);
   }
   @-webkit-keyframes pulsed_btn {
     0% {
@@ -1179,7 +1201,7 @@ html, body {
   .eva_hmi_bar {
     width: 341px;
     padding: 10px;
-    border: 2px solid rgba(204, 204, 204, 0.5);
+    border: 2px solid rgba(28, 67, 99, 0.5);
   }
   .eva_hmi_bar.embedded {
     padding: 10px!important;
@@ -1193,7 +1215,7 @@ html, body {
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
   }
-  .eva_hmi_bar:last-child{
+  .eva_hmi_bar:last-child {
     margin-right: auto !important;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
@@ -1220,7 +1242,7 @@ html, body {
     padding: 10px 2px;
   }
   .eva_hmi_bar:nth-child(2n + 2) {
-    border: 2px solid rgba(204, 204, 204, 0.5);
+    border: 2px solid rgba(28, 67, 99, 0.5);
   }
   .eva_hmi_bar:nth-child(3n + 1),
   .eva_hmi_bar:nth-child(3n + 2) {
