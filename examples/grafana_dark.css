@@ -5,6 +5,9 @@ body {
 html {
   overflow: hidden;
 }
+.eva_hmi_bg.embedded {
+  background-color: #161719;
+}
 .eva_hmi_bar:nth-child(2n + 1) {
   border: 0px;
 }
