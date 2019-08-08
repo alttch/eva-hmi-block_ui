@@ -14,12 +14,17 @@ The app is fully compatible with `EVA ICS Control Center Android app
 
 Screenshots:
 
+Theme **default**:
+
 .. image:: images/dashboard.jpg
     :width: 30%
 .. image:: images/simple.jpg
     :width: 30%
 .. image:: images/sensors.png
     :width: 30%
+
+Theme **dark**:
+
 .. image:: images/dashboard_dark.jpg
     :width: 30%
 .. image:: images/sensors_dark.jpg
