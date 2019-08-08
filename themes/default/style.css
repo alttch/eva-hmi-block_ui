@@ -9,7 +9,7 @@ html, body {
   left: 0;
   width: 100%;
   height: 40px;
-  background-color: #fff;
+  background-color: white;
   border-bottom: 2px solid #ccc;
   z-index: 1250;
   overflow: hidden;
@@ -80,9 +80,14 @@ html, body {
 }
 .eva_hmi_menu_item {
   padding: 10px 15px;
+  /*border-bottom: 1px solid #ccc;*/
   color: #999;
   font-size: 18px;
   cursor: pointer;
+}
+.eva_hmi_menu_item:not(:disabled):hover,
+.eva_hmi_menu_item.active_menu {
+  color: #1a1a1a;
 }
 .eva_hmi_menu_item:not(:disabled):hover {
   background: #eee;
@@ -309,7 +314,7 @@ html, body {
 	color: #4d4d4d;
 }
 .eva_hmi_custom_checkbox {
-	margin-bottom: 24px;
+	margin-bottom: 8px;
 }
 .eva_hmi_custom_checkbox input[type=checkbox] {
 	opacity: 0;
@@ -345,7 +350,6 @@ html, body {
 	border-top: none;
 	border-right: none;
 }
-
 .btn {
 	width: 100%;
 	font: 18px Arial;
@@ -379,9 +383,6 @@ html, body {
   background: url('images/patt.gif') 0 0;
   z-index: -1;
 }
-.eva_hmi_bg.embedded {
-  background-image: none;
-}
 .eva_hmi_container.sensors {
   position: relative;
   width: 100%;
@@ -394,26 +395,14 @@ html, body {
   /*margin: auto;*/
 }
 .eva_hmi_content_holder.embedded {
-  width: calc(100% - 20px)!important;  
-  margin-top: 0;
-  margin-bottom: 5px;
-  margin-left: 10px;
-}
+    margin-top: -55px;
+    margin-bottom: 5px;
+    margin-left: 10px;
+  }
 .eva_hmi_bar_holder {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  margin-top: 55px;
-}
-.embedded .eva_hmi_bar_holder {
-  margin-top: 5px;
-}
-.embedded .eva_hmi_bar_holder.embedded {
-  margin-top: 0;
-}
-.eva_hmi_bar.embedded {
-  width: 337px!important;
-  border: none!important;
 }
 .eva_hmi_bar_holder.single_bar_holder {
 	width: 760px;
@@ -474,17 +463,19 @@ html, body {
   width: 20px;
 }
 .eva_hmi_bar {
-  margin-top: 5px;
+  margin-top: 50px;
   width: 320px;
 	display: flex;
 	flex-wrap: wrap;
 	flex-direction: column;
-  background-color: #fff;
+}
+.eva_hmi_bar:first-child {
+  margin-top: 20px;
 }
 .eva_hmi_camera_block {
   width: 100%;
   text-align: center;
-  border: 1px solid #989eaa;
+  margin-top: 10px;
 }
 .eva_hmi_control_block {
   display: flex;
@@ -500,53 +491,16 @@ html, body {
 }
 .eva_hmi_cbtn {
   position: relative;
-  width: 72px;
-  height: 72px;
-  margin-right: 9px;
-  border: 2px solid rgba(152, 158, 170, 0.68);
-  border-radius: 100%;
+  width: 75px;
+  height: 75px;
+  margin-right: 6px;
+  border: 2px solid #e6e6e6;
+  border-radius: 5px;
   background-color: #fff;
-}
-.eva_hmi_cbtn.s_0 {
-  border-color: #efefef;
-}
-.eva_hmi_cbtn.s_0 .btn_border {
-  background-color: rgba(14, 56, 90, 0);
-}
-.eva_hmi_cbtn.s_0 .btn_border::before {
-  border: 1px solid rgba(255, 255, 255, 0);
-}
-.eva_hmi_cbtn .btn_img,
-.eva_hmi_cbtn .btn_border {
-  position: absolute;
-  top: 9px;
-  bottom: 9px;
-  left: 9px;
-  right: 9px;
-  border-radius: 100%;
-  border: none;
-  background-color: rgba(14, 56, 90, 0.1);
-}
-.eva_hmi_cbtn .btn_img {
-  background-color: transparent;
   background-position: 50% 50%;
-  background-size: 95%;
-  background-repeat: no-repeat;
+  background-size: 80%;
+	background-repeat: no-repeat;
   transition: background-image 0.2s linear;
-}
-.eva_hmi_cbtn.s_0 .btn_img {
-  opacity: 0.2;
-}
-.eva_hmi_cbtn .btn_border::before {
-  content: "";
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  bottom: -2px;
-  right: -2px;
-  background-color: transparent;
-  border: 1px solid rgba(14, 56, 90, 0.68);
-  border-radius: 100%;
 }
 .eva_hmi_cbtn:last-of-type {
   margin-right: 0;
@@ -576,9 +530,8 @@ html, body {
   left: 0;
   height: 100%;
   width: 100%;
-  background: url('btn/x_busy.svg') 50% 50%  no-repeat rgba(255, 255, 255, 0.6);
+  background: url('btn/x_busy.svg') 50% 50%  no-repeat rgba(255, 255, 255, 0.3);
   background-size: 50px;
-  border-radius: 100%;
 }
 .eva_hmi_cbtn:not(:disabled):hover {
   outline: none;
@@ -589,23 +542,15 @@ html, body {
 }
 .eva_hmi_cbtn .title {
 	position: absolute;
-	max-width: 90%;
+	max-width: 70%;
 	top: 0;
-	right: -10px;
-  height: 14px;
-  padding: 0 8px;
-	font: 11px Arial;
-  line-height: 14px;
-	color: #fff;
-  background-color: #5684e2;
+	right: 2px;
+	font: 10px Arial;
+  font-weight: 800;
+	color: #b3b3b3;
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
-  border-radius: 7px;
-}
-.eva_hmi_cbtn.s_0 .title {
-  background-color: #bec2c9;
-  color: #fff;
 }
 .eva_hmi_cbtn .value {
 	position: absolute;
@@ -618,15 +563,6 @@ html, body {
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
-}
-.eva_hmi_cbtn .error_msg {
-  position: absolute;
-  top: 3px;
-  left: 3px;
-  width: 33%;
-  height: 33%;
-  border-top-left-radius: 4px;
-  background: url('icons/error.svg') 0 0 no-repeat;
 }
 .single_bar_holder .eva_hmi_cbtn {
   padding: 0;
@@ -692,6 +628,13 @@ html, body {
 .bs-popover-top .arrow::after {
   bottom: 3px;
 }
+.popover-body {
+	padding: .5rem;
+}
+.popover .eva_hmi_cbtn:not(:disabled):hover,
+.popover .eva_hmi_cbtn:not(:disabled):active {
+  border-color: #ececec;
+}
 .bs-popover-top {
   position: absolute;
 }
@@ -705,7 +648,6 @@ html, body {
 .popover-body {
   height: 100%;
   overflow: hidden;
-  padding: .5rem;
 }
 @-webkit-keyframes fade-in {
   from { opacity: 0; }
@@ -810,7 +752,6 @@ html, body {
 }
 .eva_hmi_data_item {
   width: 100%;
-  color: #808080;
   background-position: 0 0;
   background-repeat: no-repeat;
   white-space:nowrap;
@@ -907,39 +848,6 @@ html, body {
   margin-top: 20px;
   position: relative;
 }
-.vanillatoasts-toast {
-  border: 2px solid #efefef;
-}
-.vanillatoasts-toast::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 20px;
-  border-radius: 10px;
-}
-.vanillatoasts-icon::before {
-  border-radius: 100%;
-}
-.vanillatoasts-success::before {
-  border-bottom: 2px solid #49d278;
-}
-.vanillatoasts-success .vanillatoasts-title {
-  color: #49d278;
-}
-.vanillatoasts-warning::before {
-  border-bottom: 2px solid #f5b05a;
-}
-.vanillatoasts-warning .vanillatoasts-title {
-  color: #f5b05a;
-}
-.vanillatoasts-error::before {
-  border-bottom: 2px solid #ee4941;
-}
-.vanillatoasts-error .vanillatoasts-title {
-  color: #ee4941;
-}
 
 @media (max-width: 567px) {
   .eva_hmi_bar_holder.single_bar_holder {
@@ -1035,140 +943,13 @@ html, body {
   }
   .eva_hmi_cbtn:not(:disabled):hover {
     outline: none;
+    background-color: #ececec;
+    border-color: #ccc;
   }
-
-  .eva_hmi_cbtn:not(:disabled):hover .btn_border {
-    top: 7px;
-    bottom: 7px;
-    left: 7px;
-    right: 7px;
-    background-color: rgba(14, 56, 90, 0);
-    border: 1px solid rgba(14, 56, 90, 0.68);
-  }
-  .eva_hmi_cbtn:not(:disabled):hover .btn_border::before {
-    border: 1px solid rgba(255, 255, 255, 0);
-    top: 1px;
-    bottom: 1px;
-    left: 1px;
-    right: 1px;
-    background-color: rgba(14, 56, 90, 0.1);
-    animation: pulsed_btn .4s;
-  }
-  .eva_hmi_cbtn.s_0:not(:disabled):hover .btn_border {
-    border: 1px solid rgba(255, 255, 255, 0);
-  }
-  .eva_hmi_cbtn.s_0:not(:disabled):hover .btn_border::before {
-    border: 1px solid rgba(14, 56, 90, 0.68);
-  }
-  @-webkit-keyframes pulsed_btn {
-    0% {
-      top: 20px;
-      bottom: 20px;
-      left: 20px;
-      right: 20px;
-    }
-    33% {
-      top: -4px;
-      bottom: -4px;
-      left: -4px;
-      right: -4px;
-    }
-    67% {
-      top: 5px;
-      bottom: 5px;
-      left: 5px;
-      right: 5px;
-    }
-    100% {
-      top: 0px;
-      bottom: 0px;
-      left: 0px;
-      right: 0px;
-    }
-  }
-  @-moz-keyframes pulsed_btn {
-    0% {
-      top: 20px;
-      bottom: 20px;
-      left: 20px;
-      right: 20px;
-    }
-    33% {
-      top: -4px;
-      bottom: -4px;
-      left: -4px;
-      right: -4px;
-    }
-    67% {
-      top: 5px;
-      bottom: 5px;
-      left: 5px;
-      right: 5px;
-    }
-    100% {
-      top: 0px;
-      bottom: 0px;
-      left: 0px;
-      right: 0px;
-    }
-  }
-  @-ms-keyframes pulsed_btn {
-    0% {
-      top: 20px;
-      bottom: 20px;
-      left: 20px;
-      right: 20px;
-    }
-    33% {
-      top: -4px;
-      bottom: -4px;
-      left: -4px;
-      right: -4px;
-    }
-    67% {
-      top: 5px;
-      bottom: 5px;
-      left: 5px;
-      right: 5px;
-    }
-    100% {
-      top: 0px;
-      bottom: 0px;
-      left: 0px;
-      right: 0px;
-    }
-  }
-  @keyframes pulsed_btn {
-    0% {
-      top: 20px;
-      bottom: 20px;
-      left: 20px;
-      right: 20px;
-    }
-    33% {
-      top: -4px;
-      bottom: -4px;
-      left: -4px;
-      right: -4px;
-    }
-    67% {
-      top: 5px;
-      bottom: 5px;
-      left: 5px;
-      right: 5px;
-    }
-    100% {
-      top: 0px;
-      bottom: 0px;
-      left: 0px;
-      right: 0px;
-    }
-  }
-
-
   .eva_hmi_content_holder {
     margin-top: -45px;
-    width: 682px;
+    width: 664px;
+    /*justify-content: space-between;*/
   }
   .eva_hmi_content_holder.with_topbar {
     margin-top: -15px;
@@ -1176,27 +957,23 @@ html, body {
   .eva_hmi_content_holder_sensors.with_topbar {
     margin-top: 45px;
   }
-  .eva_hmi_bar {
-    width: 341px;
-    padding: 10px;
-    border: 2px solid rgba(204, 204, 204, 0.5);
-  }
-  .eva_hmi_bar.embedded {
-    padding: 10px!important;
+  .eva_hmi_bar:first-child {
+    margin-top: 50px;
   }
   .eva_hmi_bar:nth-child(2n + 1) {
-    border-top-left-radius: 20px;
-    border-bottom-left-radius: 20px;
+    width: 333px;
+    margin-right: 11px;
+    padding-right: 11px;
+    border-right: 2px dashed #ccc;
   }
-  .eva_hmi_bar:nth-child(2n + 2) {
-    border-left: none;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
-  }
-  .eva_hmi_bar:last-child{
+  /*.eva_hmi_bar:nth-child(4) {
+    margin-left: auto;
+  }*/
+  .eva_hmi_bar:last-child {
+    width: 320px !important;
     margin-right: auto !important;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
+    padding-right: 0 !important;
+    border-right: none !important;
   }
   .eva_hmi_chart_item:first-child {
     margin-top: 20px;
@@ -1208,57 +985,37 @@ html, body {
 
 @media (min-width: 992px) {
   .container {
-    max-width: 972px;
+    max-width: 990px;
   }
   .eva_hmi_content_holder {
-    width: 972px;
-    margin-left: auto;
-    margin-right: auto;
+    width: 990px;
   }
-  .eva_hmi_bar {
-    width: 323px;
-    padding: 10px 2px;
-  }
-  .eva_hmi_bar:nth-child(2n + 2) {
-    border: 2px solid rgba(204, 204, 204, 0.5);
+  .eva_hmi_bar:nth-child(2n + 1) {
+    width: 320px;
+    margin-right: 0;
+    padding-right: 0;
+    border-right: none;
   }
   .eva_hmi_bar:nth-child(3n + 1),
-  .eva_hmi_bar:nth-child(3n + 2) {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-  }
-  .eva_hmi_bar:nth-child(3n + 1) {
-    width: 325px;
-    border-top-left-radius: 20px;
-    border-bottom-left-radius: 20px;
-  }
-  .eva_hmi_bar:nth-child(3n + 2),
-  .eva_hmi_bar:nth-child(3n + 3) {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    border-left: none;
-  }
-  .eva_hmi_bar:nth-child(3n + 3)  {
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
-  }
-  .eva_hmi_bar:last-child {
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
+  .eva_hmi_bar:nth-child(3n + 2)  {
+    width: 328px;
+    margin-right: 6px;
+    padding-right: 6px;
+    border-right: 2px dashed #ccc;
   }
 }
 @media (min-width: 1200px) {
   .container {
-    max-width: 1031px;
+    max-width: 1008px;
   }
   .eva_hmi_content_holder {
-    width: 1031px;
+    width: 1008px;
   }
-  .eva_hmi_bar {
-    width: 343px;
-    padding: 12px;
-  }
-  .eva_hmi_bar:first-child {
-    width: 345px;
+  .eva_hmi_bar:nth-child(3n + 1),
+  .eva_hmi_bar:nth-child(3n + 2) {
+    width: 333px;
+    margin-right: 11px;
+    padding-right: 11px;
+    border-right: 2px dashed #ccc;
   }
 }
