@@ -429,7 +429,7 @@ html, body {
   border: none!important;
 }
 .eva_hmi_bar_holder.single_bar_holder {
-	width: 760px;
+	width: 767px;
 	justify-content: start;
 	padding-right: 15px;
 }
@@ -497,7 +497,7 @@ html, body {
 .eva_hmi_camera_block {
   width: 100%;
   text-align: center;
-  border: 1px solid #989eaa;
+  border: 1px solid #0e385a;
 }
 .eva_hmi_control_block {
   display: flex;
@@ -833,7 +833,7 @@ html, body {
   background-repeat: no-repeat;
   white-space:nowrap;
   height: 34px;
-  padding-left: 30px;
+  padding-left: 35px;
   padding-top: 10px;
 }
 .eva_hmi_data_item.size_medium {
@@ -932,6 +932,9 @@ html, body {
 .vanillatoasts-title {
   color: #989eaa;
 }
+.vanillatoasts-text {
+  color: #c9c9c9;
+}
 .vanillatoasts-toast::before {
   content: "";
   position: absolute;
@@ -945,10 +948,10 @@ html, body {
   border-radius: 100%;
 }
 .vanillatoasts-success::before {
-  border-bottom: 2px solid #49d278;
+  border-bottom: 2px solid #2aaf40;
 }
 .vanillatoasts-success .vanillatoasts-title {
-  color: #49d278;
+  color: #2aaf40;
 }
 .vanillatoasts-warning::before {
   border-bottom: 2px solid #f5b05a;
