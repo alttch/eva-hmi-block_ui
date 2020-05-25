@@ -30,7 +30,7 @@ Theme **dark**:
 .. image:: images/sensors_dark.jpg
     :width: 30%
 
-Live demo: `<https://smarthome.demo.eva-ics.com/>`_
+Live demo: `<https://demo-smarthome.eva-ics.com/>`_
 
 .. toctree::
     :maxdepth: 1
