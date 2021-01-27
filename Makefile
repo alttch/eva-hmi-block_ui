@@ -35,8 +35,9 @@ ver-pub:
 pkg:
 	rm -rf _build
 	mkdir -p _build/ui/apps/eva-hmi-block_ui
-	cp -r index.min.js setup.py themes examples doc _build/ui/apps/eva-hmi-block_ui/
-	cd _build && tar czvf eva-hmi-block_ui-$(VERSION).evapkg ui
+	cp -r index.min.js themes examples doc _build/ui/apps/eva-hmi-block_ui/
+	sed "s/^VERSION=.*/VERSION='$(VERSION)'/g" setup.py > _build/setup.py
+	cd _build && tar czf eva-hmi-block_ui-$(VERSION).evapkg ui setup.py
 
 pub-pkg:
 	echo "" | gh release create v$(VERSION) -t "v$(VERSION)" _build/eva-hmi-block_ui-$(VERSION).evapkg
