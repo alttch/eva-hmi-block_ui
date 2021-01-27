@@ -82,7 +82,7 @@
         .popup(
           'eva_hmi_popup',
           'error',
-          'Server error',
+          'Server error ' + err,
           'Connection to server failed',
           {
             ct: ct,
