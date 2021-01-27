@@ -1,6 +1,24 @@
 Installation
 ************
 
+.. contents::
+
+Installing UI App
+=================
+
+Package (EVA ICS 3.3.2+)
+------------------------
+
+Go to https://github.com/alttch/eva-hmi-block_ui/releases and install the
+desired package:
+
+.. code:: bash
+    
+    eva sfa server pkg-install -w 30 <URI_OF_EVAPKG>
+
+Manual
+------
+
 Go to EVA ICS UI folder (usually */opt/eva/ui*) create *apps* folder if
 it doesn't exist yet and clone app repository to it.
 
@@ -11,18 +29,16 @@ it doesn't exist yet and clone app repository to it.
     cd apps
     git clone https://github.com/alttch/eva-hmi-block_ui.git
 
-If you don't have `EVA JS Framework
-<https://github.com/alttch/eva-js-framework/>`_ installed, download it and
-put e.g. to *lib* folder:
+.. warning::
 
-.. code-block:: bash
+    If you don't have `EVA JS Framework
+    <https://github.com/alttch/eva-js-framework/>`_, install it as well.
 
-    cd /opt/eva/ui
-    mkdir -p lib
-    curl https://raw.githubusercontent.com/alttch/eva-js-framework/master/dist/eva.min.js -o lib/eva.min.js
+Creating UI pages
+=================
 
-Then create your first page in */opt/eva/ui/*, call it *index.j2*. J2 files
-are regular HTML files however EVA ICS processes them as `Jinja2
+Create your first page in */opt/eva/ui/*, call it *index.j2*. J2 files are
+regular HTML files however EVA ICS processes them as `Jinja2
 templates <http://jinja.pocoo.org/>`_. If you don't plan to use Jinja tags,
 you can name your file *index.html* as well:
 
@@ -39,7 +55,7 @@ you can name your file *index.html* as well:
         <script type="text/javascript"
             src="config/index.yml?as=js&var=eva_hmi_config"></script>
         <script type="text/javascript"
-            src="lib/eva.min.js"></script>
+            src="eva.min.js"></script>
         <script type="text/javascript"
             src="apps/eva-hmi-block_ui/index.min.js"></script>
         <link rel="stylesheet"
@@ -117,7 +133,7 @@ Connect EVA JS Framework:
 
 .. code-block:: html
 
-    <script type="text/javascript" src="lib/eva.min.js"></script>
+    <script type="text/javascript" src="eva.min.js"></script>
 
 Connect HMI application:
 
