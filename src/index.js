@@ -1532,7 +1532,7 @@
           '<span class="eva_build"></span>/' +
           '<span class="eva_framework_version"></span>/' +
           '<span class="eva_framework_mode"></span>' +
-          ' user: <span class="eva_user"></span>'
+          ' [<span class="eva_user"></span>]'
       );
     if (!mini) {
       sysblock.append($("<br />"));
