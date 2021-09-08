@@ -1024,7 +1024,11 @@
       $(".eva_version").html($eva.server_info.version);
       $(".eva_build").html($eva.server_info.product_build);
       $(".eva_framework_version").html($eva.version);
-      $(".eva_framework_mode").html($eva.get_mode());
+      let mode = $eva.get_mode();
+      if (mode == 'wasm') {
+        mode = 'W' + window.evajw.get_build();
+      }
+      $(".eva_framework_mode").html(mode);
       $(".eva_key_id").html($eva.server_info.acl.key_id);
       $(".eva_user").html($eva.authorized_user);
     }
