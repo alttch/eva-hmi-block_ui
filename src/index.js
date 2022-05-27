@@ -1817,6 +1817,7 @@
   $eva.hmi.start = start;
   $eva.hmi.login = login;
   $eva.hmi.logout = logout;
+  $eva.hmi.show_alert = show_info_bar;
   $eva.hmi.logo = {};
   $eva.hmi.logo.href = "https://www.eva-ics.com/";
   $eva.hmi.logo.text = "www.eva-ics.com";
