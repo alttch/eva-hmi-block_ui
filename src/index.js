@@ -40,7 +40,7 @@
     content_holder.html('<div class="eva_hmi_body_error">' + msg + "</div>");
   }
 
-  function show_info_bar(msg, cl, timeout) {
+  function display_info_bar(msg, cl, timeout) {
     if (!cl) cl = "info";
     if (!timeout) timeout = 2;
     $("#eva_hmi_popup").removeClass();
@@ -65,7 +65,7 @@
         timeout: t
       });
     } else {
-      show_info_bar(msg, "error");
+      display_info_bar(msg, "error");
     }
   }
 
@@ -982,7 +982,7 @@
           })
           .catch((err) => {});
       } else {
-        show_info_bar("EVA ICS asked to reload UI", "info", 5);
+        display_info_bar("EVA ICS asked to reload UI", "info", 5);
       }
     });
     $eva.on("server.restart", function() {
@@ -1003,7 +1003,7 @@
           )
           .catch((err) => {});
       } else {
-        show_info_bar("Waiting for server restart", "warning", 15);
+        display_info_bar("Waiting for server restart", "warning", 15);
       }
       setTimeout(function() {
         $eva.start();
@@ -1817,7 +1817,7 @@
   $eva.hmi.start = start;
   $eva.hmi.login = login;
   $eva.hmi.logout = logout;
-  $eva.hmi.show_alert = show_info_bar;
+  $eva.hmi.display_alert = display_info_bar;
   $eva.hmi.logo = {};
   $eva.hmi.logo.href = "https://www.eva-ics.com/";
   $eva.hmi.logo.text = "www.eva-ics.com";
