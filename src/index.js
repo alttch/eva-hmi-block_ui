@@ -839,7 +839,8 @@
             <label for="eva_hmi_remember_auth">Remember me</label> \
           </div> \
           <div class="form-group"> \
-            <input type="submit" class="btn" value="Log in"/> \
+            <input type="submit" class="btn" \
+                  id="eva_hmi_btn_login" value="Log in"/> \
           </div> \
         </form> \
       </div>'
@@ -1612,17 +1613,21 @@
     });
   }
 
-  function submit_login(e) {
-    e.preventDefault();
-    try {
-      $eva.login = $("#eva_hmi_login").val();
-      $eva.password = $("#eva_hmi_password").val();
-      if ($("#eva_hmi_remember_auth").prop("checked")) {
+  function login(login, password, remember) {
+      $eva.login = login;
+      $eva.password = password;
+      if (remember) {
         window.$cookies.create("eva_hmi_login", $eva.login, 365);
         window.$cookies.create("eva_hmi_password", $eva.password, 365);
       }
       start_animation();
       $eva.start();
+  }
+
+  function submit_login(e) {
+    e.preventDefault();
+    try {
+      login($("#eva_hmi_login").val(), $("#eva_hmi_password").val(), $("#eva_hmi_remember_auth").prop("checked"));
     } catch (err) {}
     return false;
   }
@@ -1806,6 +1811,8 @@
   $eva.hmi = {};
   $eva.hmi.init = init;
   $eva.hmi.start = start;
+  $eva.hmi.login = login;
+  $eva.hmi.logout = logout;
   $eva.hmi.logo = {};
   $eva.hmi.logo.href = "https://www.eva-ics.com/";
   $eva.hmi.logo.text = "www.eva-ics.com";
