@@ -1817,7 +1817,15 @@
   $eva.hmi.start = start;
   $eva.hmi.login = login;
   $eva.hmi.logout = logout;
-  $eva.hmi.display_alert = display_info_bar;
+  $eva.hmi.display_alert = function(text, level, level, timeout) {
+    if (!timeout) {
+      timeout = 30;
+    }
+    $eva.toolbox.popup("eva_hmi_popup", level, level.toUpperCase(), text, {
+      ct: timeout,
+      btn1: "Ok"
+    });
+  };
   $eva.hmi.logo = {};
   $eva.hmi.logo.href = "https://www.eva-ics.com/";
   $eva.hmi.logo.text = "www.eva-ics.com";
