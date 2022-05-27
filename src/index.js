@@ -1026,8 +1026,8 @@
       $(".eva_build").html($eva.server_info.product_build);
       $(".eva_framework_version").html($eva.version);
       let mode = $eva.get_mode();
-      if (mode == 'wasm') {
-        mode = 'W' + window.evajw.get_build();
+      if (mode == "wasm") {
+        mode = "W" + window.evajw.get_build();
       }
       $(".eva_framework_mode").html(mode);
       $(".eva_key_id").html($eva.server_info.acl.key_id);
@@ -1614,20 +1614,24 @@
   }
 
   function login(login, password, remember) {
-      $eva.login = login;
-      $eva.password = password;
-      if (remember) {
-        window.$cookies.create("eva_hmi_login", $eva.login, 365);
-        window.$cookies.create("eva_hmi_password", $eva.password, 365);
-      }
-      start_animation();
-      $eva.start();
+    $eva.login = login;
+    $eva.password = password;
+    if (remember) {
+      window.$cookies.create("eva_hmi_login", $eva.login, 365);
+      window.$cookies.create("eva_hmi_password", $eva.password, 365);
+    }
+    start_animation();
+    $eva.start();
   }
 
   function submit_login(e) {
     e.preventDefault();
     try {
-      login($("#eva_hmi_login").val(), $("#eva_hmi_password").val(), $("#eva_hmi_remember_auth").prop("checked"));
+      login(
+        $("#eva_hmi_login").val(),
+        $("#eva_hmi_password").val(),
+        $("#eva_hmi_remember_auth").prop("checked")
+      );
     } catch (err) {}
     return false;
   }
