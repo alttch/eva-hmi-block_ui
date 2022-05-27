@@ -1817,7 +1817,7 @@
   $eva.hmi.start = start;
   $eva.hmi.login = login;
   $eva.hmi.logout = logout;
-  $eva.hmi.display_alert = function(text, level, level, timeout) {
+  $eva.hmi.display_alert = function(text, level, timeout) {
     if (!timeout) {
       timeout = 30;
     }
