@@ -212,7 +212,12 @@
       } else if (config.busy.startsWith("lvar:")) {
         after_start = function(result) {
           let state = $eva.state(config.busy);
-          if (!state.status || !state.value || state.value == "0") {
+          if (
+            !state.status ||
+            !state.value ||
+            ($eva.api_version == 4 && state.status == 0) ||
+            ($eva.api_version == 3 && state.value == "0")
+          ) {
             el.removeClass("busy");
           }
           if (!result || !result.uuid) {
@@ -244,7 +249,12 @@
   function set_el_busy_lvar(lvar, el) {
     if (!lvar || !lvar.startsWith("lvar:")) return false;
     $eva.watch(lvar, function(state) {
-      if (state.status && state.value && state.value != "0") {
+      if (
+        state.status &&
+        state.value &&
+        (($eva.api_version == 4 && state.value != 0) ||
+          ($eva.api_version == 3 && state.value != "0"))
+      ) {
         el.addClass("busy");
       } else {
         el.removeClass("busy");
@@ -281,17 +291,16 @@
           var params = $.extend({}, config.action_params);
           b.attr("eva-ui-status-to", i);
           b.on("click", function() {
-            params["s"] = this.getAttribute("eva-ui-status-to");
-            $eva
-              .call("action", action, params)
-              .then(function(result) {
-                el.find(".error_msg").remove();
-              })
-              .catch(function(err) {
-                if (is_btn) el.removeClass("busy");
-                el.append($("<span />", { class: "error_msg" }));
-                server_error(err);
-              });
+            params["s"] = parseInt(this.getAttribute("eva-ui-status-to"));
+            let afunc = create_api_action(
+              "action",
+              action,
+              params,
+              el,
+              config,
+              is_btn
+            );
+            afunc();
           });
           b.appendTo(mc);
         }
@@ -375,8 +384,14 @@
         } else if (action.startsWith("lvar:")) {
           var v;
           v = val < min ? null : val;
+          let method;
+          if ($eva.api_version == 4) {
+            method = "lvar.set";
+          } else {
+            method = "set";
+          }
           let afunc = create_api_action(
-            "set",
+            method,
             action,
             { v: v },
             el,
@@ -445,8 +460,14 @@
           is_btn
         );
       } else {
+        let method;
+        if ($eva.api_version == 4) {
+          method = "action.toggle";
+        } else {
+          method = "action_toggle";
+        }
         a = create_api_action(
-          "action_toggle",
+          method,
           action,
           config.action_params,
           el,
@@ -456,8 +477,14 @@
       }
     } else if (action.startsWith("lvar:")) {
       if (config.action_params && "v" in config.action_params) {
+        let method;
+        if ($eva.api_version == 4) {
+          method = "lvar.set";
+        } else {
+          method = "set";
+        }
         a = create_api_action(
-          "set",
+          method,
           action,
           config.action_params,
           el,
@@ -465,7 +492,13 @@
           is_btn
         );
       } else {
-        a = create_api_action("toggle", action, null, el, config, is_btn);
+        let method;
+        if ($eva.api_version == 4) {
+          method = "lvar.toggle";
+        } else {
+          method = "toggle";
+        }
+        a = create_api_action(method, action, null, el, config, is_btn);
       }
     } else if (action.startsWith("lmacro:")) {
       if (is_btn) el.addClass("gear");
@@ -575,7 +608,8 @@
           if (!button.custom_busy) {
             if (
               state.act ||
-              state.status != state.nstatus || state.value != state.nvalue
+              (state.nstatus !== undefined &&
+                (state.status != state.nstatus || state.value != state.nvalue))
             ) {
               button.addClass("busy");
             } else {
@@ -589,9 +623,15 @@
         }
         button.addClass("s_");
         $eva.watch(istatus, function(state) {
+          let st;
+          if ($eva.api_version == 4) {
+            st = state.status;
+          } else {
+            st = state.value;
+          }
           button.attr(
             "class",
-            button.attr("class").replace(/\bs_.*/g, "s_" + state.value)
+            button.attr("class").replace(/\bs_.*/g, "s_" + st)
           );
         });
       }
@@ -880,7 +920,7 @@
         });
         $eva.on("login.failed", function(err) {
           stop_intervals();
-          if (err.code == 2) {
+          if (err.code == 2 || err.code == -32002) {
             stop_animation();
             erase_login_cookies();
             content_holder.hide();
@@ -953,7 +993,7 @@
       });
       $eva.on("login.failed", function(err) {
         stop_intervals();
-        if (err.code == 2) {
+        if (err.code == 2 || err.code == -32002) {
           stop_animation();
           body_error_message("ACCESS DENIED");
         } else {
@@ -1026,7 +1066,11 @@
   function update_sysblock() {
     if ($eva.server_info) {
       $(".eva_version").html($eva.server_info.version);
-      $(".eva_build").html($eva.server_info.product_build);
+      if ($eva.api_version == 4) {
+        $(".eva_build").html($eva.server_info.build);
+      } else {
+        $(".eva_build").html($eva.server_info.product_build);
+      }
       $(".eva_framework_version").html($eva.version);
       let mode = $eva.get_mode();
       if (mode == "wasm") {

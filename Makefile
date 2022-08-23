@@ -38,6 +38,9 @@ pkg:
 	cp -r index.min.js themes examples doc _build/ui/apps/eva-hmi-block_ui/
 	sed "s/^VERSION=.*/VERSION='$(VERSION)'/g" setup.py > _build/setup.py
 	cd _build && tar czf eva-hmi-block_ui-$(VERSION).evapkg ui setup.py
+	cd _build && tar czf eva-hmi-block_ui-$(VERSION).tgz ui
 
 pub-pkg:
-	echo "" | gh release create v$(VERSION) -t "v$(VERSION)" _build/eva-hmi-block_ui-$(VERSION).evapkg
+	echo "" | gh release create v$(VERSION) -t "v$(VERSION)" \
+		build/eva-hmi-block_ui-$(VERSION).evapkg
+		build/eva-hmi-block_ui-$(VERSION).tgz
