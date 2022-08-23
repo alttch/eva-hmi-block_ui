@@ -42,5 +42,5 @@ pkg:
 
 pub-pkg:
 	echo "" | gh release create v$(VERSION) -t "v$(VERSION)" \
-		build/eva-hmi-block_ui-$(VERSION).evapkg
-		build/eva-hmi-block_ui-$(VERSION).tgz
+		_build/eva-hmi-block_ui-$(VERSION).evapkg \
+		_build/eva-hmi-block_ui-$(VERSION).tgz
