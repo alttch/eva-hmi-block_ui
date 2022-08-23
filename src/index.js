@@ -573,7 +573,10 @@
             }
           }
           if (!button.custom_busy) {
-            if (state.status != state.nstatus || state.value != state.nvalue) {
+            if (
+              state.act ||
+              state.status != state.nstatus || state.value != state.nvalue
+            ) {
               button.addClass("busy");
             } else {
               button.removeClass("busy");
