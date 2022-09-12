@@ -5,7 +5,7 @@ ICS](https://www.eva-ics.com/).
 
 ## HOWTO/Docs
 
-https://eva-hmi-block-ui.readthedocs.io/
+https://info.bma.ai/en/actual/hmi-block-ui/
 
 ## Screenshots
 
