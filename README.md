@@ -15,10 +15,6 @@ https://info.bma.ai/en/actual/hmi-block-ui/
 <img src="https://info.bma.ai/en/actual/_images/dashboard_dark.jpg" width="200" />
 <img src="https://info.bma.ai/en/actual/_images/sensors_dark.jpg" width="200" />
 
-## Live demo
-
-https://demo-smarthome.eva-ics.com/
-
 ## Build from sources
 
 make prepare build
